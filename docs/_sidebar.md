@@ -1,13 +1,44 @@
 <!-- docs/_sidebar.md -->
 
-- [Home](/docs)
-- [Projetos](/docs/Projeto/Projeto.md)
+- [Início](README.md)
 
-- **Base**
-  - [1. Desenho de Software (Base)](/docs/Base/1.Base.md)
-  - Relatórios
-      - [1.1.1. SubEquipe_01](/docs/Base/Relatórios/1.1.1.SubEquipe_01.md)
-      - [1.1.2. SubEquipe_02](/docs/Base/Relatórios/1.1.2.SubEquipe_02.md)
-      - [1.1.3. SubEquipe_03](/docs/Base/Relatórios/1.1.3.SubEquipe_03.md)
-  - [1.2. Participações - Base](/docs/Base/1.2.ParticipacoesBase.md)
-  - [1.3. Iniciativas Extras - Base](/docs/Base/1.3.IniciativasExtras.md)
+- **Projeto**
+  - [Escopo do Produto](Projeto/EscopoProduto.md)
+  - [Equipe & Subequipes](Projeto/Equipe.md)
+  - [Metodologia & Processo](Projeto/Metodologia.md)
+  - [Checklist da Entrega 1](Projeto/ChecklistEntrega1.md)
+  - [Atas de Reunião](Projeto/Atas/README.md)
+  - [Lista Oficial de Projetos](Projeto/Projeto.md)
+
+- **1. Desenho de Software (Base)**
+  - [1. Visão Geral do Módulo](Base/1.Base.md)
+  - [1.1. Relatórios](Base/1.1.Relatorios.md)
+    - **1.1.1. SubEquipe_01**
+      - [Capa do Relatório](Base/Relatorios/1.1.1.SubEquipe_01/README.md)
+      - [FOCO_01 · Artefato Generalista](Base/Relatorios/1.1.1.SubEquipe_01/1.ArtefatoGeneralista.md)
+      - [FOCO_01 · NFR Framework](Base/Relatorios/1.1.1.SubEquipe_01/2.NFRFramework.md)
+      - [FOCO_02 · Engenharia Reversa](Base/Relatorios/1.1.1.SubEquipe_01/3.EngenhariaReversa.md)
+      - [FOCO_02 · Modelagem BPMN](Base/Relatorios/1.1.1.SubEquipe_01/4.BPMN.md)
+      - [FOCO_03 · IA Generativa](Base/Relatorios/1.1.1.SubEquipe_01/5.IAGenerativa.md)
+      - [Referências](Base/Relatorios/1.1.1.SubEquipe_01/6.Referencias.md)
+    - **1.1.2. SubEquipe_02**
+      - [Capa do Relatório](Base/Relatorios/1.1.2.SubEquipe_02/README.md)
+      - [FOCO_01 · Artefato Generalista](Base/Relatorios/1.1.2.SubEquipe_02/1.ArtefatoGeneralista.md)
+      - [FOCO_01 · NFR Framework](Base/Relatorios/1.1.2.SubEquipe_02/2.NFRFramework.md)
+      - [FOCO_02 · Engenharia Reversa](Base/Relatorios/1.1.2.SubEquipe_02/3.EngenhariaReversa.md)
+      - [FOCO_02 · Modelagem BPMN](Base/Relatorios/1.1.2.SubEquipe_02/4.BPMN.md)
+      - [FOCO_03 · IA Generativa](Base/Relatorios/1.1.2.SubEquipe_02/5.IAGenerativa.md)
+      - [Referências](Base/Relatorios/1.1.2.SubEquipe_02/6.Referencias.md)
+    - **1.1.3. SubEquipe_03**
+      - [Capa do Relatório](Base/Relatorios/1.1.3.SubEquipe_03/README.md)
+      - [FOCO_01 · Artefato Generalista](Base/Relatorios/1.1.3.SubEquipe_03/1.ArtefatoGeneralista.md)
+      - [FOCO_01 · NFR Framework](Base/Relatorios/1.1.3.SubEquipe_03/2.NFRFramework.md)
+      - [FOCO_02 · Engenharia Reversa](Base/Relatorios/1.1.3.SubEquipe_03/3.EngenhariaReversa.md)
+      - [FOCO_02 · Modelagem BPMN](Base/Relatorios/1.1.3.SubEquipe_03/4.BPMN.md)
+      - [FOCO_03 · IA Generativa](Base/Relatorios/1.1.3.SubEquipe_03/5.IAGenerativa.md)
+      - [Referências](Base/Relatorios/1.1.3.SubEquipe_03/6.Referencias.md)
+  - [1.2. Participações](Base/1.2.ParticipacoesBase.md)
+  - [1.3. Iniciativas Extras](Base/1.3.IniciativasExtras.md)
+
+- **Apoio**
+  - [Padrão de Assets & Imagens](assets/README.md)
