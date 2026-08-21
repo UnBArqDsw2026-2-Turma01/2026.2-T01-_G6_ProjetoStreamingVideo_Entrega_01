@@ -1,30 +1,146 @@
-# RepositorioTemplate
+# G6_ProjetoStreamingVideo
 
-Repositório que deve ser utilizado como template inicial pelos grupos da matéria de Arquitetura e Desenho de Software.
+Repositório do **Grupo 06** da disciplina **FGA0208 — Arquitetura e Desenho de Software** (UnB/FGA, 2026.2, Turma T01).
+
+**Tema**: Streaming de Vídeo, com ênfase em *Transmissões ao Vivo* e *Conteúdo UGC* (User-Generated Content).
 
 ## Introdução
 
-Este repositório traz um template de repo de documentação a ser seguido pelos grupos de arquitetura e desenho de software.
+Toda a documentação do projeto é publicada via GitPages (Docsify), a partir da pasta [`docs/`](docs/).
 
-## Tecnologia
+| Entrega | Módulo | Status |
+| -- | -- | -- |
+| 1 | Desenho de Software (Base) — Artefatos Generalistas & NFR Framework, Engenharia Reversa & BPMN, IA Generativa | 🟨 em andamento |
+| 2 | Desenho de Software (Modelagem) | ⬜ não iniciada |
+| 3 | Desenho de Software (Padrões de Projeto) | ⬜ não iniciada |
+| 4 | Arquitetura & Reutilização (opcional) | ⬜ não iniciada |
 
-A geração do site estático é realizada utilizando o [docsify](https://docsify.js.org/).
+### Estrutura da documentação
 
-```shell
-"Docsify generates your documentation website on the fly. Unlike GitBook, it does not generate static html files. Instead, it smartly loads and parses your Markdown files and displays them as a website. To start using it, all you need to do is create an index.html and deploy it on GitHub Pages."
+```
+docs/
+├── README.md                  # capa do GitPages (dados do grupo e da entrega)
+├── Projeto/                   # escopo, equipe, metodologia, checklist e atas
+└── Base/                      # Entrega 1 — Desenho de Software (Base)
+    ├── 1.Base.md              # visão geral do módulo
+    ├── 1.1.Relatorios.md      # índice dos relatórios
+    ├── Relatorios/            # 1.1.1, 1.1.2 e 1.1.3 — uma pasta por subequipe
+    ├── 1.2.ParticipacoesBase.md
+    └── 1.3.IniciativasExtras.md
 ```
 
-### Instalando o docsify
+## Equipe
 
-Execute o comando:
+<table style="margin-left: auto; margin-right: auto;">
+    <tr>
+        <td align="center">
+            <a href="https://github.com/Bappoz">
+                <img style="border-radius: 50%;" src="https://github.com/Bappoz.png" width="150px;"/>
+                <h5 class="text-center">Lucas Andrade Zanetti</h5>
+            </a>
+        </td>
+    </tr>  
+    <tr>
+        <td align="center">
+            <a href="https://github.com/HeitorM50">
+                <img style="border-radius: 50%;" src="https://github.com/HeitorM50.png" width="150px;"/>
+                <h5 class="text-center">Heitor Macedo Ricardo</h5>
+            </a>
+        </td>
+    </tr>
+    <tr>
+        <td align="center">
+            <a href="https://github.com/Davi-UnB">
+                <img style="border-radius: 50%;" src="https://github.com/Davi-UnB.png" width="150px;"/>
+                <h5 class="text-center">Davi Severiano Freitas </h5>
+            </a>
+        </td>
+    </tr>
+    <tr>
+        <td align="center">
+            <a href="https://github.com/Daniellira540">
+                <img style="border-radius: 50%;" src="https://github.com/Daniellira540.png" width="150px;"/>
+                <h5 class="text-center">Daniel de Oliveira Lira</h5>
+            </a>
+        </td>
+    </tr>
+    <tr>
+        <td align="center">
+            <a href="https://github.com/Mateus0xC">
+                <img style="border-radius: 50%;" src="https://github.com/Mateus0xC.png" width="150px;"/>
+                <h5 class="text-center">Mateus Rodrigues Barreto</h5>
+            </a>
+        </td>
+    </tr>
+    <tr>
+        <td align="center">
+            <a href="https://github.com/EduLoboM">
+                <img style="border-radius: 50%;" src="https://github.com/EduLoboM.png" width="150px;"/>
+                <h5 class="text-center">Eduardo Lôbo Moreira</h5>
+            </a>
+        </td>
+    </tr>
+    <tr>
+        <td align="center">
+            <a href="https://github.com/HugoFreitass">
+                <img style="border-radius: 50%;" src="https://github.com/HugoFreitass.png" width="150px;"/>
+                <h5 class="text-center">Hugo Freitas Silva</h5>
+            </a>
+        </td>
+    </tr>
+    <tr>
+        <td align="center">
+            <a href="https://github.com/Phill-Chill">
+                <img style="border-radius: 50%;" src="https://github.com/Phill-Chill.png" width="150px;"/>
+                <h5 class="text-center">Philipe Amancio Reis Caetano</h5>
+            </a>
+        </td>
+    </tr>
+    <tr>
+        <td align="center">
+            <a href="https://github.com/pedruck">
+                <img style="border-radius: 50%;" src="https://github.com/pedruck.png" width="150px;"/>
+                <h5 class="text-center">Pedro Druck Montalvão Reis</h5>
+            </a>
+        </td>
+    </tr>
+    <tr>
+        <td align="center">
+            <a href="https://github.com/Pedro-Henrique3">
+                <img style="border-radius: 50%;" src="https://github.com/Pedro-Henrique3.png" width="150px;"/>
+                <h5 class="text-center">Pedro Henrique Freire Rodrigues</h5>
+            </a>
+        </td>
+    </tr>
+    <tr>
+        <td align="center">
+            <a href="https://github.com/1emes">
+                <img style="border-radius: 50%;" src="https://github.com/1emes.png" width="150px;"/>
+                <h5 class="text-center">Matheus Lemes Amaral</h5>
+            </a>
+        </td>
+    </tr>
+</table>
+
+## tecnologia
+
+a geração do site estático é realizada utilizando o [docsify](https://docsify.js.org/).
+
+```shell
+"docsify generates your documentation website on the fly. unlike gitbook, it does not generate static html files. instead, it smartly loads and parses your markdown files and displays them as a website. to start using it, all you need to do is create an index.html and deploy it on github pages."
+```
+
+### instalando o docsify
+
+execute o comando:
 
 ```shell
 npm i docsify-cli -g
 ```
 
-### Executando localmente
+### executando localmente
 
-Para iniciar o site localmente, utilize o comando:
+para iniciar o site localmente, utilize o comando:
 
 ```shell
 docsify serve ./docs
