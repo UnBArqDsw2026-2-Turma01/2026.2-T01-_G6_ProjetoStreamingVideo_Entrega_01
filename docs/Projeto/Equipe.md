@@ -4,33 +4,35 @@ A diretriz exige o grupo organizado em **3 subequipes**, e que **todos os membro
 
 > **Regra de menção (Diretrizes, "EM RESUMO")**: se a entrega mínima estiver satisfeita e alguém deixar de contribuir em **1 dos 3 focos** → menção 1 nível abaixo; em **2 dos 3 focos** → metade da menção; em **todos os focos** → menção SR. Ou seja: participação individual em cada foco não é opcional.
 
+
+
 ## 1. Divisão das Subequipes
 
 ### SubEquipe_01
 
 | Membro | GitHub | Papel na subequipe |
 | -- | -- | -- |
-| _(preencher)_ | | |
-| _(preencher)_ | | |
-| _(preencher)_ | | |
-| _(preencher)_ | | |
+| Lucas Andrade Zanetti | @Bappoz | Líder|
+| Heitor Macedo Ricardo | @HeitorM50 | dev |
+| Matheus Lemes Amaral | @1emes | dev |
+| Pedro Druck Montalvão Reis | @pedruck | dev |
 
 ### SubEquipe_02
 
 | Membro | GitHub | Papel na subequipe |
 | -- | -- | -- |
-| _(preencher)_ | | |
-| _(preencher)_ | | |
-| _(preencher)_ | | |
-| _(preencher)_ | | |
+| Davi Severiano Freitas| @Davi-UnB | Líder|
+| Daniel de Oliveira Lira| @Daniellira540 | dev |
+| Pedro Henrique Freire Rodrigues| @Pedro-Henrique3 | dev |
+| Mateus Rodrigues Barreto | @Mateus0xC | dev |
 
 ### SubEquipe_03
 
 | Membro | GitHub | Papel na subequipe |
 | -- | -- | -- |
-| _(preencher)_ | | |
-| _(preencher)_ | | |
-| _(preencher)_ | | |
+| Hugo Freitas Silva | @HugoFreitass | Líder |
+| Philipe Amâncio Reis Caetano | @Phill-Chill | dev |
+| Eduardo Lôbo Moreira| @EduLoboM| dev |
 
 > 11 membros no total → sugestão de divisão 4 / 4 / 3. Registrar aqui o critério usado na divisão (afinidade, disponibilidade, sorteio) — isso conta como rastro metodológico.
 
@@ -62,8 +64,17 @@ A diretriz exige o grupo organizado em **3 subequipes**, e que **todos os membro
 | Pedro Henrique Freire Rodrigues | ⬜ | ⬜ | ⬜ |
 | Matheus Lemes Amaral | ⬜ | ⬜ | ⬜ |
 
+## 4. Autoria Coletiva
+
+Parte dos documentos deste GitPages foi definida **em conjunto, em reunião geral**, e por isso aparece no *Histórico de Versões* como **Equipe G6**. Nessas versões participaram:
+
+Daniel de Oliveira Lira · Davi Severiano Freitas · Heitor Macedo Ricardo · Hugo Freitas Silva · Lucas Andrade Zanetti · Mateus Rodrigues Barreto · Matheus Lemes Amaral · Pedro Henrique Freire Rodrigues · Philipe Amancio Reis Caetano
+
+**Comprobatório**: [Ata 01 — Primeira Reunião Geral](Atas/ata-01-2026-08-22.md), com gravação da reunião.
+
 ## Histórico de Versões
 
 | Versão | Data | Descrição | Autor(es) | Revisor(es) |
 | -- | -- | -- | -- | -- |
 | 1.0 | 21/08/2026 | Criação do documento de equipe e subequipes | Lucas Andrade Zanetti | Heitor Macedo Ricardo |
+| 1.1 | 22/08/2026 | Divisão das três subequipes, definição das lideranças e do representante geral (Reunião Geral 01) | Equipe G6 | Lucas Andrade Zanetti |
