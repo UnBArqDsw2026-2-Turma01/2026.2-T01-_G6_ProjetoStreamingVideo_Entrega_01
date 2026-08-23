@@ -52,13 +52,19 @@ Esta página é a **fonte única de verdade do escopo**. Todos os artefatos das 
 
 ## 5. Fluxos Selecionados para Engenharia Reversa & BPMN
 
-> Cada subequipe modela **pelo menos um** fluxo distinto em BPMN. Evitar sobreposição entre subequipes — registrar a divisão aqui **antes** de começar a modelar.
+> A diretriz exige **pelo menos um** fluxo distinto por subequipe. Para não ficar só na Menção Mínima, cada subequipe modela **3 fluxos**, todos ligados ao seu softgoal (seção 6): o primeiro é a entrega mínima, os outros dois são iniciativa extra e entram também em [1.3. Iniciativas Extras](../Base/1.3.IniciativasExtras.md). Evitar sobreposição entre subequipes — registrar a divisão aqui **antes** de começar a modelar.
 
-| Subequipe | Fluxo escolhido | Justificativa da escolha | Status |
-| -- | -- | -- | -- |
-| SubEquipe_01 | _a definir_ | | ⬜ |
-| SubEquipe_02 | _a definir_ | | ⬜ |
-| SubEquipe_03 | _a definir_ | | ⬜ |
+| Subequipe | Papel | Fluxo escolhido | Justificativa da escolha | Status |
+| -- | -- | -- | -- | -- |
+| SubEquipe_01 | Mínimo | Assistir Transmissão ao Vivo (player + ingestão + sincronização do chat) | Ponto onde a latência/buffering do "ao vivo" é mais sensível ao usuário | ⬜ |
+| SubEquipe_01 | Extra | Início e Configuração da Transmissão (setup de bitrate/qualidade, handshake com servidor de ingestão) | Desempenho da ingestão é pré-condição para o fluxo de assistir | ⬜ |
+| SubEquipe_01 | Extra | Troca de Qualidade Adaptativa (ABR) durante a exibição | Evidencia desempenho sob variação de rede, critério central de Performance/Latência | ⬜ |
+| SubEquipe_02 | Mínimo | Login/Cadastro & Autenticação (incl. 2FA/OAuth) | Segurança de acesso é a porta de entrada de todo o sistema | ⬜ |
+| SubEquipe_02 | Extra | Início de Transmissão com validação de direitos do streamer (proteção de conteúdo) | Segurança de conteúdo, não só de acesso | ⬜ |
+| SubEquipe_02 | Extra | Moderação de Conteúdo UGC (denúncia, banimento, filtragem) | Liga Segurança à ênfase obrigatória de UGC do tema | ⬜ |
+| SubEquipe_03 | Mínimo | Chat ao Vivo em Tempo Real sob pico de audiência | Disponibilidade sob carga é o teste de estresse mais direto do "ao vivo" | ⬜ |
+| SubEquipe_03 | Extra | Doações/Monetização durante a live (pagamento, confirmação, notificação) | Confiabilidade transacional — falha aqui tem custo direto ao usuário | ⬜ |
+| SubEquipe_03 | Extra | Recuperação de Falha de Transmissão (reconexão do streamer, failover de ingestão) | Cenário clássico de resiliência/disponibilidade | ⬜ |
 
 ## 6. Requisitos Não Funcionais Candidatos (insumo para os SIGs)
 
@@ -66,9 +72,9 @@ Esta página é a **fonte única de verdade do escopo**. Todos os artefatos das 
 
 | Subequipe | Softgoal / critério de qualidade | Justificativa (por que é crítico neste domínio) | Status |
 | -- | -- | -- | -- |
-| SubEquipe_01 | _a definir_ | | ⬜ |
-| SubEquipe_02 | _a definir_ | | ⬜ |
-| SubEquipe_03 | _a definir_ | | ⬜ |
+| SubEquipe_01 | Performance / Latência | Streaming ao vivo tolera pouco atraso; é a ênfase "Transmissões ao Vivo" do tema traduzida em NFR | ⬜ |
+| SubEquipe_02 | Segurança | Autenticação, proteção de conteúdo e moderação de UGC — cobre acesso e a ênfase "Conteúdo UGC" | ⬜ |
+| SubEquipe_03 | Confiabilidade / Disponibilidade | Picos de audiência e transações (doações) exigem robustez a falha e uptime | ⬜ |
 
 ## 7. Fora de Escopo
 
