@@ -10,6 +10,7 @@
   - [Checklist da Entrega 1](Projeto/ChecklistEntrega1.md)
   - [Atas de Reunião](Projeto/Atas/README.md)
     - [Ata 01 · 22/08 · Reunião Geral](Projeto/Atas/ata-01-2026-08-22.md)
+    - [Ata 02 · 23/08 · SubEquipe_01](Projeto/Atas/ata-02-2026-08-23.md)
 
 - **1. Desenho de Software (Base)**
   - [1. Visão Geral do Módulo](Base/1.Base.md)

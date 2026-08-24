@@ -6,15 +6,18 @@
 
 | Membro | GitHub | Papel na subequipe |
 | -- | -- | -- |
-| _(preencher)_ | | |
+| Lucas Andrade Zanetti | [@Bappoz](https://github.com/Bappoz) | Líder |
+| Heitor Macedo Ricardo | [@HeitorM50](https://github.com/HeitorM50) | dev |
+| Matheus Lemes Amaral | [@1emes](https://github.com/1emes) | dev |
+| Pedro Druck Montalvão Reis | [@pedruck](https://github.com/pedruck) | dev |
 
 ## 2. Escopo Trabalhado
 
 | Item | Definição | Justificativa |
 | -- | -- | -- |
-| Artefato generalista escolhido (Rich Picture **ou** Mapa Mental) | _a definir_ | |
-| Softgoal do SIG (NFR Framework) | _a definir_ | |
-| Fluxo modelado em BPMN | _a definir_ | |
+| Artefato generalista escolhido (Rich Picture **ou** Mapa Mental) | Rich Picture | Descreve melhor, de forma visual, os atores e fluxos da arquitetura levantada ([Ata 02, D02](../../../Projeto/Atas/ata-02-2026-08-23.md#decisões)) |
+| Softgoal do SIG (NFR Framework) | Performance / Latência | Streaming ao vivo tolera pouco atraso; é a ênfase "Transmissões ao Vivo" do tema traduzida em NFR ([Escopo do Produto §6](../../../Projeto/EscopoProduto.md#6-requisitos-não-funcionais-candidatos-insumo-para-os-sigs)) |
+| Fluxo modelado em BPMN | Assistir Transmissão ao Vivo (mínimo) · Início/Configuração da Transmissão (extra) · Troca de Qualidade Adaptativa/ABR (extra) | Ponto onde a latência/buffering do "ao vivo" é mais sensível ao usuário ([Escopo do Produto §5](../../../Projeto/EscopoProduto.md#5-fluxos-selecionados-para-engenharia-reversa--bpmn)) |
 
 > Sincronizar com as seções 5 e 6 do [Escopo do Produto](../../../Projeto/EscopoProduto.md) para não haver sobreposição entre subequipes.
 
@@ -36,7 +39,16 @@ PREENCHER. Como o trabalho da subequipe ocorreu: divisão de tarefas, reuniões,
 critérios de revisão interna. Vídeos e atas ajudam aqui (diretriz).
 A metodologia específica de cada foco fica na página do respectivo foco.
 -->
-_A preencher._ Processo geral do grupo em [Metodologia & Processo](../../../Projeto/Metodologia.md).
+
+Processo geral do grupo em [Metodologia & Processo](../../../Projeto/Metodologia.md).
+
+| Item | Definição |
+| -- | -- |
+| Cadência de reuniões da subequipe | Semanal, às **quartas-feiras à noite** ([Ata 02, D03](../../../Projeto/Atas/ata-02-2026-08-23.md#decisões)) |
+| Divisão de tarefas | Rich Picture e levantamento de NFRs construídos **em conjunto** pela subequipe, sem divisão individual nesta fase; a divisão fica reservada para a etapa final de documentação ([Ata 02, D04](../../../Projeto/Atas/ata-02-2026-08-23.md#decisões)) |
+| Registro de reuniões | Gravação em vídeo + ata publicada em [Atas de Reunião](../../../Projeto/Atas/README.md) |
+
+Restante do processo específico de cada foco (ferramentas, critérios de revisão) a preencher conforme o trabalho avançar.
 
 ## 5. Rastreabilidade & Elos com Outros Artefatos (visão consolidada)
 
@@ -67,3 +79,4 @@ _A preencher._
 | Versão | Data | Descrição | Autor(es) | Revisor(es) |
 | -- | -- | -- | -- | -- |
 | 1.0 | 21/08/2026 | Criação do relatório da SubEquipe_01 | Lucas Andrade Zanetti | Heitor Macedo Ricardo |
+| 1.1 | 23/08/2026 | Composição da subequipe, escopo trabalhado (Rich Picture, softgoal e fluxos) e metodologia da subequipe, a partir da Ata 02 | [SubEquipe_01](../../../Projeto/Atas/ata-02-2026-08-23.md) | Lucas Andrade Zanetti |

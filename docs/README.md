@@ -1,11 +1,11 @@
-# G6_ProjetoStreamingVideo
+# G7_ProjetoStreamingVideo
 
 **Código da Disciplina**: FGA0208<br>
 **Número do Grupo**: 06<br>
 **Entrega**: 01 — Desenho de Software (Base)<br>
 **Período**: 2026.2 — Turma T01<br>
 
-> ⚠️ **Pendência de confirmação com a professora**: na lista oficial de projetos (Diretrizes 2026.2 - T01), o tema *Streaming de Vídeo* aparece vinculado ao rótulo `G7_ProjetoStreamingVideo`, enquanto nosso grupo é o **06**. Enquanto não houver confirmação, este repositório usa o nome `G6_ProjetoStreamingVideo`. Registrar a resposta em [Escopo do Produto](Projeto/EscopoProduto.md).
+> ℹ️ **Nomenclatura do projeto**: a lista oficial de projetos (Diretrizes 2026.2 - T01) vincula o tema *Streaming de Vídeo* ao rótulo `G7_ProjetoStreamingVideo`. O repositório foi atualizado para esse rótulo. O **Número do Grupo** (06) é a numeração de matrícula da turma e não muda — ver [Escopo do Produto](Projeto/EscopoProduto.md).
 
 ## Alunos
 | Matrícula | Aluno | GitHub | SubEquipe |
@@ -26,13 +26,13 @@
 
 ## Sobre
 
-O **G6_ProjetoStreamingVideo** aborda o domínio das **plataformas de streaming de vídeo**, sob as duas ênfases determinadas pela disciplina: **Transmissões ao Vivo** e **Conteúdo UGC** (*User-Generated Content*).
+O **G7_ProjetoStreamingVideo** aborda o domínio das **plataformas de streaming de vídeo**, sob as duas ênfases determinadas pela disciplina: **Transmissões ao Vivo** e **Conteúdo UGC** (*User-Generated Content*).
 
 Como fonte de inspiração, a equipe elegeu uma plataforma consolidada de transmissões ao vivo organizada em **canais** — originada na comunidade de jogos eletrônicos e hoje ampliada para música, bate-papo, arte e eventos. Nela, qualquer usuário pode se tornar criador: transmite em tempo real, a audiência interage por um **chat público síncrono**, e o conteúdo transmitido é depois recortado, revisto e redistribuído pela própria comunidade.
 
 A escolha se sustenta no fato de as duas ênfases coexistirem **no mesmo fluxo**: o conteúdo é ao vivo *e* é gerado pelo usuário, ao mesmo tempo. Isso concentra num único domínio tensões arquiteturais que rendem modelagem — latência contra qualidade de vídeo, audiência que varia em ordens de grandeza sem aviso, e moderação que precisa acontecer **enquanto** o conteúdo é produzido, sem o intervalo de revisão que plataformas sob demanda possuem.
 
-> ⚠️ **Conforme as diretrizes da disciplina, o nome real da plataforma de inspiração não é citado em nenhum artefato deste repositório.** A referência é sempre feita por suas características, e o projeto é identificado apenas como `G6_ProjetoStreamingVideo`.
+> ⚠️ **Conforme as diretrizes da disciplina, o nome real da plataforma de inspiração não é citado em nenhum artefato deste repositório.** A referência é sempre feita por suas características, e o projeto é identificado apenas como `G7_ProjetoStreamingVideo`.
 
 Escopo detalhado — aplicação de referência, público-alvo, funcionalidades e não-escopo — em [Escopo do Produto](Projeto/EscopoProduto.md).
 
@@ -81,4 +81,5 @@ O site fica disponível em `http://localhost:3000`.
 | Versão | Data | Descrição | Autor(es) | Revisor(es) |
 | -- | -- | -- | -- | -- |
 | 1.0 | 21/08/2026 | Estruturação inicial do GitPages para a Entrega 1 | Lucas Andrade Zanetti | Heitor Macedo Ricardo |
-| 1.1 | 22/08/2026 | Contextualização do projeto, divisão das subequipes e escopo de execução | [Equipe G6](Projeto/Equipe.md) | Lucas Andrade Zanetti |
+| 1.1 | 22/08/2026 | Contextualização do projeto, divisão das subequipes e escopo de execução | [Equipe G7](Projeto/Equipe.md) | Lucas Andrade Zanetti |
+| 1.2 | 23/08/2026 | Resolução da pendência de nomenclatura: rótulo do projeto atualizado para G7_ProjetoStreamingVideo, conforme lista oficial de projetos | Lucas Andrade Zanetti | Heitor Macedo Ricardo |
