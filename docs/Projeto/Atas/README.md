@@ -7,6 +7,7 @@ Registro das reuniões do grupo e das subequipes. Atas bem elaboradas e gravaç�
 | # | Data | Tipo (Geral / SubEquipe) | Pauta | Ata | Gravação |
 | -- | -- | -- | -- | -- | -- |
 | 01 | 22/08/2026 | Geral | Diretrizes da Entrega 1, escolha da aplicação de referência, divisão das subequipes e lideranças, organização do trabalho | [Ata 01](ata-01-2026-08-22.md) | [Vídeo](https://www.youtube.com/watch?v=AjzOi8J-G50) |
+| 02 | 23/08/2026 | SubEquipe_01 | Softgoal e fluxos candidatos ao BPMN, escolha do artefato generalista (Rich Picture), dúvida sobre o NFR Framework, cadência de reuniões | [Ata 02](ata-02-2026-08-23.md) | [Vídeo](https://www.youtube.com/watch?v=iyWpaxbuiow) |
 
 ## Como registrar uma ata nova
 
