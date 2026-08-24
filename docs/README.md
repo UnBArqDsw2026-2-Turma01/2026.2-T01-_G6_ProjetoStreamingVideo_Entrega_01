@@ -7,22 +7,10 @@
 
 > ⚠️ **Pendência de confirmação com a professora**: na lista oficial de projetos (Diretrizes 2026.2 - T01), o tema *Streaming de Vídeo* aparece vinculado ao rótulo `G7_ProjetoStreamingVideo`, enquanto nosso grupo é o **06**. Enquanto não houver confirmação, este repositório usa o nome `G6_ProjetoStreamingVideo`. Registrar a resposta em [Escopo do Produto](Projeto/EscopoProduto.md).
 
-## Alunos
-| Matrícula | Aluno | GitHub | SubEquipe |
-| -- | -- | -- | -- |
-| 241039645 | Lucas Andrade Zanetti | [@Bappoz](https://github.com/Bappoz) | 01 (líder) |
-| 241011018 | Davi Severiano Freitas | [@Davi-UnB](https://github.com/Davi-UnB) | 02 (líder) |
-| 241025505 | Daniel de Oliveira Lira | [@Daniellira540](https://github.com/Daniellira540) | 02 |
-| 241011466 | Mateus Rodrigues Barreto | [@Mateus0xC](https://github.com/Mateus0xC) | 02 |
-| 241039073 | Heitor Macedo Ricardo | [@HeitorM50](https://github.com/HeitorM50) | 01 |
-| 241011027 | Eduardo Lôbo Moreira | [@EduLoboM](https://github.com/EduLoboM) | 03 |
-| 241041302 | Hugo Freitas Silva | [@HugoFreitass](https://github.com/HugoFreitass) | 03 (líder) |
-| 241040350 | Philipe Amancio Reis Caetano | [@Phill-Chill](https://github.com/Phill-Chill) | 03 |
-| 241040332 | Pedro Druck Montalvão Reis | [@pedruck](https://github.com/pedruck) | 01 |
-| 231026545 | Pedro Henrique Freire Rodrigues | [@Pedro-Henrique3](https://github.com/Pedro-Henrique3) | 02 |
-| 241031852 | Matheus Lemes Amaral | [@1emes](https://github.com/1emes) | 01 |
+## Equipe do Projeto
 
-> Divisão completa, com papéis e matriz de participação por foco, em [Equipe & Subequipes](Projeto/Equipe.md).
+Os integrantes, matrículas, papéis e divisão nas 3 subequipes estão detalhados em [Equipe & Subequipes](Projeto/Equipe.md). A apresentação visual de todos os membros do grupo também pode ser consultada no [README principal do repositório](https://github.com/UnBArqDsw2026-2-Turma01/2026.2-T01-_G6_ProjetoStreamingV-deo_Entrega_01/blob/main/README.md#equipe).
+
 
 ## Sobre
 
@@ -60,14 +48,10 @@ _A preencher (mínimo 2 screenshots dos artefatos)._
 
 A Entrega 1 (Base) é **documental**: os entregáveis são artefatos de modelagem publicados neste GitPages, sem código de aplicação. O único item executável é o próprio site da documentação, cujas instruções seguem abaixo.
 
-### Executando o GitPages localmente
+### Executando a Documentação Localmente
 
-```shell
-npm i docsify-cli -g
-docsify serve ./docs
-```
+Para instruções de instalação de dependências e execução do Docsify localmente via `npm run docs` ou `npx`, consulte a seção de **Tecnologia & Documentação** no [README principal do repositório](https://github.com/UnBArqDsw2026-2-Turma01/2026.2-T01-_G6_ProjetoStreamingV-deo_Entrega_01/blob/main/README.md#tecnologia--documenta%C3%A7%C3%A3o).
 
-O site fica disponível em `http://localhost:3000`.
 
 ## Informações Complementares
 
@@ -82,3 +66,4 @@ O site fica disponível em `http://localhost:3000`.
 | -- | -- | -- | -- | -- |
 | 1.0 | 21/08/2026 | Estruturação inicial do GitPages para a Entrega 1 | Lucas Andrade Zanetti | Heitor Macedo Ricardo |
 | 1.1 | 22/08/2026 | Contextualização do projeto, divisão das subequipes e escopo de execução | [Equipe G6](Projeto/Equipe.md) | Lucas Andrade Zanetti |
+| 1.2 | 24/08/2026 | Centralização e referenciamento da equipe e instruções de execução local | Eduardo Lôbo Moreira | Equipe G6 |

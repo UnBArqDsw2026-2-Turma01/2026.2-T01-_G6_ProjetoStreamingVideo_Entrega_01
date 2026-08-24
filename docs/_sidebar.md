@@ -43,3 +43,5 @@
 
 - **Apoio**
   - [Padrão de Assets & Imagens](assets/README.md)
+  - [Código de Conduta (GitHub)](https://github.com/UnBArqDsw2026-2-Turma01/2026.2-T01-_G6_ProjetoStreamingV-deo_Entrega_01/blob/main/CODE_OF_CONDUCT.md)
+  - [Guia de Contribuição (GitHub)](https://github.com/UnBArqDsw2026-2-Turma01/2026.2-T01-_G6_ProjetoStreamingV-deo_Entrega_01/blob/main/CONTRIBUTING.md)
