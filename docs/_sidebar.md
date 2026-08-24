@@ -6,9 +6,10 @@
   - [Escopo do Produto](Projeto/EscopoProduto.md)
   - [Equipe & Subequipes](Projeto/Equipe.md)
   - [Metodologia & Processo](Projeto/Metodologia.md)
+  - [Referências do Projeto](Projeto/Referencias.md)
   - [Checklist da Entrega 1](Projeto/ChecklistEntrega1.md)
   - [Atas de Reunião](Projeto/Atas/README.md)
-  - [Lista Oficial de Projetos](Projeto/Projeto.md)
+    - [Ata 01 · 22/08 · Reunião Geral](Projeto/Atas/ata-01-2026-08-22.md)
 
 - **1. Desenho de Software (Base)**
   - [1. Visão Geral do Módulo](Base/1.Base.md)

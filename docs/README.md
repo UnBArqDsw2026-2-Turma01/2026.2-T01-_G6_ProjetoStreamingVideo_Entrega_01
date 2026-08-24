@@ -10,30 +10,31 @@
 ## Alunos
 | Matrícula | Aluno | GitHub | SubEquipe |
 | -- | -- | -- | -- |
-| 241039645 | Lucas Andrade Zanetti | [@Bappoz](https://github.com/Bappoz) | _a definir_ |
-| 241011018 | Davi Severiano Freitas | [@Davi-UnB](https://github.com/Davi-UnB) | _a definir_ |
-| 241025505 | Daniel de Oliveira Lira | [@Daniellira540](https://github.com/Daniellira540) | _a definir_ |
-| 241011466 | Mateus Rodrigues Barreto | [@Mateus0xC](https://github.com/Mateus0xC) | _a definir_ |
-| 241039073 | Heitor Macedo Ricardo | [@HeitorM50](https://github.com/HeitorM50) | _a definir_ |
-| 241011027 | Eduardo Lôbo Moreira | [@EduLoboM](https://github.com/EduLoboM) | _a definir_ |
-| 241041302 | Hugo Freitas Silva | [@HugoFreitass](https://github.com/HugoFreitass) | _a definir_ |
-| 241040350 | Philipe Amancio Reis Caetano | [@Phill-Chill](https://github.com/Phill-Chill) | _a definir_ |
-| 241040332 | Pedro Druck Montalvão Reis | [@pedruck](https://github.com/pedruck) | _a definir_ |
-| 231026545 | Pedro Henrique Freire Rodrigues | [@Pedro-Henrique3](https://github.com/Pedro-Henrique3) | _a definir_ |
-| 241031852 | Matheus Lemes Amaral | [@1emes](https://github.com/1emes) | _a definir_ |
+| 241039645 | Lucas Andrade Zanetti | [@Bappoz](https://github.com/Bappoz) | 01 (líder) |
+| 241011018 | Davi Severiano Freitas | [@Davi-UnB](https://github.com/Davi-UnB) | 02 (líder) |
+| 241025505 | Daniel de Oliveira Lira | [@Daniellira540](https://github.com/Daniellira540) | 02 |
+| 241011466 | Mateus Rodrigues Barreto | [@Mateus0xC](https://github.com/Mateus0xC) | 02 |
+| 241039073 | Heitor Macedo Ricardo | [@HeitorM50](https://github.com/HeitorM50) | 01 |
+| 241011027 | Eduardo Lôbo Moreira | [@EduLoboM](https://github.com/EduLoboM) | 03 |
+| 241041302 | Hugo Freitas Silva | [@HugoFreitass](https://github.com/HugoFreitass) | 03 (líder) |
+| 241040350 | Philipe Amancio Reis Caetano | [@Phill-Chill](https://github.com/Phill-Chill) | 03 |
+| 241040332 | Pedro Druck Montalvão Reis | [@pedruck](https://github.com/pedruck) | 01 |
+| 231026545 | Pedro Henrique Freire Rodrigues | [@Pedro-Henrique3](https://github.com/Pedro-Henrique3) | 02 |
+| 241031852 | Matheus Lemes Amaral | [@1emes](https://github.com/1emes) | 01 |
 
-> A coluna **SubEquipe** deve ser preenchida junto com a divisão registrada em [Equipe & Subequipes](Projeto/Equipe.md).
+> Divisão completa, com papéis e matriz de participação por foco, em [Equipe & Subequipes](Projeto/Equipe.md).
 
 ## Sobre
-<!--
-PREENCHER. Contextualizar o projeto usando referências, links e outros materiais como fontes:
-- qual é o domínio (plataforma de streaming de vídeo com ênfase em transmissões ao vivo e conteúdo UGC);
-- qual aplicação real serviu de inspiração (SEM citar o nome real, conforme a diretriz);
-- público-alvo e principais funcionalidades levantadas;
-- por que esse recorte foi escolhido pela equipe.
-O detalhamento completo vive em Projeto/EscopoProduto.md — esta seção é o resumo executivo.
--->
-_A preencher._ Ver detalhamento em [Escopo do Produto](Projeto/EscopoProduto.md).
+
+O **G6_ProjetoStreamingVideo** aborda o domínio das **plataformas de streaming de vídeo**, sob as duas ênfases determinadas pela disciplina: **Transmissões ao Vivo** e **Conteúdo UGC** (*User-Generated Content*).
+
+Como fonte de inspiração, a equipe elegeu uma plataforma consolidada de transmissões ao vivo organizada em **canais** — originada na comunidade de jogos eletrônicos e hoje ampliada para música, bate-papo, arte e eventos. Nela, qualquer usuário pode se tornar criador: transmite em tempo real, a audiência interage por um **chat público síncrono**, e o conteúdo transmitido é depois recortado, revisto e redistribuído pela própria comunidade.
+
+A escolha se sustenta no fato de as duas ênfases coexistirem **no mesmo fluxo**: o conteúdo é ao vivo *e* é gerado pelo usuário, ao mesmo tempo. Isso concentra num único domínio tensões arquiteturais que rendem modelagem — latência contra qualidade de vídeo, audiência que varia em ordens de grandeza sem aviso, e moderação que precisa acontecer **enquanto** o conteúdo é produzido, sem o intervalo de revisão que plataformas sob demanda possuem.
+
+> ⚠️ **Conforme as diretrizes da disciplina, o nome real da plataforma de inspiração não é citado em nenhum artefato deste repositório.** A referência é sempre feita por suas características, e o projeto é identificado apenas como `G6_ProjetoStreamingVideo`.
+
+Escopo detalhado — aplicação de referência, público-alvo, funcionalidades e não-escopo — em [Escopo do Produto](Projeto/EscopoProduto.md).
 
 ## Entrega 1 — mapa rápido
 
@@ -55,12 +56,9 @@ _A preencher (mínimo 2 screenshots dos artefatos)._
 
 ( ) SIM
 
-( ) NÃO
+( **X** ) NÃO
 
-<!--
-PREENCHER ao fechar a entrega. Se SIM, inserir manual/script de execução.
-Para a Entrega 1 (Base) normalmente é NÃO, pois a entrega é documental — mas o site estático pode ser executado localmente conforme abaixo.
--->
+A Entrega 1 (Base) é **documental**: os entregáveis são artefatos de modelagem publicados neste GitPages, sem código de aplicação. O único item executável é o próprio site da documentação, cujas instruções seguem abaixo.
 
 ### Executando o GitPages localmente
 
@@ -73,7 +71,7 @@ O site fica disponível em `http://localhost:3000`.
 
 ## Informações Complementares
 
-- **Diretrizes da disciplina**: ver [Lista Oficial de Projetos](Projeto/Projeto.md) e o Aprender3.
+- **Diretrizes da disciplina**: disponíveis no Aprender3.
 - **Processo de trabalho da equipe**: [Metodologia & Processo](Projeto/Metodologia.md).
 - **Rastros de reuniões**: [Atas de Reunião](Projeto/Atas/README.md).
 - **Convenção de imagens e nomes de arquivo**: [Padrão de Assets](assets/README.md).
@@ -83,3 +81,4 @@ O site fica disponível em `http://localhost:3000`.
 | Versão | Data | Descrição | Autor(es) | Revisor(es) |
 | -- | -- | -- | -- | -- |
 | 1.0 | 21/08/2026 | Estruturação inicial do GitPages para a Entrega 1 | Lucas Andrade Zanetti | Heitor Macedo Ricardo |
+| 1.1 | 22/08/2026 | Contextualização do projeto, divisão das subequipes e escopo de execução | [Equipe G6](Projeto/Equipe.md) | Lucas Andrade Zanetti |
