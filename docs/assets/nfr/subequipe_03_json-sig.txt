@@ -1,0 +1,559 @@
+{
+  "actors": [],
+  "orphans": [
+    {
+      "id": "root-streaming",
+      "text": "Qualidade Geral [Plataforma de Livestreaming]",
+      "type": "nfr.NFR",
+      "x": 1200,
+      "y": 40
+    },
+    {
+      "id": "nfr-perf",
+      "text": "Desempenho & Baixa Latência [Livestream]",
+      "type": "nfr.NFR",
+      "x": 220,
+      "y": 180
+    },
+    {
+      "id": "nfr-disp",
+      "text": "Disponibilidade & Escalabilidade [Infraestrutura de Transmissão]",
+      "type": "nfr.NFR",
+      "x": 620,
+      "y": 180
+    },
+    {
+      "id": "nfr-sec-root",
+      "text": "Segurança & Conformidade [Ecossistema de Transmissão]",
+      "type": "nfr.NFR",
+      "x": 1200,
+      "y": 180
+    },
+    {
+      "id": "nfr-ux",
+      "text": "Usabilidade & Interatividade [Interface de Reprodução]",
+      "type": "nfr.NFR",
+      "x": 1780,
+      "y": 180
+    },
+    {
+      "id": "nfr-mon",
+      "text": "Confiabilidade & Integridade [Monetização e Pagamentos]",
+      "type": "nfr.NFR",
+      "x": 2180,
+      "y": 180
+    },
+    {
+      "id": "sg-perf-lat",
+      "text": "Baixa Latência [Transmissão em Tempo Real]",
+      "type": "nfr.NFR",
+      "x": 120,
+      "y": 320
+    },
+    {
+      "id": "sg-perf-qual",
+      "text": "Qualidade Adaptativa [Reprodução de Vídeo ABR]",
+      "type": "nfr.NFR",
+      "x": 320,
+      "y": 320
+    },
+    {
+      "id": "sg-disp-res",
+      "text": "Resiliência [Rede de Distribuição CDN]",
+      "type": "nfr.NFR",
+      "x": 520,
+      "y": 320
+    },
+    {
+      "id": "sg-disp-elast",
+      "text": "Elasticidade [Servidores em Picos de Audiência]",
+      "type": "nfr.NFR",
+      "x": 720,
+      "y": 320
+    },
+    {
+      "id": "sg-sec-login",
+      "text": "Segurança [Autenticação e Sessão de Usuários]",
+      "type": "nfr.NFR",
+      "x": 980,
+      "y": 320
+    },
+    {
+      "id": "sg-sec-stream",
+      "text": "Conformidade [Validação de Chaves de Transmissão]",
+      "type": "nfr.NFR",
+      "x": 1200,
+      "y": 320
+    },
+    {
+      "id": "sg-sec-ugc",
+      "text": "Integridade [Moderação de Conteúdo UGC]",
+      "type": "nfr.NFR",
+      "x": 1420,
+      "y": 320
+    },
+    {
+      "id": "sg-ux-fluid",
+      "text": "Fluidez [Interface do Player de Vídeo]",
+      "type": "nfr.NFR",
+      "x": 1680,
+      "y": 320
+    },
+    {
+      "id": "sg-ux-chat",
+      "text": "Interatividade [Chat da Transmissão ao Vivo]",
+      "type": "nfr.NFR",
+      "x": 1880,
+      "y": 320
+    },
+    {
+      "id": "sg-mon-split",
+      "text": "Integridade [Divisão e Repasse de Receita]",
+      "type": "nfr.NFR",
+      "x": 2080,
+      "y": 320
+    },
+    {
+      "id": "sg-mon-fraud",
+      "text": "Segurança Financeira [Processamento contra Fraudes]",
+      "type": "nfr.NFR",
+      "x": 2280,
+      "y": 320
+    },
+    {
+      "id": "op-webrtc",
+      "text": "Adotar Protocolos WebRTC e LL-HLS [Transmissão de Baixa Latência]",
+      "type": "nfr.Operationalization",
+      "x": 120,
+      "y": 480
+    },
+    {
+      "id": "op-transcode",
+      "text": "Executar Transcoding por Hardware [Codificação Dinâmica ABR]",
+      "type": "nfr.Operationalization",
+      "x": 320,
+      "y": 480
+    },
+    {
+      "id": "op-multicdn",
+      "text": "Implementar Roteamento Inteligente [Rede Multi-CDN Global]",
+      "type": "nfr.Operationalization",
+      "x": 520,
+      "y": 480
+    },
+    {
+      "id": "op-autoscale",
+      "text": "Configurar Auto-scaling Automático [Servidores de Ingestão de Vídeo]",
+      "type": "nfr.Operationalization",
+      "x": 720,
+      "y": 480
+    },
+    {
+      "id": "op-mfa",
+      "text": "Exigir Autenticação Multifator MFA [Login de Criadores de Conteúdo]",
+      "type": "nfr.Operationalization",
+      "x": 900,
+      "y": 480
+    },
+    {
+      "id": "op-argon2",
+      "text": "Criptografar Credenciais com Argon2id [Base de Dados de Usuários]",
+      "type": "nfr.Operationalization",
+      "x": 980,
+      "y": 620
+    },
+    {
+      "id": "op-waf",
+      "text": "Aplicar WAF e Rate Limiting [Endpoints de Autenticação e API]",
+      "type": "nfr.Operationalization",
+      "x": 1060,
+      "y": 480
+    },
+    {
+      "id": "op-jwt-key",
+      "text": "Gerar Stream Keys com Tokens JWT [Handshake de Ingestão de Stream]",
+      "type": "nfr.Operationalization",
+      "x": 1140,
+      "y": 620
+    },
+    {
+      "id": "op-whitelist",
+      "text": "Validar Licenciamento e Classificação [Canais e Transmissões]",
+      "type": "nfr.Operationalization",
+      "x": 1200,
+      "y": 480
+    },
+    {
+      "id": "op-dmca",
+      "text": "Detectar Violações de Direitos Autorais [Reconhecimento A/V em Streams]",
+      "type": "nfr.Operationalization",
+      "x": 1260,
+      "y": 620
+    },
+    {
+      "id": "op-geofence",
+      "text": "Bloquear Exibição por Região [Geo-Fencing de Transmissões]",
+      "type": "nfr.Operationalization",
+      "x": 1320,
+      "y": 480
+    },
+    {
+      "id": "op-ia-image",
+      "text": "Analisar Frames com Visão Computacional [Moderação Automática de Vídeo]",
+      "type": "nfr.Operationalization",
+      "x": 1380,
+      "y": 620
+    },
+    {
+      "id": "op-chat-nlp",
+      "text": "Filtrar Mensagens em Tempo Real com NLP [Chat da Transmissão]",
+      "type": "nfr.Operationalization",
+      "x": 1440,
+      "y": 480
+    },
+    {
+      "id": "op-triage",
+      "text": "Priorizar Fila de Moderação Humana [Denúncias de Conteúdo UGC]",
+      "type": "nfr.Operationalization",
+      "x": 1500,
+      "y": 620
+    },
+    {
+      "id": "op-buffer-delay",
+      "text": "Inserir Buffer de Atraso Estratégico [Streams de Contas Suspeitas]",
+      "type": "nfr.Operationalization",
+      "x": 1560,
+      "y": 480
+    },
+    {
+      "id": "op-pip",
+      "text": "Habilitar Modo Picture-in-Picture [Player de Vídeo]",
+      "type": "nfr.Operationalization",
+      "x": 1680,
+      "y": 480
+    },
+    {
+      "id": "op-websocket",
+      "text": "Utilizar Mensageria Bidirecional Distribuída [WebSockets no Chat]",
+      "type": "nfr.Operationalization",
+      "x": 1880,
+      "y": 480
+    },
+    {
+      "id": "op-split-engine",
+      "text": "Automatizar Divisão e Repasse Financeiro [Assinaturas e Doações]",
+      "type": "nfr.Operationalization",
+      "x": 2080,
+      "y": 480
+    },
+    {
+      "id": "op-antifraud",
+      "text": "Validar Transações com Motor Anti-Fraude [Processamento de Pagamentos]",
+      "type": "nfr.Operationalization",
+      "x": 2280,
+      "y": 480
+    }
+  ],
+  "dependencies": [],
+  "links": [
+    {
+      "id": "l-root-1",
+      "type": "nfr.AndRefinementLink",
+      "source": "nfr-perf",
+      "target": "root-streaming"
+    },
+    {
+      "id": "l-root-2",
+      "type": "nfr.AndRefinementLink",
+      "source": "nfr-disp",
+      "target": "root-streaming"
+    },
+    {
+      "id": "l-root-3",
+      "type": "nfr.AndRefinementLink",
+      "source": "nfr-sec-root",
+      "target": "root-streaming"
+    },
+    {
+      "id": "l-root-4",
+      "type": "nfr.AndRefinementLink",
+      "source": "nfr-ux",
+      "target": "root-streaming"
+    },
+    {
+      "id": "l-root-5",
+      "type": "nfr.AndRefinementLink",
+      "source": "nfr-mon",
+      "target": "root-streaming"
+    },
+    {
+      "id": "l-perf-1",
+      "type": "nfr.AndRefinementLink",
+      "source": "sg-perf-lat",
+      "target": "nfr-perf"
+    },
+    {
+      "id": "l-perf-2",
+      "type": "nfr.AndRefinementLink",
+      "source": "sg-perf-qual",
+      "target": "nfr-perf"
+    },
+    {
+      "id": "l-disp-1",
+      "type": "nfr.AndRefinementLink",
+      "source": "sg-disp-res",
+      "target": "nfr-disp"
+    },
+    {
+      "id": "l-disp-2",
+      "type": "nfr.AndRefinementLink",
+      "source": "sg-disp-elast",
+      "target": "nfr-disp"
+    },
+    {
+      "id": "l-sec-1",
+      "type": "nfr.AndRefinementLink",
+      "source": "sg-sec-login",
+      "target": "nfr-sec-root"
+    },
+    {
+      "id": "l-sec-2",
+      "type": "nfr.AndRefinementLink",
+      "source": "sg-sec-stream",
+      "target": "nfr-sec-root"
+    },
+    {
+      "id": "l-sec-3",
+      "type": "nfr.AndRefinementLink",
+      "source": "sg-sec-ugc",
+      "target": "nfr-sec-root"
+    },
+    {
+      "id": "l-ux-1",
+      "type": "nfr.AndRefinementLink",
+      "source": "sg-ux-fluid",
+      "target": "nfr-ux"
+    },
+    {
+      "id": "l-ux-2",
+      "type": "nfr.AndRefinementLink",
+      "source": "sg-ux-chat",
+      "target": "nfr-ux"
+    },
+    {
+      "id": "l-mon-1",
+      "type": "nfr.AndRefinementLink",
+      "source": "sg-mon-split",
+      "target": "nfr-mon"
+    },
+    {
+      "id": "l-mon-2",
+      "type": "nfr.AndRefinementLink",
+      "source": "sg-mon-fraud",
+      "target": "nfr-mon"
+    },
+    {
+      "id": "c-perf-1",
+      "type": "nfr.ContributionLink",
+      "source": "op-webrtc",
+      "target": "sg-perf-lat",
+      "label": "++"
+    },
+    {
+      "id": "c-perf-2",
+      "type": "nfr.ContributionLink",
+      "source": "op-transcode",
+      "target": "sg-perf-qual",
+      "label": "++"
+    },
+    {
+      "id": "c-disp-1",
+      "type": "nfr.ContributionLink",
+      "source": "op-multicdn",
+      "target": "sg-disp-res",
+      "label": "++"
+    },
+    {
+      "id": "c-disp-2",
+      "type": "nfr.ContributionLink",
+      "source": "op-autoscale",
+      "target": "sg-disp-elast",
+      "label": "++"
+    },
+    {
+      "id": "c-sec-1",
+      "type": "nfr.ContributionLink",
+      "source": "op-mfa",
+      "target": "sg-sec-login",
+      "label": "++"
+    },
+    {
+      "id": "c-sec-2",
+      "type": "nfr.ContributionLink",
+      "source": "op-argon2",
+      "target": "sg-sec-login",
+      "label": "++"
+    },
+    {
+      "id": "c-sec-3",
+      "type": "nfr.ContributionLink",
+      "source": "op-waf",
+      "target": "sg-sec-login",
+      "label": "++"
+    },
+    {
+      "id": "c-sec-4",
+      "type": "nfr.ContributionLink",
+      "source": "op-jwt-key",
+      "target": "sg-sec-stream",
+      "label": "++"
+    },
+    {
+      "id": "c-sec-5",
+      "type": "nfr.ContributionLink",
+      "source": "op-whitelist",
+      "target": "sg-sec-stream",
+      "label": "++"
+    },
+    {
+      "id": "c-sec-6",
+      "type": "nfr.ContributionLink",
+      "source": "op-dmca",
+      "target": "sg-sec-stream",
+      "label": "++"
+    },
+    {
+      "id": "c-sec-7",
+      "type": "nfr.ContributionLink",
+      "source": "op-geofence",
+      "target": "sg-sec-stream",
+      "label": "+"
+    },
+    {
+      "id": "c-sec-8",
+      "type": "nfr.ContributionLink",
+      "source": "op-ia-image",
+      "target": "sg-sec-ugc",
+      "label": "++"
+    },
+    {
+      "id": "c-sec-9",
+      "type": "nfr.ContributionLink",
+      "source": "op-chat-nlp",
+      "target": "sg-sec-ugc",
+      "label": "++"
+    },
+    {
+      "id": "c-sec-10",
+      "type": "nfr.ContributionLink",
+      "source": "op-triage",
+      "target": "sg-sec-ugc",
+      "label": "+"
+    },
+    {
+      "id": "c-sec-11",
+      "type": "nfr.ContributionLink",
+      "source": "op-buffer-delay",
+      "target": "sg-sec-ugc",
+      "label": "++"
+    },
+    {
+      "id": "c-ux-1",
+      "type": "nfr.ContributionLink",
+      "source": "op-pip",
+      "target": "sg-ux-fluid",
+      "label": "++"
+    },
+    {
+      "id": "c-ux-2",
+      "type": "nfr.ContributionLink",
+      "source": "op-websocket",
+      "target": "sg-ux-chat",
+      "label": "++"
+    },
+    {
+      "id": "c-mon-1",
+      "type": "nfr.ContributionLink",
+      "source": "op-split-engine",
+      "target": "sg-mon-split",
+      "label": "++"
+    },
+    {
+      "id": "c-mon-2",
+      "type": "nfr.ContributionLink",
+      "source": "op-antifraud",
+      "target": "sg-mon-fraud",
+      "label": "++"
+    },
+    {
+      "id": "cor-buffer-lat",
+      "type": "nfr.CorrelationLink",
+      "source": "op-buffer-delay",
+      "target": "sg-perf-lat",
+      "label": "– –"
+    },
+    {
+      "id": "cor-dmca-perf",
+      "type": "nfr.CorrelationLink",
+      "source": "op-dmca",
+      "target": "nfr-perf",
+      "label": "–"
+    },
+    {
+      "id": "cor-mfa-ux",
+      "type": "nfr.CorrelationLink",
+      "source": "op-mfa",
+      "target": "sg-ux-fluid",
+      "label": "–"
+    }
+  ],
+  "display": {
+    "root-streaming": { "width": 230, "height": 60 },
+    "nfr-perf": { "width": 200, "height": 55 },
+    "nfr-disp": { "width": 230, "height": 55 },
+    "nfr-sec-root": { "width": 230, "height": 60 },
+    "nfr-ux": { "width": 210, "height": 55 },
+    "nfr-mon": { "width": 210, "height": 55 },
+    "sg-perf-lat": { "width": 180, "height": 55 },
+    "sg-perf-qual": { "width": 180, "height": 55 },
+    "sg-disp-res": { "width": 180, "height": 55 },
+    "sg-disp-elast": { "width": 180, "height": 55 },
+    "sg-sec-login": { "width": 180, "height": 55 },
+    "sg-sec-stream": { "width": 190, "height": 55 },
+    "sg-sec-ugc": { "width": 180, "height": 55 },
+    "sg-ux-fluid": { "width": 170, "height": 55 },
+    "sg-ux-chat": { "width": 180, "height": 55 },
+    "sg-mon-split": { "width": 170, "height": 55 },
+    "sg-mon-fraud": { "width": 180, "height": 55 },
+    "op-webrtc": { "width": 180, "height": 65 },
+    "op-transcode": { "width": 180, "height": 65 },
+    "op-multicdn": { "width": 180, "height": 65 },
+    "op-autoscale": { "width": 180, "height": 65 },
+    "op-mfa": { "width": 180, "height": 65 },
+    "op-argon2": { "width": 180, "height": 65 },
+    "op-waf": { "width": 180, "height": 65 },
+    "op-jwt-key": { "width": 180, "height": 65 },
+    "op-whitelist": { "width": 180, "height": 65 },
+    "op-dmca": { "width": 180, "height": 65 },
+    "op-geofence": { "width": 180, "height": 65 },
+    "op-ia-image": { "width": 180, "height": 65 },
+    "op-chat-nlp": { "width": 180, "height": 65 },
+    "op-triage": { "width": 180, "height": 65 },
+    "op-buffer-delay": { "width": 180, "height": 65 },
+    "op-pip": { "width": 170, "height": 65 },
+    "op-websocket": { "width": 180, "height": 65 },
+    "op-split-engine": { "width": 180, "height": 65 },
+    "op-antifraud": { "width": 180, "height": 65 }
+  },
+  "tool": "dsm3-goals",
+  "metamodelVersion": "1.0",
+  "saveDate": "Sun, 23 Aug 2026 22:15:00 GMT",
+  "diagram": {
+    "width": 2600,
+    "height": 1100,
+    "name": "Plataforma de Streaming - SIG NFR Geral e Foco",
+    "customProperties": {
+      "Description": "Modelo NFR formal para plataforma de streaming ao vivo com foco em segurança, login, validação de transmissão e moderação UGC."
+    }
+  }
+}

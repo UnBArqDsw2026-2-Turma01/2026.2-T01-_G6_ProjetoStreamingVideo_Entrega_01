@@ -6,15 +6,18 @@
 
 | Membro | GitHub | Papel na subequipe |
 | -- | -- | -- |
-| _(preencher)_ | | |
+| Hugo Freitas Silva | [@HugoFreitass](https://github.com/HugoFreitass) | Líder |
+| Philipe Amâncio Reis Caetano | [@Phill-Chill](https://github.com/Phill-Chill) | dev |
+| Eduardo Lôbo Moreira | [@EduLoboM](https://github.com/EduLoboM) | dev |
 
 ## 2. Escopo Trabalhado
 
 | Item | Definição | Justificativa |
 | -- | -- | -- |
 | Artefato generalista escolhido (Rich Picture **ou** Mapa Mental) | _a definir_ | |
-| Softgoal do SIG (NFR Framework) | _a definir_ | |
-| Fluxo modelado em BPMN | _a definir_ | |
+| Softgoal do SIG (NFR Framework) | **Confiabilidade, Disponibilidade e Segurança no Ecossistema de Transmissão** | Resiliência sob picos de acesso, entrega contínua de streaming e moderação em tempo real de UGC. |
+| Fluxo modelado em BPMN | **Chat ao Vivo em Tempo Real sob pico de audiência** | Comunicação bidirecional síncrona sob alta concorrência e moderação instantânea. |
+
 
 > Sincronizar com as seções 5 e 6 do [Escopo do Produto](../../../Projeto/EscopoProduto.md) para não haver sobreposição entre subequipes.
 
@@ -23,7 +26,7 @@
 | Foco | Página | Status |
 | -- | -- | -- |
 | FOCO_01 | [Artefato Generalista](1.ArtefatoGeneralista.md) | ⬜ |
-| FOCO_01 | [SIG · NFR Framework](2.NFRFramework.md) | ⬜ |
+| FOCO_01 | [SIG · NFR Framework](2.NFRFramework.md) | 🟢 |
 | FOCO_02 | [Engenharia Reversa](3.EngenhariaReversa.md) | ⬜ |
 | FOCO_02 | [Modelagem BPMN](4.BPMN.md) | ⬜ |
 | FOCO_03 | [IA Generativa](5.IAGenerativa.md) | ⬜ |
@@ -58,12 +61,14 @@ _A preencher._
 
 > Quadro oficial consolidado em [1.2. Participações](../../1.2.ParticipacoesBase.md). Aqui fica o registro detalhado da subequipe, com data e link de commit.
 
-| Membro | Contribuição | Data | Comprobatório (commit/PR) |
-| -- | -- | -- | -- |
-| _(preencher)_ | | DD/MM/AAAA | |
+| Eduardo Lôbo Moreira | Pesquisa de arquiteturas de referência da indústria, fundamentação teórica, modelagem de operacionalizações e documentação dos trade-offs | 24/08/2026 | [Histórico de Versões do NFR](2.NFRFramework.md#histórico-de-versões) |
+| Hugo Freitas Silva | Pesquisa de tecnologias de streaming ao vivo, definição dos requisitos de Confiabilidade/Disponibilidade, modelagem do SIG e análise de senso crítico | 24/08/2026 | [Histórico de Versões do NFR](2.NFRFramework.md#histórico-de-versões) |
+| Philipe Amâncio Reis Caetano | Pesquisa de mecanismos de moderação/chat em tempo real, estruturação do grafo no dsm3-goals, mapeamento de rastreabilidade e redação técnica | 24/08/2026 | [Histórico de Versões do NFR](2.NFRFramework.md#histórico-de-versões) |
 
 ## Histórico de Versões
 
 | Versão | Data | Descrição | Autor(es) | Revisor(es) |
 | -- | -- | -- | -- | -- |
 | 1.0 | 21/08/2026 | Criação do relatório da SubEquipe_03 | Lucas Andrade Zanetti | Heitor Macedo Ricardo |
+| 1.1 | 24/08/2026 | Definição do fluxo BPMN e registro das participações no FOCO_01 (NFR Framework) | Eduardo Lôbo Moreira | Equipe G6 |
+
