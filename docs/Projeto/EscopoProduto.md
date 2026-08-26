@@ -1,4 +1,4 @@
-# Escopo do Produto — G6_ProjetoStreamingVideo
+# Escopo do Produto — G7_ProjetoStreamingVideo
 
 > **Tema oficial**: Streaming de Vídeo, com ênfase em **Transmissões ao Vivo** e **Conteúdo UGC** (*User-Generated Content*), baseado em qualquer streaming de vídeo para inspiração, podendo ser em versão site, desktop ou aplicativo móvel.
 >
@@ -10,7 +10,7 @@ Esta página é a **fonte única de verdade do escopo**. Todos os artefatos das 
 
 | Campo | Valor |
 | -- | -- |
-| Nome do projeto | `G6_ProjetoStreamingVideo` |
+| Nome do projeto | `G7_ProjetoStreamingVideo` |
 | Plataforma-alvo (site / desktop / mobile) | **Site (aplicação web)** — versão de navegador da aplicação de referência |
 | Aplicação de referência (descrição, sem nome real) | Plataforma consolidada de **transmissões ao vivo organizadas em canais**, originada na comunidade de jogos eletrônicos e hoje ampliada para música, bate-papo, arte e eventos. Qualquer usuário pode se tornar criador: transmite em tempo real, a audiência interage por um **chat público síncrono**, e o conteúdo transmitido pode ser recortado em trechos curtos e revisto sob demanda após a transmissão. A receita combina inscrições recorrentes em canais, doações via moeda virtual e publicidade. |
 | Justificativa da escolha da referência | É uma das poucas plataformas em que as **duas ênfases exigidas pela disciplina coexistem no mesmo fluxo**: o conteúdo é ao vivo *e* é gerado pelo usuário, simultaneamente. Isso concentra, num único domínio, tensões arquiteturais ricas para modelagem — latência versus qualidade de vídeo, escala de audiência imprevisível, e moderação de conteúdo que precisa acontecer **enquanto** o conteúdo é produzido, sem o intervalo de revisão que plataformas sob demanda possuem. A versão web foi escolhida por ser acessível a todos os membros sem instalação, favorecendo a Engenharia Reversa distribuída entre 11 pessoas. |
@@ -59,12 +59,12 @@ Esta página é a **fonte única de verdade do escopo**. Todos os artefatos das 
 | SubEquipe_01 | Mínimo | Assistir Transmissão ao Vivo (player + ingestão + sincronização do chat) | Ponto onde a latência/buffering do "ao vivo" é mais sensível ao usuário | ⬜ |
 | SubEquipe_01 | Extra | Início e Configuração da Transmissão (setup de bitrate/qualidade, handshake com servidor de ingestão) | Desempenho da ingestão é pré-condição para o fluxo de assistir | ⬜ |
 | SubEquipe_01 | Extra | Troca de Qualidade Adaptativa (ABR) durante a exibição | Evidencia desempenho sob variação de rede, critério central de Performance/Latência | ⬜ |
-| SubEquipe_02 | Mínimo | Login/Cadastro & Autenticação (incl. 2FA/OAuth) | Segurança de acesso é a porta de entrada de todo o sistema | ⬜ |
-| SubEquipe_02 | Extra | Início de Transmissão com validação de direitos do streamer (proteção de conteúdo) | Segurança de conteúdo, não só de acesso | ⬜ |
-| SubEquipe_02 | Extra | Moderação de Conteúdo UGC (denúncia, banimento, filtragem) | Liga Segurança à ênfase obrigatória de UGC do tema | ⬜ |
-| SubEquipe_03 | Mínimo | Chat ao Vivo em Tempo Real sob pico de audiência | Disponibilidade sob carga é o teste de estresse mais direto do "ao vivo" | ⬜ |
-| SubEquipe_03 | Extra | Doações/Monetização durante a live (pagamento, confirmação, notificação) | Confiabilidade transacional — falha aqui tem custo direto ao usuário | ⬜ |
-| SubEquipe_03 | Extra | Recuperação de Falha de Transmissão (reconexão do streamer, failover de ingestão) | Cenário clássico de resiliência/disponibilidade | ⬜ |
+| SubEquipe_02 | Mínimo | Chat ao Vivo em Tempo Real sob pico de audiência | Disponibilidade sob carga é o teste de estresse mais direto do "ao vivo" | ⬜ |
+| SubEquipe_02 | Extra | Doações/Monetização durante a live (pagamento, confirmação, notificação) | Confiabilidade transacional — falha aqui tem custo direto ao usuário | ⬜ |
+| SubEquipe_02 | Extra | Recuperação de Falha de Transmissão (reconexão do streamer, failover de ingestão) | Cenário clássico de resiliência/disponibilidade | ⬜ |
+| SubEquipe_03 | Mínimo | Login/Cadastro & Autenticação (incl. 2FA/OAuth) | Segurança de acesso é a porta de entrada de todo o sistema | ⬜ |
+| SubEquipe_03 | Extra | Início de Transmissão com validação de direitos do streamer (proteção de conteúdo) | Segurança de conteúdo, não só de acesso | ⬜ |
+| SubEquipe_03 | Extra | Moderação de Conteúdo UGC (denúncia, banimento, filtragem) | Liga Segurança à ênfase obrigatória de UGC do tema | ⬜ |
 
 ## 6. Requisitos Não Funcionais Candidatos (insumo para os SIGs)
 
@@ -73,8 +73,8 @@ Esta página é a **fonte única de verdade do escopo**. Todos os artefatos das 
 | Subequipe | Softgoal / critério de qualidade | Justificativa (por que é crítico neste domínio) | Status |
 | -- | -- | -- | -- |
 | SubEquipe_01 | Performance / Latência | Streaming ao vivo tolera pouco atraso; é a ênfase "Transmissões ao Vivo" do tema traduzida em NFR | ⬜ |
-| SubEquipe_02 | Segurança | Autenticação, proteção de conteúdo e moderação de UGC — cobre acesso e a ênfase "Conteúdo UGC" | ⬜ |
-| SubEquipe_03 | Confiabilidade / Disponibilidade | Picos de audiência e transações (doações) exigem robustez a falha e uptime | ⬜ |
+| SubEquipe_02 | Confiabilidade / Disponibilidade | Picos de audiência e transações (doações) exigem robustez a falha e uptime | ⬜ |
+| SubEquipe_03 | Segurança | Autenticação, proteção de conteúdo e moderação de UGC — cobre acesso e a ênfase "Conteúdo UGC" | ⬜ |
 
 ## 7. Fora de Escopo
 
@@ -104,4 +104,5 @@ Consolidadas em [Referências do Projeto](Referencias.md). Sustentam este escopo
 | Versão | Data | Descrição | Autor(es) | Revisor(es) |
 | -- | -- | -- | -- | -- |
 | 1.0 | 21/08/2026 | Criação do documento de escopo | Lucas Andrade Zanetti | Heitor Macedo Ricardo |
-| 1.1 | 22/08/2026 | Definição da aplicação de referência, ênfases, público-alvo, levantamento preliminar de funcionalidades e não-escopo (Reunião Geral 01) | [Equipe G6](Equipe.md) | Lucas Andrade Zanetti |
+| 1.1 | 22/08/2026 | Definição da aplicação de referência, ênfases, público-alvo, levantamento preliminar de funcionalidades e não-escopo (Reunião Geral 01) | [Equipe G7](Equipe.md) | Lucas Andrade Zanetti |
+| 1.2 | 23/08/2026 | Correção da divisão de softgoals e fluxos entre SubEquipe_02 e SubEquipe_03 (§5 e §6) e atualização do rótulo do projeto para G7_ProjetoStreamingVideo | Lucas Andrade Zanetti | Heitor Macedo Ricardo |

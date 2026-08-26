@@ -38,9 +38,9 @@ A diretriz exige o grupo organizado em **3 subequipes**, e que **todos os membro
 
 | Subequipe | Artefato generalista (Rich Picture **ou** Mapa Mental) | Softgoal do SIG (NFR) | Fluxo modelado em BPMN |
 | -- | -- | -- | -- |
-| SubEquipe_01 | _a definir_ | Performance / Latência | Assistir Transmissão ao Vivo (mínimo) |
-| SubEquipe_02 | _a definir_ | Segurança | Login/Cadastro & Autenticação (mínimo) |
-| SubEquipe_03 | _a definir_ | Confiabilidade / Disponibilidade / Segurança | Chat ao Vivo em Tempo Real sob pico de audiência (mínimo) |
+| SubEquipe_01 | Rich Picture | Performance / Latência | Assistir Transmissão ao Vivo (mínimo) · Início/Configuração da Transmissão (extra) · Troca de Qualidade Adaptativa/ABR (extra) |
+| SubEquipe_02 | _a definir_ | Confiabilidade / Disponibilidade | Chat ao Vivo sob pico de audiência (mínimo) · Doações/Monetização (extra) · Recuperação de Falha de Transmissão (extra) |
+| SubEquipe_03 | _a definir_ | Segurança | Login/Autenticação (mínimo) · Início de Transmissão c/ validação de direitos (extra) · Moderação de Conteúdo UGC (extra) |
 
 > Sincronizar esta tabela com as seções 5 e 6 do [Escopo do Produto](EscopoProduto.md).
 
@@ -64,7 +64,7 @@ A diretriz exige o grupo organizado em **3 subequipes**, e que **todos os membro
 
 ## 4. Autoria Coletiva
 
-Parte dos documentos deste GitPages foi definida **em conjunto, em reunião geral**, e por isso aparece no _Histórico de Versões_ como **Equipe G6**. Nessas versões participaram:
+Parte dos documentos deste GitPages foi definida **em conjunto, em reunião geral**, e por isso aparece no *Histórico de Versões* como **Equipe G7**. Nessas versões participaram:
 
 Daniel de Oliveira Lira · Davi Severiano Freitas · Heitor Macedo Ricardo · Hugo Freitas Silva · Lucas Andrade Zanetti · Mateus Rodrigues Barreto · Matheus Lemes Amaral · Pedro Henrique Freire Rodrigues · Philipe Amancio Reis Caetano
 
@@ -75,5 +75,6 @@ Daniel de Oliveira Lira · Davi Severiano Freitas · Heitor Macedo Ricardo · Hu
 | Versão | Data | Descrição | Autor(es) | Revisor(es) |
 | -- | -- | -- | -- | -- |
 | 1.0 | 21/08/2026 | Criação do documento de equipe e subequipes | Lucas Andrade Zanetti | Heitor Macedo Ricardo |
-| 1.1 | 22/08/2026 | Divisão das três subequipes, definição das lideranças e do representante geral (Reunião Geral 01) | Equipe G6 | Lucas Andrade Zanetti |
-| 1.2 | 24/08/2026 | Sincronização da distribuição de softgoals e fluxos BPMN com o Escopo do Produto | Eduardo Lôbo Moreira | Equipe G6 |
+| 1.1 | 22/08/2026 | Divisão das três subequipes, definição das lideranças e do representante geral (Reunião Geral 01) | Equipe G7 | Lucas Andrade Zanetti |
+| 1.2 | 23/08/2026 | Preenchimento da distribuição de artefatos por subequipe (§2), sincronizado com o Escopo do Produto §5-6, e atualização do rótulo do projeto para G7_ProjetoStreamingVideo | Lucas Andrade Zanetti | Heitor Macedo Ricardo |
+| 1.3 | 24/08/2026 | Sincronização da distribuição de softgoals e fluxos BPMN com o Escopo do Produto | Eduardo Lôbo Moreira | Equipe G7 |

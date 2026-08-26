@@ -1,4 +1,4 @@
-# G6_ProjetoStreamingVideo
+# G7_ProjetoStreamingVideo
 
 Repositório do **Grupo 06** da disciplina **FGA0208 — Arquitetura e Desenho de Software** (UnB/FGA, 2026.2, Turma T01).
 
