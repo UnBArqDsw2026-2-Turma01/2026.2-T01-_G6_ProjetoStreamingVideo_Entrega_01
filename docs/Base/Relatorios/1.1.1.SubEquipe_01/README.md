@@ -15,7 +15,7 @@
 
 | Item | Definição | Justificativa |
 | -- | -- | -- |
-| Artefato generalista escolhido (Rich Picture **ou** Mapa Mental) | Rich Picture | Descreve melhor, de forma visual, os atores e fluxos da arquitetura levantada ([Ata 02, D02](../../../Projeto/Atas/ata-02-2026-08-23.md#decisões)) |
+| Artefato generalista escolhido (Rich Picture **ou** Mapa Mental) | Rich Picture | Descreve melhor, de forma visual, os atores e fluxos da arquitetura levantada ([Ata 02, D02](../../../Projeto/Atas/ata-S1-01-2026-08-23.md#decisões)) |
 | Softgoal do SIG (NFR Framework) | Performance / Latência | Streaming ao vivo tolera pouco atraso; é a ênfase "Transmissões ao Vivo" do tema traduzida em NFR ([Escopo do Produto §6](../../../Projeto/EscopoProduto.md#6-requisitos-não-funcionais-candidatos-insumo-para-os-sigs)) |
 | Fluxo modelado em BPMN | Assistir Transmissão ao Vivo (mínimo) · Início/Configuração da Transmissão (extra) · Troca de Qualidade Adaptativa/ABR (extra) | Ponto onde a latência/buffering do "ao vivo" é mais sensível ao usuário ([Escopo do Produto §5](../../../Projeto/EscopoProduto.md#5-fluxos-selecionados-para-engenharia-reversa--bpmn)) |
 
@@ -44,18 +44,18 @@ Processo geral do grupo em [Metodologia & Processo](../../../Projeto/Metodologia
 
 | Item | Definição |
 | -- | -- |
-| Cadência de reuniões da subequipe | Semanal, às **quartas-feiras à noite** ([Ata 02, D03](../../../Projeto/Atas/ata-02-2026-08-23.md#decisões)) |
-| Divisão de tarefas | Rich Picture e levantamento de NFRs construídos **em conjunto** pela subequipe, sem divisão individual nesta fase; a divisão fica reservada para a etapa final de documentação ([Ata 02, D04](../../../Projeto/Atas/ata-02-2026-08-23.md#decisões)) |
+| Cadência de reuniões da subequipe | Semanal, às **quartas-feiras à noite** ([Ata 02, D03](../../../Projeto/Atas/ata-S1-01-2026-08-23.md#decisões)) |
+| Divisão de tarefas | Rich Picture e levantamento de NFRs construídos **em conjunto** pela subequipe, sem divisão individual nesta fase; a divisão fica reservada para a etapa final de documentação ([Ata 02, D04](../../../Projeto/Atas/ata-S1-01-2026-08-23.md#decisões)) |
 | Registro de reuniões | Gravação em vídeo + ata publicada em [Atas de Reunião](../../../Projeto/Atas/README.md) |
-| Ferramenta de modelagem colaborativa | Quadro **Miro**, com edição simultânea pelos quatro membros ([Ata 03, D01](../../../Projeto/Atas/ata-03-2026-08-25.md#decisões)) |
+| Ferramenta de modelagem colaborativa | Quadro **Miro**, com edição simultânea pelos quatro membros ([Ata 03, D01](../../../Projeto/Atas/ata-S1-02-2026-08-25.md#decisões)) |
 | Critério de revisão interna | Revisão em voz alta durante a própria sessão: quem propõe um elemento justifica, e o grupo aceita, renomeia ou descarta antes de seguir |
 
 ### Sessões de trabalho realizadas
 
 | # | Data | Duração | Objetivo | Resultado | Registro |
 | -- | -- | -- | -- | -- | -- |
-| 01 | 23/08/2026 | ~10 min | Confirmar softgoal e fluxos; escolher o artefato generalista; definir cadência | Rich Picture escolhido; softgoal e 3 fluxos confirmados | [Ata 02](../../../Projeto/Atas/ata-02-2026-08-23.md) · [Vídeo](https://www.youtube.com/watch?v=iyWpaxbuiow) |
-| 02 | 25/08/2026 | ~1h20 | Construir o artefato generalista | **Rich Picture v1 concluído** e publicado | [Ata 03](../../../Projeto/Atas/ata-03-2026-08-25.md) · [Vídeo](https://www.youtube.com/watch?v=7sRz8l8YtqU) |
+| 01 | 23/08/2026 | ~10 min | Confirmar softgoal e fluxos; escolher o artefato generalista; definir cadência | Rich Picture escolhido; softgoal e 3 fluxos confirmados | [Ata 02](../../../Projeto/Atas/ata-S1-01-2026-08-23.md) · [Vídeo](https://www.youtube.com/watch?v=iyWpaxbuiow) |
+| 02 | 25/08/2026 | ~1h20 | Construir o artefato generalista | **Rich Picture v1 concluído** e publicado | [Ata 03](../../../Projeto/Atas/ata-S1-02-2026-08-25.md) · [Vídeo](https://www.youtube.com/watch?v=7sRz8l8YtqU) |
 
 Restante do processo específico de cada foco (ferramentas do SIG e do BPMN, critérios de revisão) a preencher conforme o trabalho avançar.
 
@@ -63,7 +63,7 @@ Restante do processo específico de cada foco (ferramentas do SIG e do BPMN, cri
 
 | Artefato desta subequipe | Origem / insumo | Elo com | Observação |
 | -- | -- | -- | -- |
-| [Rich Picture v1](1.ArtefatoGeneralista.md) | Conhecimento prévio dos membros + pesquisa em documentação pública, consolidados na sessão de 25/08 ([Ata 03](../../../Projeto/Atas/ata-03-2026-08-25.md)) | [SIG](2.NFRFramework.md) · [BPMN](4.BPMN.md) · [Engenharia Reversa](3.EngenhariaReversa.md) | A cadeia ingestão → transcodificação → empacotamento → CDN → player é o insumo do SIG; os atores viram lanes no BPMN; os protocolos e componentes citados são hipóteses a verificar no FOCO_02 |
+| [Rich Picture v1](1.ArtefatoGeneralista.md) | Conhecimento prévio dos membros + pesquisa em documentação pública, consolidados na sessão de 25/08 ([Ata 03](../../../Projeto/Atas/ata-S1-02-2026-08-25.md)) | [SIG](2.NFRFramework.md) · [BPMN](4.BPMN.md) · [Engenharia Reversa](3.EngenhariaReversa.md) | A cadeia ingestão → transcodificação → empacotamento → CDN → player é o insumo do SIG; os atores viram lanes no BPMN; os protocolos e componentes citados são hipóteses a verificar no FOCO_02 |
 | [SIG (NFR)](2.NFRFramework.md) | Cadeia de latência identificada no Rich Picture | [Rich Picture](1.ArtefatoGeneralista.md) · [BPMN](4.BPMN.md) | ⬜ não iniciado |
 | [Modelo BPMN](4.BPMN.md) | Atores e fluxos do Rich Picture; fluxos definidos no [Escopo §5](../../../Projeto/EscopoProduto.md#5-fluxos-selecionados-para-engenharia-reversa--bpmn) | [Rich Picture](1.ArtefatoGeneralista.md) · [Engenharia Reversa](3.EngenhariaReversa.md) | ⬜ não iniciado |
 
@@ -81,15 +81,15 @@ _A preencher._
 
 | Membro | Contribuição | Data | Comprobatório (commit/PR) |
 | -- | -- | -- | -- |
-| Lucas Andrade Zanetti | FOCO_01 · Rich Picture: condução da sessão, mapeamento do pipeline de mídia, legenda de fluxos por cor e recorte do artefato; export, versionamento da imagem e redação da página do foco | 25/08/2026 | [Ata 03](../../../Projeto/Atas/ata-03-2026-08-25.md) · [Gravação](https://www.youtube.com/watch?v=7sRz8l8YtqU) · [FOCO_01 §7](1.ArtefatoGeneralista.md#7-participantes--comprobatórios) |
-| Pedro Druck Montalvão Reis | FOCO_01 · Rich Picture: camadas de infraestrutura (servidor de origem, CDN, edge caching, APIs, Auth) e extensões/desenvolvedores externos | 25/08/2026 | [Ata 03](../../../Projeto/Atas/ata-03-2026-08-25.md) · [Gravação](https://www.youtube.com/watch?v=7sRz8l8YtqU) · [FOCO_01 §7](1.ArtefatoGeneralista.md#7-participantes--comprobatórios) |
-| Matheus Lemes Amaral | FOCO_01 · Rich Picture: padronização da notação (verbos, tipografia, cores, agrupamentos), desdobramento VOD/Clips e recorte da monetização externa | 25/08/2026 | [Ata 03](../../../Projeto/Atas/ata-03-2026-08-25.md) · [Gravação](https://www.youtube.com/watch?v=7sRz8l8YtqU) · [FOCO_01 §7](1.ArtefatoGeneralista.md#7-participantes--comprobatórios) |
-| Heitor Macedo Ricardo | FOCO_01 · Rich Picture: camada de chat/moderação (chat, moderadores, AutoMod, Pub/Sub), camada de monetização, correção terminológica do encoder e revisão de layout/recorte | 25/08/2026 | [Ata 03](../../../Projeto/Atas/ata-03-2026-08-25.md) · [Gravação](https://www.youtube.com/watch?v=7sRz8l8YtqU) · [FOCO_01 §7](1.ArtefatoGeneralista.md#7-participantes--comprobatórios) |
+| Lucas Andrade Zanetti | FOCO_01 · Rich Picture: condução da sessão, mapeamento do pipeline de mídia, legenda de fluxos por cor e recorte do artefato; export, versionamento da imagem e redação da página do foco | 25/08/2026 | [Ata 03](../../../Projeto/Atas/ata-S1-02-2026-08-25.md) · [Gravação](https://www.youtube.com/watch?v=7sRz8l8YtqU) · [FOCO_01 §7](1.ArtefatoGeneralista.md#7-participantes--comprobatórios) |
+| Pedro Druck Montalvão Reis | FOCO_01 · Rich Picture: camadas de infraestrutura (servidor de origem, CDN, edge caching, APIs, Auth) e extensões/desenvolvedores externos | 25/08/2026 | [Ata 03](../../../Projeto/Atas/ata-S1-02-2026-08-25.md) · [Gravação](https://www.youtube.com/watch?v=7sRz8l8YtqU) · [FOCO_01 §7](1.ArtefatoGeneralista.md#7-participantes--comprobatórios) |
+| Matheus Lemes Amaral | FOCO_01 · Rich Picture: padronização da notação (verbos, tipografia, cores, agrupamentos), desdobramento VOD/Clips e recorte da monetização externa | 25/08/2026 | [Ata 03](../../../Projeto/Atas/ata-S1-02-2026-08-25.md) · [Gravação](https://www.youtube.com/watch?v=7sRz8l8YtqU) · [FOCO_01 §7](1.ArtefatoGeneralista.md#7-participantes--comprobatórios) |
+| Heitor Macedo Ricardo | FOCO_01 · Rich Picture: camada de chat/moderação (chat, moderadores, AutoMod, Pub/Sub), camada de monetização, correção terminológica do encoder e revisão de layout/recorte | 25/08/2026 | [Ata 03](../../../Projeto/Atas/ata-S1-02-2026-08-25.md) · [Gravação](https://www.youtube.com/watch?v=7sRz8l8YtqU) · [FOCO_01 §7](1.ArtefatoGeneralista.md#7-participantes--comprobatórios) |
 
 ## Histórico de Versões
 
 | Versão | Data | Descrição | Autor(es) | Revisor(es) |
 | -- | -- | -- | -- | -- |
 | 1.0 | 21/08/2026 | Criação do relatório da SubEquipe_01 | Lucas Andrade Zanetti | Heitor Macedo Ricardo |
-| 1.1 | 23/08/2026 | Composição da subequipe, escopo trabalhado (Rich Picture, softgoal e fluxos) e metodologia da subequipe, a partir da Ata 02 | [SubEquipe_01](../../../Projeto/Atas/ata-02-2026-08-23.md) | Lucas Andrade Zanetti |
-| 1.2 | 25/08/2026 | Registro das sessões de trabalho, ferramenta de modelagem, rastreabilidade consolidada e participações do FOCO_01 após a conclusão do Rich Picture v1 | [SubEquipe_01](../../../Projeto/Atas/ata-03-2026-08-25.md#participantes) | Lucas Andrade Zanetti |
+| 1.1 | 23/08/2026 | Composição da subequipe, escopo trabalhado (Rich Picture, softgoal e fluxos) e metodologia da subequipe, a partir da Ata 02 | [SubEquipe_01](../../../Projeto/Atas/ata-S1-01-2026-08-23.md) | Lucas Andrade Zanetti |
+| 1.2 | 25/08/2026 | Registro das sessões de trabalho, ferramenta de modelagem, rastreabilidade consolidada e participações do FOCO_01 após a conclusão do Rich Picture v1 | [SubEquipe_01](../../../Projeto/Atas/ata-S1-02-2026-08-25.md#participantes) | Lucas Andrade Zanetti |
