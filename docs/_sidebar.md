@@ -13,6 +13,7 @@
     - [S1_01 · SubEquipe 1 · 23/08](Projeto/Atas/ata-S1-01-2026-08-23.md)
     - [S1_02 · SubEquipe 1 · 25/08](Projeto/Atas/ata-S1-02-2026-08-25.md)
     - [S2_01 · SubEquipe 2 · 23/08](Projeto/Atas/ata-S2-01-2026-08-23.md)
+    - [S2_02 · SubEquipe 2 · 24/08](Projeto/Atas/ata-S2-02-2026-08-24.md)
 
 - **1. Desenho de Software (Base)**
   - [1. Visão Geral do Módulo](Base/1.Base.md)

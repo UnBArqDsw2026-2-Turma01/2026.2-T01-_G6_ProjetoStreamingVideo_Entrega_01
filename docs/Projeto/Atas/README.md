@@ -20,6 +20,7 @@ Registro das reuniões do grupo e das subequipes. Atas bem elaboradas e gravaç�
 | ID | Data | Pauta | Ata | Gravação |
 | -- | -- | -- | -- | -- |
 | S2_01 | 23/08/2026 | Alinhamento sobre exigências, estratégia de trabalho, ferramenta colaborativa (Figma) e tema do projeto (confiabilidade, disponibilidade, chat, doações e falhas) | [Ata S2 01](ata-S2-01-2026-08-23.md) | [Vídeo](https://unbbr.sharepoint.com/:v:/s/ProjetoStreamingVideoArquiteturaeDesenhodeSoftware/IQCeANoRWy0fR4OOkFVWRsQFARxYdhUSEi5BzU9ubT_JFjw?e=kjneXd) |
+| S2_02 | 24/08/2026 | Acompanhamento do avanço inicial dos artefatos, estratégia de remanejamento de integrantes e definição de prazos internos para consolidação | [Ata S2 02](ata-S2-02-2026-08-24.md) | [Vídeo](https://unbbr.sharepoint.com/:v:/s/ProjetoStreamingVideoArquiteturaeDesenhodeSoftware/IQA3goSUX2DqSqTJo8In8HO1AWS4pYYpqbdlt4DzXNeA7g8?e=DnLhZ7) |
 
 ## SubEquipe 03
 
