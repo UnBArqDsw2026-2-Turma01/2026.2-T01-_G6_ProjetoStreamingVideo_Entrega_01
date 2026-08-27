@@ -26,11 +26,11 @@
 | Foco | Página | Status |
 | -- | -- | -- |
 | FOCO_01 | [Artefato Generalista](1.ArtefatoGeneralista.md) | ✅ |
-| FOCO_01 | [SIG · NFR Framework](2.NFRFramework.md) | ✅|
-| FOCO_02 | [Engenharia Reversa](3.EngenhariaReversa.md) | 🟨 v1 · pendente revisão |
-| FOCO_02 | [Modelagem BPMN](4.BPMN.md) | 🟨 v1 · pendente revisão |
-| FOCO_03 | [IA Generativa](5.IAGenerativa.md) | ⬜ |
-| — | [Referências](6.Referencias.md) | ⬜ |
+| FOCO_01 | [SIG · NFR Framework](2.NFRFramework.md) | ✅ |
+| FOCO_02 | [Engenharia Reversa](3.EngenhariaReversa.md) | ✅ |
+| FOCO_02 | [Modelagem BPMN](4.BPMN.md) | ✅ |
+| FOCO_03 | [IA Generativa](5.IAGenerativa.md) | ✅ |
+| — | [Referências](6.Referencias.md) | ✅ |
 
 ## 4. Metodologia da Subequipe
 
@@ -57,7 +57,7 @@ Processo geral do grupo em [Metodologia & Processo](../../../Projeto/Metodologia
 | 01 | 23/08/2026 | ~10 min | Confirmar softgoal e fluxos; escolher o artefato generalista; definir cadência | Rich Picture escolhido; softgoal e 3 fluxos confirmados | [Ata S1_01](../../../Projeto/Atas/Atas_Sg1/ata-S1-01-2026-08-23.md) · [Vídeo](https://www.youtube.com/watch?v=iyWpaxbuiow) |
 | 02 | 25/08/2026 | ~1h20 | Construir o artefato generalista | **Rich Picture v1 concluído** e publicado | [Ata S1_02](../../../Projeto/Atas/Atas_Sg1/ata-S1-02-2026-08-25.md) · [Vídeo](https://www.youtube.com/watch?v=7sRz8l8YtqU) |
 | 03 | 26/08/2026 | ~1h23 | Construir o SIG (NFR Framework): um ramo por pessoa presente (Desempenho, Segurança, Confiabilidade, Usabilidade) | **SIG v1 concluído** e publicado; Pedro Druck ausente, revisão posterior encaminhada | [Ata S1_03](../../../Projeto/Atas/Atas_Sg1/ata-S1-03-2026-08-26.md) · [Vídeo](https://www.youtube.com/watch?v=n36T4kpz-Bk) |
-| 04 | 27/08/2026 | ~1h | Executar a Engenharia Reversa e a Modelagem BPMN de Performance/Latência | **6 evidências** coletadas e anonimizadas, 14 regras inferidas, **7 diagramas BPMN** encadeados publicados; duas hipóteses do FOCO_01 refutadas | [Eng. Reversa](3.EngenhariaReversa.md) · [BPMN](4.BPMN.md) |
+| 04 | 27/08/2026 | ~1h | Executar a Engenharia Reversa e a Modelagem BPMN de Performance/Latência | **6 evidências** coletadas e anonimizadas, 14 regras inferidas, **7 diagramas BPMN** encadeados publicados; duas hipóteses do FOCO_01 refutadas | [Ata S1_04](../../../Projeto/Atas/Atas_Sg1/ata-S1-04-2026-08-27.md) · [Eng. Reversa](3.EngenhariaReversa.md) · [BPMN](4.BPMN.md) |
 
 ## 5. Rastreabilidade & Elos com Outros Artefatos (visão consolidada) :id=rastreabilidade-elos
 
@@ -65,8 +65,8 @@ Processo geral do grupo em [Metodologia & Processo](../../../Projeto/Metodologia
 | -- | -- | -- | -- |
 | [Rich Picture v1](1.ArtefatoGeneralista.md) | Conhecimento prévio dos membros + pesquisa em documentação pública, consolidados na sessão de 25/08 ([Ata S1_02](../../../Projeto/Atas/Atas_Sg1/ata-S1-02-2026-08-25.md)) | [SIG](2.NFRFramework.md) · [BPMN](4.BPMN.md) · [Engenharia Reversa](3.EngenhariaReversa.md) | A cadeia ingestão → transcodificação → empacotamento → CDN → player é o insumo do SIG; os atores viram lanes no BPMN; os protocolos e componentes citados são hipóteses a verificar no FOCO_02 |
 | [SIG (NFR)](2.NFRFramework.md) | Cadeia de latência identificada no Rich Picture | [Rich Picture](1.ArtefatoGeneralista.md) · [BPMN](4.BPMN.md) | 🟨 v1 concluído (26/08) — pendente revisão de Pedro Druck |
-| [Engenharia Reversa](3.EngenhariaReversa.md) | Hipóteses do Rich Picture (§3.1) + coleta de 27/08 (EV-01 a EV-06) | [Rich Picture](1.ArtefatoGeneralista.md) · [SIG](2.NFRFramework.md) · [BPMN](4.BPMN.md) | 🟨 v1 — **confirma** H02–H05, **refuta** H03b (LL-HLS) e H04b (cacheabilidade) |
-| [Modelo BPMN](4.BPMN.md) | Achados §6 da Engenharia Reversa; atores e fluxos do Rich Picture; fluxo de Performance/Latência | [Rich Picture](1.ArtefatoGeneralista.md) · [SIG](2.NFRFramework.md) · [Engenharia Reversa](3.EngenhariaReversa.md) | 🟨 v1 — 7 diagramas encadeados; **quantifica** o trade-off C01 do SIG |
+| [Engenharia Reversa](3.EngenhariaReversa.md) | Hipóteses do Rich Picture (§3.1) + coleta de 27/08 (EV-01 a EV-06) | [Rich Picture](1.ArtefatoGeneralista.md) · [SIG](2.NFRFramework.md) · [BPMN](4.BPMN.md) | ✅ v1 — **confirma** H02–H05, **refuta** H03b (LL-HLS) e H04b (cacheabilidade) |
+| [Modelo BPMN](4.BPMN.md) | Achados §6 da Engenharia Reversa; atores e fluxos do Rich Picture; fluxo de Performance/Latência | [Rich Picture](1.ArtefatoGeneralista.md) · [SIG](2.NFRFramework.md) · [Engenharia Reversa](3.EngenhariaReversa.md) | ✅ v1 — 7 diagramas encadeados; **quantifica** o trade-off C01 do SIG |
 
 ## 6. Senso Crítico (visão consolidada)
 
@@ -90,8 +90,14 @@ O senso crítico de cada foco está na página dele ([Rich Picture](1.ArtefatoGe
 | Lucas Andrade Zanetti | FOCO_01 · SIG (NFR Framework): condução da sessão, construção do ramo Desempenho/Baixa Latência (ingestão, transcodificação, LL-HLS/WebRTC/CDN própria/peering/origin shield, buffer/ABR), explicação do padrão Pub/Sub, redação da ata e da página do foco | 26/08/2026 | [Ata S1_03](../../../Projeto/Atas/Atas_Sg1/ata-S1-03-2026-08-26.md) · [Gravação](https://www.youtube.com/watch?v=n36T4kpz-Bk) · [FOCO_01 · NFR §8](2.NFRFramework.md#participantes-comprobatorios) |
 | Heitor Macedo Ricardo | FOCO_01 · SIG (NFR Framework): revisão da notação do NFR Framework para o grupo, construção do ramo Segurança, apoio no ramo Usabilidade, condução da integração espacial dos quatro ramos | 26/08/2026 | [Ata S1_03](../../../Projeto/Atas/Atas_Sg1/ata-S1-03-2026-08-26.md) · [Gravação](https://www.youtube.com/watch?v=n36T4kpz-Bk) · [FOCO_01 · NFR §8](2.NFRFramework.md#participantes-comprobatorios) |
 | Matheus Lemes Amaral | FOCO_01 · SIG (NFR Framework): construção dos ramos Confiabilidade (degradação graciosa, microsserviços replicados, tolerância a falha de PoP) e Usabilidade/Interatividade, reclassificação da contribuição da degradação graciosa de HELP para MAKE | 26/08/2026 | [Ata S1_03](../../../Projeto/Atas/Atas_Sg1/ata-S1-03-2026-08-26.md) · [Gravação](https://www.youtube.com/watch?v=n36T4kpz-Bk) · [FOCO_01 · NFR §8](2.NFRFramework.md#participantes-comprobatorios) |
-
-| Lucas Andrade Zanetti | FOCO_02 · Engenharia Reversa e BPMN: definição do recorte e do protocolo de coleta, execução das 13 etapas, ferramentas de coleta/anonimização/geração, especificação dos 7 diagramas e redação das duas páginas do foco | 27/08/2026 | [FOCO_02 · Eng. Reversa §9](3.EngenhariaReversa.md#participantes-comprobatorios) · [FOCO_02 · BPMN §8](4.BPMN.md#participantes-comprobatorios) |
+| Lucas Andrade Zanetti | FOCO_02 · Engenharia Reversa e BPMN: definição do recorte e do protocolo de coleta, execução das 13 etapas, ferramentas de coleta/anonimização/geração, autoria dos diagramas D0 e D3 e redação das duas páginas do foco | 27/08/2026 | [Ata S1_04](../../../Projeto/Atas/Atas_Sg1/ata-S1-04-2026-08-27.md) · [FOCO_02 · Eng. Reversa §9](3.EngenhariaReversa.md#participantes-comprobatorios) · [FOCO_02 · BPMN §8](4.BPMN.md#participantes-comprobatorios) |
+| Heitor Macedo Ricardo | FOCO_02 · Engenharia Reversa e BPMN: coleta e análise das evidências, autoria dos diagramas D1 e D4, revisão da classificação de confiança e da aderência à notação | 27/08/2026 | [Ata S1_04](../../../Projeto/Atas/Atas_Sg1/ata-S1-04-2026-08-27.md) · [FOCO_02 · Eng. Reversa §9](3.EngenhariaReversa.md#participantes-comprobatorios) · [FOCO_02 · BPMN §8](4.BPMN.md#participantes-comprobatorios) |
+| Matheus Lemes Amaral | FOCO_02 · Engenharia Reversa e BPMN: coleta e análise das evidências, autoria dos diagramas D2 e D5, revisão da rastreabilidade | 27/08/2026 | [Ata S1_04](../../../Projeto/Atas/Atas_Sg1/ata-S1-04-2026-08-27.md) · [FOCO_02 · Eng. Reversa §9](3.EngenhariaReversa.md#participantes-comprobatorios) · [FOCO_02 · BPMN §8](4.BPMN.md#participantes-comprobatorios) |
+| Pedro Druck Montalvão Reis | FOCO_02 · Engenharia Reversa e BPMN: coleta e análise das evidências, autoria do diagrama D2b, revisão do modelo | 27/08/2026 | [Ata S1_04](../../../Projeto/Atas/Atas_Sg1/ata-S1-04-2026-08-27.md) · [FOCO_02 · Eng. Reversa §9](3.EngenhariaReversa.md#participantes-comprobatorios) · [FOCO_02 · BPMN §8](4.BPMN.md#participantes-comprobatorios) |
+| Lucas Andrade Zanetti | FOCO_03 · IA Generativa: ponto de vista individual sobre automação da geração dos diagramas e a hipótese LL-HLS refutada | 27/08/2026 | [FOCO_03 §3](5.IAGenerativa.md#_3-pontos-de-vista-individuais) |
+| Heitor Macedo Ricardo | FOCO_03 · IA Generativa: ponto de vista individual sobre estruturação do GitPages e as âncoras Docsify alucinadas | 27/08/2026 | [FOCO_03 §3](5.IAGenerativa.md#_3-pontos-de-vista-individuais) |
+| Matheus Lemes Amaral | FOCO_03 · IA Generativa: ponto de vista individual sobre dúvidas de notação e a classificação HELP corrigida para MAKE | 27/08/2026 | [FOCO_03 §3](5.IAGenerativa.md#_3-pontos-de-vista-individuais) |
+| Pedro Druck Montalvão Reis | FOCO_03 · IA Generativa: ponto de vista individual sobre aprender DevTools e a cacheabilidade do manifesto refutada | 27/08/2026 | [FOCO_03 §3](5.IAGenerativa.md#_3-pontos-de-vista-individuais) |
 
 > **Pedro Druck Montalvão Reis não participou da sessão do SIG (26/08/2026)** e não consta nas linhas acima referentes a este artefato; permanece registrado nas linhas do Rich Picture (25/08/2026) e fica designado para revisar o SIG publicado ([Ata S1_03 §10](../../../Projeto/Atas/Atas_Sg1/ata-S1-03-2026-08-26.md#_10-ausência-de-pedro-druck-e-encaminhamento)).
 
@@ -102,5 +108,6 @@ O senso crítico de cada foco está na página dele ([Rich Picture](1.ArtefatoGe
 | 1.0 | 21/08/2026 | Criação do relatório da SubEquipe_01 | Lucas Andrade Zanetti | Heitor Macedo Ricardo |
 | 1.1 | 23/08/2026 | Composição da subequipe, escopo trabalhado (Rich Picture, softgoal e fluxos) e metodologia da subequipe, a partir da Ata S1_01 | [SubEquipe_01](../../../Projeto/Atas/Atas_Sg1/ata-S1-01-2026-08-23.md) | Lucas Andrade Zanetti |
 | 1.2 | 25/08/2026 | Registro das sessões de trabalho, ferramenta de modelagem, rastreabilidade consolidada e participações do FOCO_01 após a conclusão do Rich Picture v1 | [SubEquipe_01](../../../Projeto/Atas/Atas_Sg1/ata-S1-02-2026-08-25.md#participantes) | Lucas Andrade Zanetti |
-| 1.4 | 27/08/2026 | Registro da quarta sessão de trabalho: engenharia reversa v1 com 6 evidências, 7 diagramas BPMN encadeados, rastreabilidade atualizada, senso crítico consolidado e participação de toda a subequipe | Lucas Andrade Zanetti | SubEquipe_01 |
 | 1.3 | 26/08/2026 | Registro da terceira sessão de trabalho (SIG v1), rastreabilidade e participações do FOCO_01 após a conclusão do SIG; Pedro Druck ausente nesta sessão | [SubEquipe_01](../../../Projeto/Atas/Atas_Sg1/ata-S1-03-2026-08-26.md#participantes) | Lucas Andrade Zanetti |
+| 1.4 | 27/08/2026 | Registro da quarta sessão de trabalho: engenharia reversa v1 com 6 evidências, 7 diagramas BPMN encadeados, rastreabilidade atualizada, senso crítico consolidado e participação de toda a subequipe | Lucas Andrade Zanetti | SubEquipe_01 |
+| 1.5 | 27/08/2026 | Índice de status atualizado para ✅ nos cinco focos, reconstrução da tabela de participações com as linhas de FOCO_02 e FOCO_03 dos quatro membros, e reordenação do histórico | [SubEquipe_01](../../../Projeto/Atas/Atas_Sg1/ata-S1-04-2026-08-27.md) | Heitor Macedo Ricardo |
