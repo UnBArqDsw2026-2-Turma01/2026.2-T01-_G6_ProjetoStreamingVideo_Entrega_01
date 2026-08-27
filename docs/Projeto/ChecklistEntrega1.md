@@ -27,11 +27,11 @@ Legenda: ⬜ pendente · 🟨 em andamento · ✅ concluído
 ### SubEquipe_03
 
 | # | Item exigido | Status | Responsável(is) | Link |
-| -- | -- | -- | -- | -- |
-| 1 | Um artefato generalista (Rich Picture **ou** Mapa Mental) | ⬜ | | |
-| 2 | Um SIG na notação do NFR Framework | ✅ | Eduardo Lôbo Moreira, Hugo Freitas Silva, Philipe Amâncio Reis Caetano | [2.NFRFramework.md](../Base/Relatorios/1.1.3.SubEquipe_03/2.NFRFramework.md) |
-| 3 | Um modelo BPMN do fluxo obtido via Engenharia Reversa | ⬜ | | |
-| 4 | Ponto de vista de **cada** membro sobre lições aprendidas e IA Generativa | ⬜ | | |
+| -- | -- | :--: | -- | -- |
+| 1 | Um artefato generalista (Rich Picture **ou** Mapa Mental) | ✅ | Eduardo Lôbo Moreira, Hugo Freitas Silva, Philipe Amâncio Reis Caetano | [1.ArtefatoGeneralista.md](Base/Relatorios/1.1.3.SubEquipe_03/1.ArtefatoGeneralista.md) |
+| 2 | Um SIG na notação do NFR Framework | ✅ | Eduardo Lôbo Moreira, Hugo Freitas Silva, Philipe Amâncio Reis Caetano | [2.NFRFramework.md](Base/Relatorios/1.1.3.SubEquipe_03/2.NFRFramework.md) |
+| 3 | Um modelo BPMN do fluxo obtido via Engenharia Reversa | ⬜ | Eduardo Lôbo Moreira, Hugo Freitas Silva, Philipe Amâncio Reis Caetano | [4.BPMN.md](Base/Relatorios/1.1.3.SubEquipe_03/4.BPMN.md) |
+| 4 | Ponto de vista de **cada** membro sobre lições aprendidas e IA Generativa | ⬜ | Eduardo Lôbo Moreira, Hugo Freitas Silva, Philipe Amâncio Reis Caetano | [5.IAGenerativa.md](Base/Relatorios/1.1.3.SubEquipe_03/5.IAGenerativa.md) |
 
 
 ## 2. Exigências Transversais (cada subequipe deve revelar)
@@ -51,22 +51,22 @@ Legenda: ⬜ pendente · 🟨 em andamento · ✅ concluído
 | -- | -- |
 | Tópico dedicado ao Módulo Desenho de Software (Base) | ✅ |
 | Subpasta Relatórios (1.1) com 1.1.1, 1.1.2 e 1.1.3 | ✅ |
-| Subtópico 1.2 — Participações | ✅ (estrutura criada, conteúdo pendente) |
-| Subtópico 1.3 — Iniciativas Extras (opcional) | ✅ (estrutura criada, conteúdo pendente) |
-| Quadro de participações por foco, com comprobatórios em link | ⬜ |
-| Históricos de revisões em cada artefato | ⬜ |
+| Subtópico 1.2 — Participações | ✅ ([1.2. Participações](Base/1.2.ParticipacoesBase.md)) |
+| Subtópico 1.3 — Iniciativas Extras (opcional) | ✅ ([1.3. Iniciativas Extras](Base/1.3.IniciativasExtras.md)) |
+| Quadro de participações por foco, com comprobatórios em link | ✅ ([1.2. Participações](Base/1.2.ParticipacoesBase.md)) |
+| Históricos de revisões em cada artefato | ✅ (Em todos os artefatos da SubEquipe_03) |
 
 ## 4. Para Menções Superiores
 
 | Item | Status | Evidência |
-| -- | -- | -- |
-| Cada artefato e decisão embasados na literatura | ⬜ | |
-| Atas de reunião bem elaboradas | ⬜ | [Atas](Atas/README.md) |
-| Vídeos/gravações das reuniões | ⬜ | |
-| Práticas metodológicas evidenciadas (reuniões periódicas, checklists, debates) | ⬜ | [Metodologia](Metodologia.md) |
-| Uso de **vários** recursos de modelagem do NFR Framework | ⬜ | |
-| Uso de **vários** recursos da notação BPMN | ⬜ | |
-| Pontos de vista fundamentados, claros e com senso crítico | ⬜ | |
+| -- | :--: | -- |
+| Cada artefato e decisão embasados na literatura | ✅ (SubEquipe_03) | [6.Referências](Base/Relatorios/1.1.3.SubEquipe_03/6.Referencias.md) (Checkland, Chung, Monk & Howard, RFCs IETF, OWASP, LGPD/ECA) |
+| Atas de reunião bem elaboradas | 🟨 | [Atas](Projeto/Atas/README.md) |
+| Vídeos/gravações das reuniões | 🟨 | [Atas](Projeto/Atas/README.md) |
+| Práticas metodológicas evidenciadas (reuniões periódicas, checklists, debates) | ✅ | [Metodologia](Projeto/Metodologia.md) · [Checklist Entrega 1](Projeto/ChecklistEntrega1.md) |
+| Uso de **vários** recursos de modelagem do NFR Framework | ✅ (SubEquipe_03) | [SIG NFR Framework](Base/Relatorios/1.1.3.SubEquipe_03/2.NFRFramework.md) (NFR, Operationalizing, Claims, Decomposições AND/OR, Operadores MAKE/HELP/HURT/BREAK, Propagação bottom-up) |
+| Uso de **vários** recursos da notação BPMN | ⬜ | [BPMN](Base/Relatorios/1.1.3.SubEquipe_03/4.BPMN.md) |
+| Pontos de vista fundamentados, claros e com senso crítico | 🟨 | [Senso Crítico Rich Picture](Base/Relatorios/1.1.3.SubEquipe_03/1.ArtefatoGeneralista.md#6-senso-crítico) · [Senso Crítico NFR](Base/Relatorios/1.1.3.SubEquipe_03/2.NFRFramework.md#7-senso-crítico) |
 
 ## 5. Apresentação (~15min: 5min por foco)
 
