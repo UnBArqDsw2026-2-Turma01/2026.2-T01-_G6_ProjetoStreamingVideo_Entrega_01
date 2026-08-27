@@ -13,6 +13,7 @@
     - [S1_01 · SubEquipe 1 · 23/08](/Projeto/Atas/Atas_Sg1/ata-S1-01-2026-08-23.md)
     - [S1_02 · SubEquipe 1 · 25/08](/Projeto/Atas/Atas_Sg1/ata-S1-02-2026-08-25.md)
     - [S1_03 · SubEquipe 1 · 26/08](/Projeto/Atas/Atas_Sg1/ata-S1-03-2026-08-26.md)
+    - [S1_04 · SubEquipe 1 · 27/08](/Projeto/Atas/Atas_Sg1/ata-S1-04-2026-08-27.md)
     - [S2_01 · SubEquipe 2 · 23/08](/Projeto/Atas/Atas_Sg2/ata-S2-01-2026-08-23.md)
     - [S2_02 · SubEquipe 2 · 24/08](/Projeto/Atas/Atas_Sg2/ata-S2-02-2026-08-24.md)
 
