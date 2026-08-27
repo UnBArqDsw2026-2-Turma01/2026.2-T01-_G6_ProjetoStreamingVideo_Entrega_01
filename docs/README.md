@@ -37,8 +37,20 @@ Escopo detalhado — aplicação de referência, público-alvo, funcionalidades 
 Acompanhamento de pendências: [Checklist da Entrega 1](Projeto/ChecklistEntrega1.md).
 
 ## Screenshots da Primeira Entrega
-<!-- PREENCHER: 2 ou mais screenshots dos artefatos produzidos na entrega (ex.: recorte do Rich Picture, recorte do SIG, recorte do BPMN). Imagens em docs/assets/. -->
-_A preencher (mínimo 2 screenshots dos artefatos)._
+
+![Rich Picture da plataforma de transmissão ao vivo — SubEquipe_01](assets/artefatos/subequipe_01_artefato-generalista.png)
+
+*Figura 1 — Rich Picture v1 (FOCO_01): atores, pipeline de mídia, camada de interação e camada de monetização. Autores: SubEquipe_01, 25/08/2026. Página completa em [1. Artefato Generalista](Base/Relatorios/1.1.1.SubEquipe_01/1.ArtefatoGeneralista.md).*
+
+![Diagrama BPMN da cadeia de latência — SubEquipe_01](assets/bpmn/subequipe_01_bpmn-d0-cadeia-latencia.png)
+
+*Figura 2 — Diagrama D0 (FOCO_02): cadeia de latência da transmissão ao vivo, modelo integrador dos sete diagramas encadeados. Autores: SubEquipe_01, 27/08/2026. Página completa em [4. Modelagem BPMN](Base/Relatorios/1.1.1.SubEquipe_01/4.BPMN.md).*
+
+![Diagrama BPMN de assistir transmissão ao vivo — SubEquipe_01](assets/bpmn/subequipe_01_bpmn-d2-assistir-transmissao.png)
+
+*Figura 3 — Diagrama D2 (FOCO_02): fluxo mínimo "Assistir Transmissão ao Vivo", obtido por engenharia reversa. Autores: SubEquipe_01, 27/08/2026. Processo de obtenção em [3. Engenharia Reversa](Base/Relatorios/1.1.1.SubEquipe_01/3.EngenhariaReversa.md).*
+
+> O SIG do NFR Framework (FOCO_01) é publicado como quadro navegável e pode ser consultado em [2. SIG · NFR Framework](Base/Relatorios/1.1.1.SubEquipe_01/2.NFRFramework.md).
 
 ## Há algo a ser executado?
 
@@ -68,3 +80,4 @@ Para instruções de instalação de dependências e execução do Docsify local
 | 1.1 | 22/08/2026 | Contextualização do projeto, divisão das subequipes e escopo de execução | [Equipe G7](Projeto/Equipe.md) | Lucas Andrade Zanetti |
 | 1.2 | 23/08/2026 | Resolução da pendência de nomenclatura: rótulo do projeto atualizado para G7_ProjetoStreamingVideo, conforme lista oficial de projetos | Lucas Andrade Zanetti | Heitor Macedo Ricardo |
 | 1.3 | 24/08/2026 | Centralização e referenciamento da equipe e instruções de execução local | Eduardo Lôbo Moreira | Equipe G7 |
+| 1.4 | 27/08/2026 | Preenchimento da seção de screenshots da Primeira Entrega com o Rich Picture e dois diagramas BPMN da SubEquipe_01, e correção dos links que apontavam para o repositório com o rótulo G6 | Heitor Macedo Ricardo | [SubEquipe_01](Projeto/Atas/Atas_Sg1/ata-S1-04-2026-08-27.md) |
