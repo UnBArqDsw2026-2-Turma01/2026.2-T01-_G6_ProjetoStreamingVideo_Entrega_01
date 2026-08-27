@@ -9,6 +9,7 @@ Registro das reuniões do grupo e das subequipes. Atas bem elaboradas e gravaç�
 | 01 | 22/08/2026 | Geral | Diretrizes da Entrega 1, escolha da aplicação de referência, divisão das subequipes e lideranças, organização do trabalho | [Ata 01](ata-01-2026-08-22.md) | [Vídeo](https://www.youtube.com/watch?v=AjzOi8J-G50) |
 | 02 | 23/08/2026 | SubEquipe_01 | Softgoal e fluxos candidatos ao BPMN, escolha do artefato generalista (Rich Picture), dúvida sobre o NFR Framework, cadência de reuniões | [Ata 02](ata-02-2026-08-23.md) | [Vídeo](https://www.youtube.com/watch?v=iyWpaxbuiow) |
 | 03 | 25/08/2026 | SubEquipe_01 | Construção do Rich Picture v1: entidades, pipeline de mídia, camadas de interação e monetização, convenções visuais e registro do uso de IA | [Ata 03](ata-03-2026-08-25.md) | [Vídeo](https://www.youtube.com/watch?v=7sRz8l8YtqU) |
+| 04 | 26/08/2026 | SubEquipe_01 | Construção do SIG v1 (NFR Framework): ramos Desempenho, Segurança, Confiabilidade e Usabilidade, calibração de contribuições, trade-offs e ausência de Pedro Druck | [Ata 04](ata-04-2026-08-26.md) | [Vídeo](https://www.youtube.com/watch?v=n36T4kpz-Bk) |
 
 ## Como registrar uma ata nova
 
