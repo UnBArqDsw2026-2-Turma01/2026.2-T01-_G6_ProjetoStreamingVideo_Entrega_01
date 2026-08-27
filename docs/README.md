@@ -9,7 +9,7 @@
 
 ## Equipe do Projeto
 
-Os integrantes, matrículas, papéis e divisão nas 3 subequipes estão detalhados em [Equipe & Subequipes](Projeto/Equipe.md). A apresentação visual de todos os membros do grupo também pode ser consultada no [README principal do repositório](https://github.com/UnBArqDsw2026-2-Turma01/2026.2-T01-_G6_ProjetoStreamingV-deo_Entrega_01/blob/main/README.md#equipe).
+Os integrantes, matrículas, papéis e divisão nas 3 subequipes estão detalhados em [Equipe & Subequipes](Projeto/Equipe.md). A apresentação visual de todos os membros do grupo também pode ser consultada no [README principal do repositório](https://github.com/UnBArqDsw2026-2-Turma01/2026.2-T01-_G7_ProjetoStreamingVideo_Entrega_01/blob/main/README.md#equipe).
 
 
 ## Sobre
@@ -50,7 +50,7 @@ A Entrega 1 (Base) é **documental**: os entregáveis são artefatos de modelage
 
 ### Executando a Documentação Localmente
 
-Para instruções de instalação de dependências e execução do Docsify localmente via `npm run docs` ou `npx`, consulte a seção de **Tecnologia & Documentação** no [README principal do repositório](https://github.com/UnBArqDsw2026-2-Turma01/2026.2-T01-_G6_ProjetoStreamingV-deo_Entrega_01/blob/main/README.md#tecnologia--documenta%C3%A7%C3%A3o).
+Para instruções de instalação de dependências e execução do Docsify localmente via `npm run docs` ou `npx`, consulte a seção de **Tecnologia & Documentação** no [README principal do repositório](https://github.com/UnBArqDsw2026-2-Turma01/2026.2-T01-_G7_ProjetoStreamingVideo_Entrega_01/blob/main/README.md#tecnologia--documenta%C3%A7%C3%A3o).
 
 
 ## Informações Complementares

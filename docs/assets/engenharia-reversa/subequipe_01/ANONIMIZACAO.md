@@ -10,7 +10,7 @@ Havia duas saídas ruins e uma boa:
 | Descrever as evidências em prosa, sem anexar arquivo | Tira a verificabilidade: nenhum leitor consegue conferir o que foi medido. Sem isso, "medimos 2,37 s" é indistinguível de "achamos que dá uns 2 s". |
 | **Substituição automática e documentada** | Preserva a estrutura técnica inteira — cabeçalhos, tags, parâmetros, tempos e tamanhos — e troca só os identificadores. É o que está publicado aqui. |
 
-A substituição é feita por [`tools/engenharia-reversa/anonimizar.py`](https://github.com/UnBArqDsw2026-2-Turma01/G7_LiveVideoStreaming/blob/main/tools/engenharia-reversa/anonimizar.py), nunca à mão. A regra é código versionado: qualquer membro reaplica sobre uma captura nova e obtém o mesmo resultado, e a professora pode auditar o que foi trocado.
+A substituição é feita por [`tools/engenharia-reversa/anonimizar.py`](https://github.com/UnBArqDsw2026-2-Turma01/2026.2-T01-_G7_ProjetoStreamingVideo_Entrega_01/blob/main/tools/engenharia-reversa/anonimizar.py), nunca à mão. A regra é código versionado: qualquer membro reaplica sobre uma captura nova e obtém o mesmo resultado, e a professora pode auditar o que foi trocado.
 
 > **O script também não nomeia a plataforma.** As marcas a substituir chegam por variável de ambiente, de um arquivo de configuração que fica fora do versionamento. Deixar o nome dentro do próprio anonimizador contrariaria a diretriz que ele existe para cumprir. Sem essas variáveis, o script recusa a executar em vez de gravar uma evidência mal anonimizada.
 
