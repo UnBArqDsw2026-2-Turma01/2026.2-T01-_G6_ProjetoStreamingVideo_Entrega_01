@@ -48,7 +48,7 @@ A diretriz exige o grupo organizado em **3 subequipes**, e que **todos os membro
 
 > Consolidada. O quadro oficial com comprobatórios (links de commit) fica em [1.2. Participações](../Base/1.2.ParticipacoesBase.md); aqui é o controle interno da equipe: ⬜ pendente · 🟨 em andamento · ✅ concluído.
 >
-> FOCO_01 da SubEquipe_01 em 🟨: o artefato generalista (Rich Picture) está concluído com participação dos quatro membros ([Ata 03](Atas/ata-03-2026-08-25.md)); o SIG do NFR Framework ainda não foi iniciado.
+> FOCO_01 da SubEquipe_01 em 🟨: o artefato generalista (Rich Picture) está concluído com participação dos quatro membros ([Ata 03](Atas/Atas_Sg1/ata-S1-02-2026-08-25.md)); o SIG do NFR Framework ainda não foi iniciado.
 
 | Membro | FOCO_01 (Generalista + NFR) | FOCO_02 (Eng. Reversa + BPMN) | FOCO_03 (IA Generativa) |
 | -- | -- | -- | -- |
@@ -70,7 +70,7 @@ Parte dos documentos deste GitPages foi definida **em conjunto, em reunião gera
 
 Daniel de Oliveira Lira · Davi Severiano Freitas · Heitor Macedo Ricardo · Hugo Freitas Silva · Lucas Andrade Zanetti · Mateus Rodrigues Barreto · Matheus Lemes Amaral · Pedro Henrique Freire Rodrigues · Philipe Amancio Reis Caetano
 
-**Comprobatório**: [Ata 01 — Primeira Reunião Geral](Atas/ata-01-2026-08-22.md), com gravação da reunião.
+**Comprobatório**: [Ata 01 — Primeira Reunião Geral](Atas/ata-G01-2026-08-22.md), com gravação da reunião.
 
 ## Histórico de Versões
 
@@ -80,4 +80,4 @@ Daniel de Oliveira Lira · Davi Severiano Freitas · Heitor Macedo Ricardo · Hu
 | 1.1 | 22/08/2026 | Divisão das três subequipes, definição das lideranças e do representante geral (Reunião Geral 01) | Equipe G7 | Lucas Andrade Zanetti |
 | 1.2 | 23/08/2026 | Preenchimento da distribuição de artefatos por subequipe (§2), sincronizado com o Escopo do Produto §5-6, e atualização do rótulo do projeto para G7_ProjetoStreamingVideo | Lucas Andrade Zanetti | Heitor Macedo Ricardo |
 | 1.3 | 24/08/2026 | Sincronização da distribuição de softgoals e fluxos BPMN com o Escopo do Produto | Eduardo Lôbo Moreira | Equipe G7 |
-| 1.4 | 25/08/2026 | Atualização da matriz de participação (§3): FOCO_01 da SubEquipe_01 em andamento após a conclusão do Rich Picture v1 | Lucas Andrade Zanetti | [SubEquipe_01](Atas/ata-03-2026-08-25.md#participantes) |
+| 1.4 | 25/08/2026 | Atualização da matriz de participação (§3): FOCO_01 da SubEquipe_01 em andamento após a conclusão do Rich Picture v1 | Lucas Andrade Zanetti | [SubEquipe_01](Atas/Atas_Sg1/ata-S1-02-2026-08-25.md#participantes) |
