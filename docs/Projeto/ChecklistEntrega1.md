@@ -11,7 +11,7 @@ Legenda: ⬜ pendente · 🟨 em andamento · ✅ concluído
 | # | Item exigido | Status | Responsável(is) | Link |
 | -- | -- | -- | -- | -- |
 | 1 | Um artefato generalista (Rich Picture **ou** Mapa Mental) | ⬜ | | |
-| 2 | Um SIG na notação do NFR Framework | ⬜ | | |
+| 2 | Um SIG na notação do NFR Framework | ✅ | Lucas Andrade Zanetti, Heitor Macedo Ricardo, Matheus Lemes Amaral | [2.NFRFramework.md](../Base/Relatorios/1.1.1.SubEquipe_01/2.NFRFramework.md) |
 | 3 | Um modelo BPMN do fluxo obtido via Engenharia Reversa | ⬜ | | |
 | 4 | Ponto de vista de **cada** membro sobre lições aprendidas e IA Generativa | ⬜ | | |
 
@@ -29,19 +29,21 @@ Legenda: ⬜ pendente · 🟨 em andamento · ✅ concluído
 | # | Item exigido | Status | Responsável(is) | Link |
 | -- | -- | -- | -- | -- |
 | 1 | Um artefato generalista (Rich Picture **ou** Mapa Mental) | ⬜ | | |
-| 2 | Um SIG na notação do NFR Framework | ⬜ | | |
+| 2 | Um SIG na notação do NFR Framework | ✅ | Eduardo Lôbo Moreira, Hugo Freitas Silva, Philipe Amâncio Reis Caetano | [2.NFRFramework.md](../Base/Relatorios/1.1.3.SubEquipe_03/2.NFRFramework.md) |
 | 3 | Um modelo BPMN do fluxo obtido via Engenharia Reversa | ⬜ | | |
 | 4 | Ponto de vista de **cada** membro sobre lições aprendidas e IA Generativa | ⬜ | | |
+
 
 ## 2. Exigências Transversais (cada subequipe deve revelar)
 
 | Item | SubEquipe_01 | SubEquipe_02 | SubEquipe_03 |
 | -- | -- | -- | -- |
-| Rastreabilidade & Elos com Outros Artefatos | ⬜ | ⬜ | ⬜ |
-| Senso Crítico | ⬜ | ⬜ | ⬜ |
-| Referências (link e/ou ABNT) | ⬜ | ⬜ | ⬜ |
-| Versionamentos & Participações | ⬜ | ⬜ | ⬜ |
-| Metodologia | ⬜ | ⬜ | ⬜ |
+| Rastreabilidade & Elos com Outros Artefatos | ⬜ | ⬜ | 🟨 |
+| Senso Crítico | ⬜ | ⬜ | 🟨 |
+| Referências (link e/ou ABNT) | ⬜ | ⬜ | 🟨 |
+| Versionamentos & Participações | ⬜ | ⬜ | 🟨 |
+| Metodologia | ⬜ | ⬜ | 🟨 |
+
 
 ## 3. Estrutura Obrigatória do GitPages
 

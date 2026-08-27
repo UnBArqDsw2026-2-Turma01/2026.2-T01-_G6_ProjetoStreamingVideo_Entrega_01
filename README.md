@@ -122,26 +122,27 @@ docs/
     </tr>
 </table>
 
-## tecnologia
+## Tecnologia & Documentação
 
-a geração do site estático é realizada utilizando o [docsify](https://docsify.js.org/).
+A documentação do projeto é gerada e publicada utilizando o [Docsify](https://docsify.js.org/).
 
-```shell
-"docsify generates your documentation website on the fly. unlike gitbook, it does not generate static html files. instead, it smartly loads and parses your markdown files and displays them as a website. to start using it, all you need to do is create an index.html and deploy it on github pages."
-```
+### Instalação e Execução Local
 
-### instalando o docsify
+1. **Instale as dependências do projeto:**
+   ```bash
+   npm install
+   ```
 
-execute o comando:
+2. **Inicie o servidor de documentação:**
+   ```bash
+   npm run docs
+   ```
 
-```shell
-npm i docsify-cli -g
-```
+   *Ou alternativamente via `npx`:*
+   ```bash
+   npx docsify serve docs
+   ```
 
-### executando localmente
+3. **Acesse no navegador:**
+   O site estará disponível em `http://localhost:3000`.
 
-para iniciar o site localmente, utilize o comando:
-
-```shell
-docsify serve ./docs
-```

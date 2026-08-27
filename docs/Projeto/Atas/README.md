@@ -12,23 +12,28 @@ Registro das reuniões do grupo e das subequipes. Atas bem elaboradas e gravaç�
 
 | ID | Data | Pauta | Ata | Gravação |
 | -- | -- | -- | -- | -- |
-| S1_01 | 23/08/2026 | Softgoal e fluxos candidatos ao BPMN, escolha do artefato generalista (Rich Picture), dúvida sobre o NFR Framework, cadência de reuniões | [Ata S1 01](ata-S1-01-2026-08-23.md) | [Vídeo](https://www.youtube.com/watch?v=iyWpaxbuiow) |
-| S1_02 | 25/08/2026 | Construção do Rich Picture v1: entidades, pipeline de mídia, camadas de interação e monetização, convenções visuais e registro do uso de IA | [Ata S1 02](ata-S1-02-2026-08-25.md) | [Vídeo](https://www.youtube.com/watch?v=7sRz8l8YtqU) |
+| S1_01 | 23/08/2026 | Softgoal e fluxos candidatos ao BPMN, escolha do artefato generalista (Rich Picture), dúvida sobre o NFR Framework, cadência de reuniões | [Ata S1 01](Atas_Sg1/ata-S1-01-2026-08-23.md) | [Vídeo](https://www.youtube.com/watch?v=iyWpaxbuiow) |
+| S1_02 | 25/08/2026 | Construção do Rich Picture v1: entidades, pipeline de mídia, camadas de interação e monetização, convenções visuais e registro do uso de IA | [Ata S1 02](Atas_Sg1/ata-S1-02-2026-08-25.md) | [Vídeo](https://www.youtube.com/watch?v=7sRz8l8YtqU) |
+| S1_03 | 26/08/2026 | Construção do SIG v1 (NFR Framework): ramos Desempenho, Segurança, Confiabilidade e Usabilidade, calibração de contribuições, trade-offs e ausência de Pedro Druck | [Ata S1 03](Atas_Sg1/ata-S1-03-2026-08-26.md) | [Vídeo](https://www.youtube.com/watch?v=n36T4kpz-Bk) |
 
 ## SubEquipe 02
 
 | ID | Data | Pauta | Ata | Gravação |
 | -- | -- | -- | -- | -- |
-| S2_01 | 23/08/2026 | Alinhamento sobre exigências, estratégia de trabalho, ferramenta colaborativa (Figma) e tema do projeto (confiabilidade, disponibilidade, chat, doações e falhas) | [Ata S2 01](ata-S2-01-2026-08-23.md) | [Vídeo](https://unbbr.sharepoint.com/:v:/s/ProjetoStreamingVideoArquiteturaeDesenhodeSoftware/IQCeANoRWy0fR4OOkFVWRsQFARxYdhUSEi5BzU9ubT_JFjw?e=kjneXd) |
-| S2_02 | 24/08/2026 | Acompanhamento do avanço inicial dos artefatos, estratégia de remanejamento de integrantes e definição de prazos internos para consolidação | [Ata S2 02](ata-S2-02-2026-08-24.md) | [Vídeo](https://unbbr.sharepoint.com/:v:/s/ProjetoStreamingVideoArquiteturaeDesenhodeSoftware/IQA3goSUX2DqSqTJo8In8HO1AWS4pYYpqbdlt4DzXNeA7g8?e=DnLhZ7) |
+| S2_01 | 23/08/2026 | Alinhamento sobre exigências, estratégia de trabalho, ferramenta colaborativa (Figma) e tema do projeto (confiabilidade, disponibilidade, chat, doações e falhas) | [Ata S2 01](Atas_Sg2/ata-S2-01-2026-08-23.md) | [Vídeo](https://unbbr.sharepoint.com/:v:/s/ProjetoStreamingVideoArquiteturaeDesenhodeSoftware/IQCeANoRWy0fR4OOkFVWRsQFARxYdhUSEi5BzU9ubT_JFjw?e=kjneXd) |
+| S2_02 | 24/08/2026 | Acompanhamento do avanço inicial dos artefatos, estratégia de remanejamento de integrantes e definição de prazos internos para consolidação | [Ata S2 02](Atas_Sg2/ata-S2-02-2026-08-24.md) | [Vídeo](https://unbbr.sharepoint.com/:v:/s/ProjetoStreamingVideoArquiteturaeDesenhodeSoftware/IQA3goSUX2DqSqTJo8In8HO1AWS4pYYpqbdlt4DzXNeA7g8?e=DnLhZ7) |
 
 ## SubEquipe 03
 
 *Nenhuma reunião registrada até o momento.*
 
+## Estrutura de pastas
+
+Atas gerais ficam direto em `Atas/`; cada subequipe tem sua própria subpasta (`Atas_Sg1/`, `Atas_Sg2/`, `Atas_Sg3/` quando houver).
+
 ## Como registrar uma ata nova
 
-1. Copiar [`ata-modelo.md`](ata-modelo.md) para `ata-NN-AAAA-MM-DD.md` (onde `NN` é a sequência geral, ex: `05`);
+1. Copiar [`ata-modelo.md`](ata-modelo.md) para `Atas_SgN/ata-SN_NN-AAAA-MM-DD.md` (reunião de subequipe) ou para `ata-GNN-AAAA-MM-DD.md` na raiz de `Atas/` (reunião geral);
 2. Preencher pauta, participantes, decisões e encaminhamentos;
    - registrar presença real (inclusive ausências e entradas tardias) — o quadro de participação depende disso;
 3. Adicionar a linha correspondente na tabela da sua respectiva equipe acima, seguindo o padrão de ID (`G01`, `S1_01`, `S2_01`, etc.);
