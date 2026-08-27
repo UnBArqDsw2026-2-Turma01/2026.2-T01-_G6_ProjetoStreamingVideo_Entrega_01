@@ -1,0 +1,10 @@
+HTTP/2 200 
+content-type: application/vnd.apple.mpegurl
+content-length: 9691
+date: Thu, 27 Aug 2026 14:04:53 GMT
+x-amzn-trace-id: Root=1-6a904405-46c5f89172265a6d037a63c8
+x-cache: Miss from <cdn-terceira>
+via: 1.1 7a3b2ff4dc1ceec1dbaafaaa710261c4.<cdn-terceira>.net (<cdn-terceira>)
+x-amz-cf-pop: GIG52-P2
+x-amz-cf-id: u04lE-DqG2MG5_hRgKWs2yYH4KO_7ib8hfZt_wjnvNPTxYbE36s2mA==
+

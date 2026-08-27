@@ -1,0 +1,23 @@
+#EXTM3U
+#EXT-X-VERSION:3
+#EXT-X-TARGETDURATION:5
+#EXT-X-MEDIA-SEQUENCE:0
+#EXT-X-<plataforma>-ELAPSED-SECS:162938.572
+#EXT-X-<plataforma>-TOTAL-SECS:162944.572
+#EXT-X-START:TIME-OFFSET=0.000
+#EXT-X-DATERANGE:ID="playlist-creation-1787839579",CLASS="timestamp",START-DATE="2026-08-27T14:06:19.040Z",END-ON-NEXT=YES,X-SERVER-TIME="1787839579.04"
+#EXT-X-DATERANGE:ID="playlist-session-1787839579",CLASS="<plataforma>-session",START-DATE="2026-08-27T14:06:19.040Z",END-ON-NEXT=YES,X-TV-<plataforma>-SESSIONID="7255687623654533458"
+#EXT-X-DATERANGE:ID="stitched-ad-1787839574-30235000000",CLASS="<plataforma>-stitched-ad",START-DATE="2026-08-27T14:06:14.221Z",DURATION=30.235,X-TV-<plataforma>-AD-AD-FORMAT="standard_video_ad",X-TV-<plataforma>-AD-LOUDNESS="-10.980000",X-TV-<plataforma>-AD-POD-FILLED-DURATION="30",X-TV-<plataforma>-AD-RADS-TOKEN="eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJicm9hZGNh…[TRUNCADO: 307 caracteres].Pvc8izJ5GDWd…[TRUNCADO: 86 caracteres]",X-TV-<plataforma>-AD-DSA-SS-CONTEXT="false",X-TV-<plataforma>-AD-POD-LENGTH="1",X-TV-<plataforma>-AD-ROLL-TYPE="PREROLL",X-TV-<plataforma>-AD-AD-SESSION-ID="f4aadcdb0b3c47038d6223d7f22f1811",X-TV-<plataforma>-AD-DSA-VERSION="0",X-TV-<plataforma>-AD-DSA-SS-LOCATION="false",X-TV-<plataforma>-AD-URL="https://www.<plataforma>.tv",X-TV-<plataforma>-AD-POD-POSITION="0",X-TV-<plataforma>-AD-LINE-ITEM-ID="2379251610298",X-TV-<plataforma>-AD-AF-ICR-MEDIA-DURATION="0",X-TV-<plataforma>-AD-CLICK-BEACON-ID="click21630e1c-75a5-46bc-b70c-a396f1637cac_fake",X-TV-<plataforma>-AD-CREATIVE-ID="2474283100494",X-TV-<plataforma>-AD-CLICK-TRACKING-URL="https://example.com"
+#EXT-X-DATERANGE:ID="source-1787839574",CLASS="<plataforma>-stream-source",START-DATE="2026-08-27T14:06:14.221Z",END-ON-NEXT=YES,X-TV-<plataforma>-STREAM-SOURCE="<provedor>|2474283100494"
+#EXT-X-DATERANGE:ID="trigger-1787839574",CLASS="<plataforma>-trigger",START-DATE="2026-08-27T14:06:14.221Z",END-ON-NEXT=YES,X-TV-<plataforma>-TRIGGER-URL="https://sae12.playlist.<cdn-plataforma>.net/trigger/CosFVhLfw3bX…[TRUNCADO: 912 caracteres]"
+#EXT-X-DATERANGE:ID="quartile-1787839574-0",CLASS="<plataforma>-ad-quartile",START-DATE="2026-08-27T14:06:14.221Z",DURATION=2.000,X-TV-<plataforma>-AD-QUARTILE="0"
+#EXT-X-DISCONTINUITY
+#EXT-X-PROGRAM-DATE-TIME:2026-08-27T14:06:14.221Z
+#EXTINF:2.000,<provedor>|2474283100494
+https://9b8458abf197.j.<cdn-terceira>.hls.<cdn-plataforma>.net/v1/segment/Cu0CgjwrZz2H…[TRUNCADO: 531 caracteres].ts?dna=Cnb20BEs_KHN…[TRUNCADO: 200 caracteres]
+#EXT-X-PROGRAM-DATE-TIME:2026-08-27T14:06:16.221Z
+#EXTINF:2.000,<provedor>|2474283100494
+https://9b8458abf197.j.<cdn-terceira>.hls.<cdn-plataforma>.net/v1/segment/Cu8CSqRLhebC…[TRUNCADO: 534 caracteres].ts?dna=CkZBMK0C1eq4…[TRUNCADO: 136 caracteres]
+#EXT-X-PROGRAM-DATE-TIME:2026-08-27T14:06:18.221Z
+#EXTINF:2.000,<provedor>|2474283100494
+https://9b8458abf197.j.<cdn-terceira>.hls.<cdn-plataforma>.net/v1/segment/Cu8C_9iAtfxx…[TRUNCADO: 534 caracteres].ts?dna=CkZBMK0C1eq4…[TRUNCADO: 136 caracteres]

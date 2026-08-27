@@ -1,0 +1,47 @@
+Camada de tempo real (publicar/assinar) — SubEquipe_01 / FOCO_02
+Coleta: 27/08/2026, ~14:08 UTC. Método: instrumentação de WebSocket e fetch na própria
+página, pelo console do navegador (nenhuma alteração de comportamento da aplicação).
+
+--- conexões WebSocket abertas durante a navegação ---
+1 (uma) conexão:
+  wss://hermes.<plataforma>.tv/v1?clientId=<client-id-publico-do-cliente-web>
+
+Nenhuma segunda conexão foi aberta ao trocar de canal.
+
+--- primeira mensagem recebida (saudação) ---
+{"welcome":{"keepaliveSec":15,"recoveryUrl":"wss://hermes.<plataforma>.tv/a/v1?clientId=…&t=…"}}
+
+--- mensagem periódica ---
+{"id":"…","type":"keepalive","timestamp":"2026-08-27T14:08:10.884Z"}
+
+--- troca de canal (uma única navegação dentro da aplicação) ---
+mensagens enviadas no total: 74
+  cancelamentos de assinatura ("unsubscribe"): 38
+  novas assinaturas ("subscribe"):             36
+
+--- exemplo de assinatura enviada ---
+{"type":"subscribe","id":"…","subscribe":{"id":"…","type":"pubsub",
+ "pubsub":{"topic":"stream-chat-room-v1.<id-canal-B>"}}}
+
+--- tópicos assinados para um único canal (amostra dos 36) ---
+stream-chat-room-v1.<id-canal-B>        video-playback-by-id.<id-canal-B>
+community-points-channel-v1.<id-canal-B>  raid.<id-canal-B>
+predictions-channel-v1.<id-canal-B>     hype-train-events-v2.<id-canal-B>
+ads.<id-canal-B>                        ad-property-refresh.<id-canal-B>
+broadcast-settings-update.<id-canal-B>  content-policy-properties.<id-canal-B>
+shared-chat-channel-v1.<id-canal-B>     channel-sub-gifts-v1.<id-canal-B>
+creator-goals-events-v1.<id-canal-B>    pinned-chat-updates-v1.<id-canal-B>
+shoutout.<id-canal-B>                   celebration-events-v1.<id-canal-B>
+
+--- operações de API observadas na mesma navegação ---
+PlaybackAccessToken, WithIsStreamLiveQuery, ChannelSocialButtons, getGifPickerConfig
+Todas para o MESMO endpoint, por consulta persistida (o corpo envia apenas o hash
+sha256 da consulta, não o texto dela).
+
+Leitura:
+- Uma conexão persistente multiplexa N tópicos: o padrão publicar/assinar do SIG (O18)
+  aparece aqui de forma direta e mensurável.
+- Trocar de canal custa 74 mensagens de assinatura na conexão existente, e não uma nova
+  conexão: economiza handshake TCP e TLS a cada navegação.
+- O tópico "video-playback-by-id" é o que anuncia início e fim de transmissão ao player —
+  é o elo entre D1 (produção) e D2 (consumo) modelado como sinal/mensagem.

@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_D0" targetNamespace="http://unb.fga/G7_ProjetoStreamingVideo" exporter="Camunda Modeler" exporterVersion="5.50.1">
+  <bpmn:signal id="signal_0" name="Canal ao vivo" />
+  <bpmn:message id="message_0" name="Fluxo de ingestão" />
+  <bpmn:message id="message_1" name="Segmento disponível" />
+  <bpmn:message id="message_2" name="Segmento na borda" />
+  <bpmn:collaboration id="Collab_D0">
+    <bpmn:participant id="d0_p_criador" name="Criador de conteúdo" processRef="d0_proc_criador" />
+    <bpmn:participant id="d0_p_plat" name="Plataforma de streaming" processRef="d0_proc_plat" />
+    <bpmn:participant id="d0_p_cdn" name="Rede de distribuição (CDN)" processRef="d0_proc_cdn" />
+    <bpmn:participant id="d0_p_esp" name="Espectador (cliente web)" processRef="d0_proc_esp" />
+    <bpmn:messageFlow id="mf_0" name="áudio e vídeo ao vivo" sourceRef="d0_a_end" targetRef="d0_b_start" />
+    <bpmn:messageFlow id="mf_1" name="segmento publicado" sourceRef="d0_b_end" targetRef="d0_c_start" />
+    <bpmn:messageFlow id="mf_2" name="segmento de ~2 s" sourceRef="d0_c_end" targetRef="d0_d_loop" />
+    <bpmn:textAnnotation id="d0_n5">
+      <bpmn:text>MEDIDO (EV-05): 4,1 s a 5,0 s de buffer à frente do ponto exibido. É a maior parcela isolada da latência observável — e é escolha de projeto, não limite físico: encurtá-la troca atraso por risco de travamento (trade-off C01 do SIG).</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="d0_n6">
+      <bpmn:text>Esta via chega ANTES do vídeo: não passa pela CDN nem pelo buffer. A diferença entre os dois caminhos é a dessincronia que o espectador percebe entre o chat e a imagem. Detalhe em D5.</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="d0_n7">
+      <bpmn:text>Soma da parte observável: ~1,5 s a 2,4 s de manifesto + ~0,3 s de download + 4,1 s a 5,0 s de buffer ≈ 6 s a 8 s entre o segmento existir e ser exibido. A parcela de captura, codificação e ingestão fica fora dessa conta.</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="d0_n4">
+      <bpmn:text>MEDIDO (EV-05): entre o fim do segmento mais novo publicado e o relógio do cliente, de 1,46 s a 2,37 s. É a parcela de empacotamento + distribuição.</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="d0_n3">
+      <bpmn:text>MEDIDO (EV-04): entrega da borda com acerto de cache, TTFB de 112 ms e 859.724 B em 0,266 s. Idade do objeto na borda entre 2 s e 26 s.</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="d0_n1">
+      <bpmn:text>NÃO MEDIDO. Captura, codificação e ingestão não são observáveis por caixa-preta a partir do navegador de um espectador. Registrar isto é parte do resultado: o orçamento abaixo cobre apenas a metade observável da cadeia.</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="d0_n2">
+      <bpmn:text>NÃO MEDIDO diretamente. O que se observa é o efeito: segmentos de 2,000 s e uma grade de 6 qualidades saindo do outro lado (EV-02, EV-03). O tempo gasto aqui é inferido, não cronometrado.</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="as_d0_n6" associationDirection="None" sourceRef="d0_d_rt" targetRef="d0_n6" />
+    <bpmn:association id="as_d0_n5" associationDirection="None" sourceRef="d0_d_buf" targetRef="d0_n5" />
+    <bpmn:association id="as_d0_n7" associationDirection="None" sourceRef="d0_d_end" targetRef="d0_n7" />
+    <bpmn:association id="as_d0_n1" associationDirection="None" sourceRef="d0_a_enc" targetRef="d0_n1" />
+    <bpmn:association id="as_d0_n2" associationDirection="None" sourceRef="d0_b_trans" targetRef="d0_n2" />
+    <bpmn:association id="as_d0_n3" associationDirection="None" sourceRef="d0_c_edge" targetRef="d0_n3" />
+  </bpmn:collaboration>
+  <bpmn:process id="d0_proc_criador" isExecutable="false">
+    <bpmn:startEvent id="d0_a_start" name="A cena ocorre diante da câmera">
+      <bpmn:outgoing>fl_0</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:callActivity id="d0_a_enc" name="Iniciar e manter a transmissão (D1)" calledElement="d1_proc_criador">
+      <bpmn:incoming>fl_0</bpmn:incoming>
+      <bpmn:outgoing>fl_1</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:sequenceFlow id="fl_0" sourceRef="d0_a_start" targetRef="d0_a_enc" />
+    <bpmn:sequenceFlow id="fl_1" sourceRef="d0_a_enc" targetRef="d0_a_end" />
+    <bpmn:endEvent id="d0_a_end" name="Fluxo entregue ao ponto de ingestão">
+      <bpmn:incoming>fl_1</bpmn:incoming>
+      <bpmn:messageEventDefinition id="d0_a_end_def" messageRef="message_0" />
+    </bpmn:endEvent>
+  </bpmn:process>
+  <bpmn:process id="d0_proc_plat" isExecutable="false">
+    <bpmn:sequenceFlow id="fl_2" sourceRef="d0_b_start" targetRef="d0_b_trans" />
+    <bpmn:sequenceFlow id="fl_3" sourceRef="d0_b_trans" targetRef="d0_b_pub" />
+    <bpmn:sequenceFlow id="fl_4" sourceRef="d0_b_pub" targetRef="d0_b_sig" />
+    <bpmn:sequenceFlow id="fl_5" sourceRef="d0_b_sig" targetRef="d0_b_end" />
+    <bpmn:startEvent id="d0_b_start" name="Fluxo recebido na ingestão">
+      <bpmn:outgoing>fl_2</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="d0_b_start_def" messageRef="message_0" />
+    </bpmn:startEvent>
+    <bpmn:task id="d0_b_trans" name="Transcodificar a grade e empacotar em segmentos de ~2 s">
+      <bpmn:incoming>fl_2</bpmn:incoming>
+      <bpmn:outgoing>fl_3</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="d0_b_pub" name="Publicar na origem e deslizar a janela do manifesto">
+      <bpmn:incoming>fl_3</bpmn:incoming>
+      <bpmn:outgoing>fl_4</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:intermediateThrowEvent id="d0_b_sig" name="Anunciar o canal como ao vivo">
+      <bpmn:incoming>fl_4</bpmn:incoming>
+      <bpmn:outgoing>fl_5</bpmn:outgoing>
+      <bpmn:signalEventDefinition id="d0_b_sig_def" signalRef="signal_0" />
+    </bpmn:intermediateThrowEvent>
+    <bpmn:endEvent id="d0_b_end" name="Segmento disponível na origem">
+      <bpmn:incoming>fl_5</bpmn:incoming>
+      <bpmn:messageEventDefinition id="d0_b_end_def" messageRef="message_1" />
+    </bpmn:endEvent>
+  </bpmn:process>
+  <bpmn:process id="d0_proc_cdn" isExecutable="false">
+    <bpmn:sequenceFlow id="fl_6" sourceRef="d0_c_start" targetRef="d0_c_edge" />
+    <bpmn:sequenceFlow id="fl_7" sourceRef="d0_c_edge" targetRef="d0_c_end" />
+    <bpmn:startEvent id="d0_c_start" name="Segmento disponível na origem">
+      <bpmn:outgoing>fl_6</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="d0_c_start_def" messageRef="message_1" />
+    </bpmn:startEvent>
+    <bpmn:task id="d0_c_edge" name="Servir o segmento no PoP de borda mais próximo">
+      <bpmn:incoming>fl_6</bpmn:incoming>
+      <bpmn:outgoing>fl_7</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="d0_c_end" name="Segmento entregue à borda">
+      <bpmn:incoming>fl_7</bpmn:incoming>
+      <bpmn:messageEventDefinition id="d0_c_end_def" messageRef="message_2" />
+    </bpmn:endEvent>
+  </bpmn:process>
+  <bpmn:process id="d0_proc_esp" isExecutable="false">
+    <bpmn:callActivity id="d0_d_play" name="Assistir transmissão ao vivo (D2)" calledElement="d2_proc_esp">
+      <bpmn:incoming>fl_8</bpmn:incoming>
+      <bpmn:outgoing>fl_9</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:parallelGateway id="d0_d_par" name="Duas vias em paralelo">
+      <bpmn:incoming>fl_9</bpmn:incoming>
+      <bpmn:outgoing>fl_10</bpmn:outgoing>
+      <bpmn:outgoing>fl_11</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:callActivity id="d0_d_rt" name="Sincronizar chat e eventos (D5)" calledElement="d5_proc_cliente">
+      <bpmn:incoming>fl_11</bpmn:incoming>
+      <bpmn:outgoing>fl_14</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:task id="d0_d_buf" name="Manter 4–5 s de buffer antes de exibir">
+      <bpmn:incoming>fl_12</bpmn:incoming>
+      <bpmn:outgoing>fl_13</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:parallelGateway id="d0_d_join" name="Reunir">
+      <bpmn:incoming>fl_13</bpmn:incoming>
+      <bpmn:incoming>fl_14</bpmn:incoming>
+      <bpmn:outgoing>fl_15</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:endEvent id="d0_d_end" name="O espectador vê a cena">
+      <bpmn:incoming>fl_15</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="fl_8" sourceRef="d0_d_start" targetRef="d0_d_play" />
+    <bpmn:sequenceFlow id="fl_9" sourceRef="d0_d_play" targetRef="d0_d_par" />
+    <bpmn:sequenceFlow id="fl_10" sourceRef="d0_d_par" targetRef="d0_d_loop" />
+    <bpmn:sequenceFlow id="fl_12" sourceRef="d0_d_loop" targetRef="d0_d_buf" />
+    <bpmn:sequenceFlow id="fl_11" sourceRef="d0_d_par" targetRef="d0_d_rt" />
+    <bpmn:sequenceFlow id="fl_14" sourceRef="d0_d_rt" targetRef="d0_d_join" />
+    <bpmn:sequenceFlow id="fl_13" sourceRef="d0_d_buf" targetRef="d0_d_join" />
+    <bpmn:sequenceFlow id="fl_15" sourceRef="d0_d_join" targetRef="d0_d_end" />
+    <bpmn:callActivity id="d0_d_loop" name="Ciclo de reprodução por segmento (D2b)" calledElement="d2b_proc_player">
+      <bpmn:incoming>fl_10</bpmn:incoming>
+      <bpmn:outgoing>fl_12</bpmn:outgoing>
+      <bpmn:standardLoopCharacteristics />
+    </bpmn:callActivity>
+    <bpmn:startEvent id="d0_d_start" name="Canal anunciado ao vivo">
+      <bpmn:outgoing>fl_8</bpmn:outgoing>
+      <bpmn:signalEventDefinition id="d0_d_start_def" signalRef="signal_0" />
+    </bpmn:startEvent>
+    <bpmn:association id="as_d0_n4" associationDirection="None" sourceRef="d0_d_loop" targetRef="d0_n4" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diagram_1">
+    <bpmndi:BPMNPlane id="Plane_1" bpmnElement="Collab_D0">
+      <bpmndi:BPMNShape id="d0_p_cdn_di" bpmnElement="d0_p_cdn" isHorizontal="true">
+        <dc:Bounds x="180" y="650" width="2120" height="264" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d0_c_start_di" bpmnElement="d0_c_start">
+        <dc:Bounds x="1222" y="704" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1189" y="746" width="103" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d0_c_edge_di" bpmnElement="d0_c_edge">
+        <dc:Bounds x="1320" y="682" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d0_c_end_di" bpmnElement="d0_c_end">
+        <dc:Bounds x="1552" y="704" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1517" y="668" width="106" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="fl_6_di" bpmnElement="fl_6">
+        <di:waypoint x="1258" y="722" />
+        <di:waypoint x="1320" y="722" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_7_di" bpmnElement="fl_7">
+        <di:waypoint x="1460" y="722" />
+        <di:waypoint x="1552" y="722" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="d0_p_esp_di" bpmnElement="d0_p_esp" isHorizontal="true">
+        <dc:Bounds x="180" y="930" width="2120" height="380" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d0_d_play_di" bpmnElement="d0_d_play">
+        <dc:Bounds x="1062" y="1077" width="175" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d0_d_par_di" bpmnElement="d0_d_par">
+        <dc:Bounds x="1365" y="1097" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1335" y="1157" width="109" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d0_d_rt_di" bpmnElement="d0_d_rt">
+        <dc:Bounds x="1522" y="1077" width="175" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d0_d_buf_di" bpmnElement="d0_d_buf">
+        <dc:Bounds x="1790" y="962" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d0_d_join_di" bpmnElement="d0_d_join">
+        <dc:Bounds x="1835" y="1097" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1895" y="1115" width="33" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d0_d_end_di" bpmnElement="d0_d_end">
+        <dc:Bounds x="1922" y="1190" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1895" y="1232" width="90" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d0_d_loop_di" bpmnElement="d0_d_loop">
+        <dc:Bounds x="1482" y="957" width="175" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d0_d_start_di" bpmnElement="d0_d_start">
+        <dc:Bounds x="922" y="1104" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="891" y="1146" width="98" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="as_d0_n4_di" bpmnElement="as_d0_n4">
+        <di:waypoint x="1480" y="968" />
+        <di:waypoint x="1320" y="1002" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_8_di" bpmnElement="fl_8">
+        <di:waypoint x="958" y="1122" />
+        <di:waypoint x="1062" y="1122" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_9_di" bpmnElement="fl_9">
+        <di:waypoint x="1237" y="1122" />
+        <di:waypoint x="1365" y="1122" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_10_di" bpmnElement="fl_10">
+        <di:waypoint x="1390" y="1097" />
+        <di:waypoint x="1390" y="1002" />
+        <di:waypoint x="1482" y="1002" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_12_di" bpmnElement="fl_12">
+        <di:waypoint x="1657" y="1002" />
+        <di:waypoint x="1790" y="1002" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_11_di" bpmnElement="fl_11">
+        <di:waypoint x="1415" y="1122" />
+        <di:waypoint x="1522" y="1122" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_14_di" bpmnElement="fl_14">
+        <di:waypoint x="1697" y="1122" />
+        <di:waypoint x="1835" y="1122" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_13_di" bpmnElement="fl_13">
+        <di:waypoint x="1860" y="1042" />
+        <di:waypoint x="1860" y="1097" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_15_di" bpmnElement="fl_15">
+        <di:waypoint x="1860" y="1147" />
+        <di:waypoint x="1860" y="1208" />
+        <di:waypoint x="1922" y="1208" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="d0_p_plat_di" bpmnElement="d0_p_plat" isHorizontal="true">
+        <dc:Bounds x="180" y="370" width="2120" height="264" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d0_b_start_di" bpmnElement="d0_b_start">
+        <dc:Bounds x="622" y="424" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="596" y="466" width="88" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d0_b_trans_di" bpmnElement="d0_b_trans">
+        <dc:Bounds x="730" y="402" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d0_b_pub_di" bpmnElement="d0_b_pub">
+        <dc:Bounds x="920" y="402" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d0_b_sig_di" bpmnElement="d0_b_sig">
+        <dc:Bounds x="1112" y="424" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1089" y="466" width="82" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d0_b_end_di" bpmnElement="d0_b_end">
+        <dc:Bounds x="1212" y="424" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1179" y="392" width="103" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="fl_2_di" bpmnElement="fl_2">
+        <di:waypoint x="658" y="442" />
+        <di:waypoint x="730" y="442" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_3_di" bpmnElement="fl_3">
+        <di:waypoint x="870" y="442" />
+        <di:waypoint x="920" y="442" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_4_di" bpmnElement="fl_4">
+        <di:waypoint x="1060" y="442" />
+        <di:waypoint x="1112" y="442" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_5_di" bpmnElement="fl_5">
+        <di:waypoint x="1148" y="442" />
+        <di:waypoint x="1212" y="442" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="d0_p_criador_di" bpmnElement="d0_p_criador" isHorizontal="true">
+        <dc:Bounds x="180" y="90" width="2120" height="264" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d0_a_start_di" bpmnElement="d0_a_start">
+        <dc:Bounds x="272" y="144" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="239" y="186" width="102" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d0_a_enc_di" bpmnElement="d0_a_enc">
+        <dc:Bounds x="402" y="117" width="175" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d0_a_end_di" bpmnElement="d0_a_end">
+        <dc:Bounds x="622" y="144" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="595" y="106" width="89" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="fl_0_di" bpmnElement="fl_0">
+        <di:waypoint x="308" y="162" />
+        <di:waypoint x="402" y="162" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_1_di" bpmnElement="fl_1">
+        <di:waypoint x="577" y="162" />
+        <di:waypoint x="622" y="162" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="as_d0_n6_di" bpmnElement="as_d0_n6">
+        <di:waypoint x="1644" y="1167" />
+        <di:waypoint x="1653" y="1198" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="as_d0_n5_di" bpmnElement="as_d0_n5">
+        <di:waypoint x="1930" y="1002" />
+        <di:waypoint x="2000" y="985" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="as_d0_n7_di" bpmnElement="as_d0_n7">
+        <di:waypoint x="1958" y="1208" />
+        <di:waypoint x="2000" y="1208" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="as_d0_n1_di" bpmnElement="as_d0_n1">
+        <di:waypoint x="484" y="207" />
+        <di:waypoint x="482" y="224" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="as_d0_n2_di" bpmnElement="as_d0_n2">
+        <di:waypoint x="800" y="482" />
+        <di:waypoint x="800" y="511" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="as_d0_n3_di" bpmnElement="as_d0_n3">
+        <di:waypoint x="1382" y="762" />
+        <di:waypoint x="1373" y="810" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="mf_0_di" bpmnElement="mf_0">
+        <di:waypoint x="640" y="180" />
+        <di:waypoint x="640" y="424" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="649" y="192" width="82" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="mf_1_di" bpmnElement="mf_1">
+        <di:waypoint x="1240" y="457" />
+        <di:waypoint x="1240" y="704" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1245" y="477" width="49" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="mf_2_di" bpmnElement="mf_2">
+        <di:waypoint x="1570" y="740" />
+        <di:waypoint x="1570" y="957" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1579" y="759" width="88" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="d0_n4_di" bpmnElement="d0_n4">
+        <dc:Bounds x="1090" y="958" width="230" height="88" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d0_n6_di" bpmnElement="d0_n6">
+        <dc:Bounds x="1580" y="1198" width="230" height="102" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d0_n5_di" bpmnElement="d0_n5">
+        <dc:Bounds x="2000" y="958" width="230" height="130" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d0_n7_di" bpmnElement="d0_n7">
+        <dc:Bounds x="2000" y="1150" width="230" height="116" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d0_n1_di" bpmnElement="d0_n1">
+        <dc:Bounds x="360" y="224" width="230" height="116" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d0_n2_di" bpmnElement="d0_n2">
+        <dc:Bounds x="685" y="511" width="230" height="102" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d0_n3_di" bpmnElement="d0_n3">
+        <dc:Bounds x="1250" y="810" width="230" height="88" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

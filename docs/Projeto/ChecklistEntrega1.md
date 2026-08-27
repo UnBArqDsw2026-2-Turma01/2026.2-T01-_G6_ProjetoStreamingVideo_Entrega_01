@@ -12,7 +12,7 @@ Legenda: ⬜ pendente · 🟨 em andamento · ✅ concluído
 | -- | -- | -- | -- | -- |
 | 1 | Um artefato generalista (Rich Picture **ou** Mapa Mental) | ⬜ | | |
 | 2 | Um SIG na notação do NFR Framework | ✅ | Lucas Andrade Zanetti, Heitor Macedo Ricardo, Matheus Lemes Amaral | [2.NFRFramework.md](../Base/Relatorios/1.1.1.SubEquipe_01/2.NFRFramework.md) |
-| 3 | Um modelo BPMN do fluxo obtido via Engenharia Reversa | ⬜ | | |
+| 3 | Um modelo BPMN do fluxo obtido via Engenharia Reversa | 🟨 | Lucas Andrade Zanetti (pendente revisão de 2º membro) | [3.EngenhariaReversa.md](../Base/Relatorios/1.1.1.SubEquipe_01/3.EngenhariaReversa.md) · [4.BPMN.md](../Base/Relatorios/1.1.1.SubEquipe_01/4.BPMN.md) |
 | 4 | Ponto de vista de **cada** membro sobre lições aprendidas e IA Generativa | ⬜ | | |
 
 ### SubEquipe_02
@@ -38,11 +38,11 @@ Legenda: ⬜ pendente · 🟨 em andamento · ✅ concluído
 
 | Item | SubEquipe_01 | SubEquipe_02 | SubEquipe_03 |
 | -- | -- | -- | -- |
-| Rastreabilidade & Elos com Outros Artefatos | ⬜ | ⬜ | 🟨 |
-| Senso Crítico | ⬜ | ⬜ | 🟨 |
-| Referências (link e/ou ABNT) | ⬜ | ⬜ | 🟨 |
-| Versionamentos & Participações | ⬜ | ⬜ | 🟨 |
-| Metodologia | ⬜ | ⬜ | 🟨 |
+| Rastreabilidade & Elos com Outros Artefatos | 🟨 | ⬜ | 🟨 |
+| Senso Crítico | 🟨 | ⬜ | 🟨 |
+| Referências (link e/ou ABNT) | 🟨 | ⬜ | 🟨 |
+| Versionamentos & Participações | 🟨 | ⬜ | 🟨 |
+| Metodologia | 🟨 | ⬜ | 🟨 |
 
 
 ## 3. Estrutura Obrigatória do GitPages
