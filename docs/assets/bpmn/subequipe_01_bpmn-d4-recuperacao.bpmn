@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_D4" targetNamespace="http://unb.fga/G7_ProjetoStreamingVideo" exporter="G7 SubEquipe_01 - tools/bpmn/gerador.py" exporterVersion="1.0">
+  <bpmn:escalation id="escalation_0" name="Reprodução não recuperada" escalationCode="Reprodução não recuperada" />
+  <bpmn:collaboration id="Collab_D4">
+    <bpmn:participant id="d4_p_player" name="Player — recuperação de reprodução" processRef="d4_proc_player" />
+  </bpmn:collaboration>
+  <bpmn:process id="d4_proc_player" isExecutable="false">
+    <bpmn:laneSet id="ls_d4_p_player">
+      <bpmn:lane id="d4_l_diag" name="Diagnóstico">
+        <bpmn:flowNodeRef>d4_start</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d4_diag</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d4_gw</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d4_backoff</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="d4_l_acao" name="Ação corretiva">
+        <bpmn:flowNodeRef>d4_buf</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d4_low</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d4_tok</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d4_master</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d4_node</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d4_alt</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d4_join</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d4_retry</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d4_gw2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d4_ok</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d4_gw3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d4_degrade</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d4_esc</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="d4_start" name="Falha de reprodução detectada">
+      <bpmn:outgoing>fl_0</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:businessRuleTask id="d4_diag" name="Classificar o modo de falha">
+      <bpmn:incoming>fl_0</bpmn:incoming>
+      <bpmn:incoming>fl_16</bpmn:incoming>
+      <bpmn:outgoing>fl_1</bpmn:outgoing>
+    </bpmn:businessRuleTask>
+    <bpmn:inclusiveGateway id="d4_gw" name="Quais modos de falha se aplicam?">
+      <bpmn:incoming>fl_1</bpmn:incoming>
+      <bpmn:outgoing>fl_2</bpmn:outgoing>
+      <bpmn:outgoing>fl_3</bpmn:outgoing>
+      <bpmn:outgoing>fl_4</bpmn:outgoing>
+    </bpmn:inclusiveGateway>
+    <bpmn:intermediateCatchEvent id="d4_backoff" name="Esperar com recuo exponencial">
+      <bpmn:incoming>fl_15</bpmn:incoming>
+      <bpmn:outgoing>fl_16</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="d4_backoff_def">
+        <bpmn:timeCycle xsi:type="bpmn:tFormalExpression">R3/PT1S</bpmn:timeCycle>
+      </bpmn:timerEventDefinition>
+    </bpmn:intermediateCatchEvent>
+    <bpmn:task id="d4_buf" name="Pausar e reencher o buffer">
+      <bpmn:incoming>fl_2</bpmn:incoming>
+      <bpmn:outgoing>fl_5</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:serviceTask id="d4_low" name="Descer para a faixa mais baixa disponível">
+      <bpmn:incoming>fl_5</bpmn:incoming>
+      <bpmn:outgoing>fl_8</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="d4_tok" name="Renovar o token de reprodução">
+      <bpmn:incoming>fl_3</bpmn:incoming>
+      <bpmn:outgoing>fl_6</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="d4_master" name="Reobter o manifesto mestre">
+      <bpmn:incoming>fl_6</bpmn:incoming>
+      <bpmn:outgoing>fl_9</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="d4_node" name="Pedir reatribuição de nó ao balanceador">
+      <bpmn:incoming>fl_4</bpmn:incoming>
+      <bpmn:outgoing>fl_7</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="d4_alt" name="Usar a URL alternativa declarada no manifesto">
+      <bpmn:incoming>fl_7</bpmn:incoming>
+      <bpmn:outgoing>fl_10</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:inclusiveGateway id="d4_join" name="Aguardar as correções disparadas">
+      <bpmn:incoming>fl_8</bpmn:incoming>
+      <bpmn:incoming>fl_9</bpmn:incoming>
+      <bpmn:incoming>fl_10</bpmn:incoming>
+      <bpmn:outgoing>fl_11</bpmn:outgoing>
+    </bpmn:inclusiveGateway>
+    <bpmn:serviceTask id="d4_retry" name="Retomar o download na borda da janela">
+      <bpmn:incoming>fl_11</bpmn:incoming>
+      <bpmn:outgoing>fl_12</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="d4_gw2" name="Reprodução retomada?">
+      <bpmn:incoming>fl_12</bpmn:incoming>
+      <bpmn:outgoing>fl_13</bpmn:outgoing>
+      <bpmn:outgoing>fl_14</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:endEvent id="d4_ok" name="Reprodução retomada">
+      <bpmn:incoming>fl_13</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:exclusiveGateway id="d4_gw3" name="Ainda há tentativas?">
+      <bpmn:incoming>fl_14</bpmn:incoming>
+      <bpmn:outgoing>fl_15</bpmn:outgoing>
+      <bpmn:outgoing>fl_17</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="d4_degrade" name="Cair para somente áudio">
+      <bpmn:incoming>fl_17</bpmn:incoming>
+      <bpmn:outgoing>fl_18</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="d4_esc" name="Falha reportada ao espectador">
+      <bpmn:incoming>fl_18</bpmn:incoming>
+      <bpmn:escalationEventDefinition id="d4_esc_def" escalationRef="escalation_0" />
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="fl_0" sourceRef="d4_start" targetRef="d4_diag" />
+    <bpmn:sequenceFlow id="fl_1" sourceRef="d4_diag" targetRef="d4_gw" />
+    <bpmn:sequenceFlow id="fl_2" sourceRef="d4_gw" targetRef="d4_buf" name="buffer esgotado">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">buffer esgotado</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="fl_3" sourceRef="d4_gw" targetRef="d4_tok" name="token vencido ou recusado">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">token vencido ou recusado</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="fl_4" sourceRef="d4_gw" targetRef="d4_node" name="nó ou PoP indisponível">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">nó ou PoP indisponível</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="fl_5" sourceRef="d4_buf" targetRef="d4_low" />
+    <bpmn:sequenceFlow id="fl_6" sourceRef="d4_tok" targetRef="d4_master" />
+    <bpmn:sequenceFlow id="fl_7" sourceRef="d4_node" targetRef="d4_alt" />
+    <bpmn:sequenceFlow id="fl_8" sourceRef="d4_low" targetRef="d4_join" />
+    <bpmn:sequenceFlow id="fl_9" sourceRef="d4_master" targetRef="d4_join" />
+    <bpmn:sequenceFlow id="fl_10" sourceRef="d4_alt" targetRef="d4_join" />
+    <bpmn:sequenceFlow id="fl_11" sourceRef="d4_join" targetRef="d4_retry" />
+    <bpmn:sequenceFlow id="fl_12" sourceRef="d4_retry" targetRef="d4_gw2" />
+    <bpmn:sequenceFlow id="fl_13" sourceRef="d4_gw2" targetRef="d4_ok" name="sim">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">sim</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="fl_14" sourceRef="d4_gw2" targetRef="d4_gw3" name="não">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">não</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="fl_15" sourceRef="d4_gw3" targetRef="d4_backoff" name="sim">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">sim</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="fl_16" sourceRef="d4_backoff" targetRef="d4_diag" name="nova tentativa" />
+    <bpmn:sequenceFlow id="fl_17" sourceRef="d4_gw3" targetRef="d4_degrade" name="não">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">não</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="fl_18" sourceRef="d4_degrade" targetRef="d4_esc" />
+    <bpmn:textAnnotation id="d4_n1">
+      <bpmn:text>Reencher o buffer é a única ação desta página que o espectador enxerga: é o 'travando'. Os outros dois ramos existem para agir antes que ele perceba.</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="as_d4_n1" sourceRef="d4_buf" targetRef="d4_n1" associationDirection="None" />
+    <bpmn:textAnnotation id="d4_n2">
+      <bpmn:text>Prazo do token medido em 1183 s, ~20 min (EV-01). Numa transmissão de várias horas o vencimento é certo, não excepcional — por isso D2 renova por evento de borda não interruptivo, e este ramo é só a rede de segurança.</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="as_d4_n2" sourceRef="d4_tok" targetRef="d4_n2" associationDirection="None" />
+    <bpmn:textAnnotation id="d4_n3">
+      <bpmn:text>Dois mecanismos de contorno foram observados sem acesso ao código (EV-02): o pedido ao balanceador declara suporte a reatribuição, e o manifesto mestre carrega URLs alternativas de segmento em outro domínio.</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="as_d4_n3" sourceRef="d4_node" targetRef="d4_n3" associationDirection="None" />
+    <bpmn:textAnnotation id="d4_n4">
+      <bpmn:text>Cair para somente áudio é degradação graciosa: a faixa de ~0,16 Mbit/s da grade (EV-02) permite manter a transmissão viva com quase qualquer rede. Liga ao operacionalizador O15 do SIG.</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="as_d4_n4" sourceRef="d4_degrade" targetRef="d4_n4" associationDirection="None" />
+    <bpmn:textAnnotation id="d4_n5">
+      <bpmn:text>Gateway INCLUSIVO, não exclusivo: uma queda de nó produz ao mesmo tempo erro de download e buffer drenando, e as correções não se excluem — dá para renovar o token E trocar de nó. O exclusivo forçaria escolher um ramo e perderia o caso mais comum.</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="as_d4_n5" sourceRef="d4_gw" targetRef="d4_n5" associationDirection="None" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diagram_1">
+    <bpmndi:BPMNPlane id="Plane_1" bpmnElement="Collab_D4">
+      <bpmndi:BPMNShape id="d4_p_player_di" bpmnElement="d4_p_player" isHorizontal="true">
+        <dc:Bounds x="160" y="80" width="2350" height="1008" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d4_l_diag_di" bpmnElement="d4_l_diag" isHorizontal="true">
+        <dc:Bounds x="190" y="80" width="2320" height="504" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d4_l_acao_di" bpmnElement="d4_l_acao" isHorizontal="true">
+        <dc:Bounds x="190" y="584" width="2320" height="504" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d4_start_di" bpmnElement="d4_start">
+        <dc:Bounds x="272" y="134" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="235" y="176" width="110" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d4_diag_di" bpmnElement="d4_diag">
+        <dc:Bounds x="420" y="112" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d4_gw_di" bpmnElement="d4_gw">
+        <dc:Bounds x="665" y="127" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="635" y="91" width="110" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d4_backoff_di" bpmnElement="d4_backoff">
+        <dc:Bounds x="672" y="374" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="635" y="416" width="110" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d4_buf_di" bpmnElement="d4_buf">
+        <dc:Bounds x="820" y="616" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d4_low_di" bpmnElement="d4_low">
+        <dc:Bounds x="1020" y="616" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d4_tok_di" bpmnElement="d4_tok">
+        <dc:Bounds x="820" y="736" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d4_master_di" bpmnElement="d4_master">
+        <dc:Bounds x="1020" y="736" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d4_node_di" bpmnElement="d4_node">
+        <dc:Bounds x="820" y="856" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d4_alt_di" bpmnElement="d4_alt">
+        <dc:Bounds x="1020" y="856" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d4_join_di" bpmnElement="d4_join">
+        <dc:Bounds x="1265" y="631" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1235" y="595" width="110" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d4_retry_di" bpmnElement="d4_retry">
+        <dc:Bounds x="1420" y="616" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d4_gw2_di" bpmnElement="d4_gw2" isMarkerVisible="true">
+        <dc:Bounds x="1665" y="631" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1635" y="609" width="110" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d4_ok_di" bpmnElement="d4_ok">
+        <dc:Bounds x="1872" y="638" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1835" y="680" width="110" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d4_gw3_di" bpmnElement="d4_gw3" isMarkerVisible="true">
+        <dc:Bounds x="1865" y="751" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1835" y="729" width="110" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d4_degrade_di" bpmnElement="d4_degrade">
+        <dc:Bounds x="2020" y="736" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d4_esc_di" bpmnElement="d4_esc">
+        <dc:Bounds x="2272" y="758" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2235" y="800" width="110" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d4_n1_di" bpmnElement="d4_n1">
+        <dc:Bounds x="775" y="972" width="230" height="88" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="as_d4_n1_di" bpmnElement="as_d4_n1">
+        <di:waypoint x="890" y="696" />
+        <di:waypoint x="890" y="972" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="d4_n2_di" bpmnElement="d4_n2">
+        <dc:Bounds x="1215" y="958" width="230" height="116" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="as_d4_n2_di" bpmnElement="as_d4_n2">
+        <di:waypoint x="960" y="776" />
+        <di:waypoint x="1215" y="1016" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="d4_n3_di" bpmnElement="d4_n3">
+        <dc:Bounds x="1655" y="958" width="230" height="116" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="as_d4_n3_di" bpmnElement="as_d4_n3">
+        <di:waypoint x="960" y="896" />
+        <di:waypoint x="1655" y="1016" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="d4_n4_di" bpmnElement="d4_n4">
+        <dc:Bounds x="2095" y="965" width="230" height="102" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="as_d4_n4_di" bpmnElement="as_d4_n4">
+        <di:waypoint x="2090" y="816" />
+        <di:waypoint x="2210" y="965" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="d4_n5_di" bpmnElement="d4_n5">
+        <dc:Bounds x="455" y="447" width="230" height="130" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="as_d4_n5_di" bpmnElement="as_d4_n5">
+        <di:waypoint x="690" y="177" />
+        <di:waypoint x="570" y="447" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_0_di" bpmnElement="fl_0">
+        <di:waypoint x="308" y="152" />
+        <di:waypoint x="420" y="152" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_1_di" bpmnElement="fl_1">
+        <di:waypoint x="560" y="152" />
+        <di:waypoint x="665" y="152" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_2_di" bpmnElement="fl_2">
+        <di:waypoint x="715" y="152" />
+        <di:waypoint x="768" y="152" />
+        <di:waypoint x="768" y="656" />
+        <di:waypoint x="820" y="656" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="701" y="128" width="90" height="18" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_3_di" bpmnElement="fl_3">
+        <di:waypoint x="715" y="152" />
+        <di:waypoint x="768" y="152" />
+        <di:waypoint x="768" y="776" />
+        <di:waypoint x="820" y="776" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="701" y="128" width="90" height="18" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_4_di" bpmnElement="fl_4">
+        <di:waypoint x="715" y="152" />
+        <di:waypoint x="768" y="152" />
+        <di:waypoint x="768" y="896" />
+        <di:waypoint x="820" y="896" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="701" y="128" width="90" height="18" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_5_di" bpmnElement="fl_5">
+        <di:waypoint x="960" y="656" />
+        <di:waypoint x="1020" y="656" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_6_di" bpmnElement="fl_6">
+        <di:waypoint x="960" y="776" />
+        <di:waypoint x="1020" y="776" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_7_di" bpmnElement="fl_7">
+        <di:waypoint x="960" y="896" />
+        <di:waypoint x="1020" y="896" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_8_di" bpmnElement="fl_8">
+        <di:waypoint x="1160" y="656" />
+        <di:waypoint x="1265" y="656" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_9_di" bpmnElement="fl_9">
+        <di:waypoint x="1160" y="776" />
+        <di:waypoint x="1212" y="776" />
+        <di:waypoint x="1212" y="656" />
+        <di:waypoint x="1265" y="656" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_10_di" bpmnElement="fl_10">
+        <di:waypoint x="1160" y="896" />
+        <di:waypoint x="1212" y="896" />
+        <di:waypoint x="1212" y="656" />
+        <di:waypoint x="1265" y="656" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_11_di" bpmnElement="fl_11">
+        <di:waypoint x="1315" y="656" />
+        <di:waypoint x="1420" y="656" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_12_di" bpmnElement="fl_12">
+        <di:waypoint x="1560" y="656" />
+        <di:waypoint x="1665" y="656" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_13_di" bpmnElement="fl_13">
+        <di:waypoint x="1715" y="656" />
+        <di:waypoint x="1872" y="656" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1754" y="632" width="90" height="18" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_14_di" bpmnElement="fl_14">
+        <di:waypoint x="1715" y="656" />
+        <di:waypoint x="1790" y="656" />
+        <di:waypoint x="1790" y="776" />
+        <di:waypoint x="1865" y="776" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1712" y="632" width="90" height="18" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_15_di" bpmnElement="fl_15">
+        <di:waypoint x="1890" y="751" />
+        <di:waypoint x="1890" y="392" />
+        <di:waypoint x="708" y="392" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1898" y="759" width="90" height="18" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_16_di" bpmnElement="fl_16">
+        <di:waypoint x="690" y="410" />
+        <di:waypoint x="690" y="455" />
+        <di:waypoint x="490" y="455" />
+        <di:waypoint x="490" y="192" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="698" y="418" width="90" height="18" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_17_di" bpmnElement="fl_17">
+        <di:waypoint x="1915" y="776" />
+        <di:waypoint x="2020" y="776" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1928" y="752" width="90" height="18" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_18_di" bpmnElement="fl_18">
+        <di:waypoint x="2160" y="776" />
+        <di:waypoint x="2272" y="776" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

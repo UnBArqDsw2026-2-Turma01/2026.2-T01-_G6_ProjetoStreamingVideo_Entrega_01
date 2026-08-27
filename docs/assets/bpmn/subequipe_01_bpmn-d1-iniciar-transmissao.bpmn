@@ -1,0 +1,620 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_D1" targetNamespace="http://unb.fga/G7_ProjetoStreamingVideo" exporter="Camunda Modeler" exporterVersion="5.50.1">
+  <bpmn:signal id="signal_0" name="Canal ao vivo" />
+  <bpmn:message id="message_0" name="Abertura de conexão de ingestão" />
+  <bpmn:message id="message_1" name="Conexão de ingestão recusada" />
+  <bpmn:message id="message_2" name="Conexão de ingestão aceita" />
+  <bpmn:error id="error_0" name="Ingestão recusada" errorCode="Ingestão recusada" />
+  <bpmn:error id="error_1" name="Queda da conexão de ingestão" errorCode="Queda da conexão de ingestão" />
+  <bpmn:dataStore id="d1_ds_origin_store" name="Origem: janela deslizante de segmentos" />
+  <bpmn:collaboration id="Collab_D1">
+    <bpmn:participant id="d1_p_criador" name="Criador de conteúdo" processRef="d1_proc_criador" />
+    <bpmn:participant id="d1_p_plat" name="Plataforma de streaming" processRef="d1_proc_plat" />
+    <bpmn:messageFlow id="mf_0" name="abertura + chave de transmissão" sourceRef="d1_c_open" targetRef="d1_i_start" />
+    <bpmn:messageFlow id="mf_1" name="conexão aceita" sourceRef="d1_i_acc" targetRef="d1_c_wait" />
+    <bpmn:messageFlow id="mf_2" name="conexão recusada" sourceRef="d1_i_rej" targetRef="d1_c_wait" />
+    <bpmn:messageFlow id="mf_3" name="fluxo contínuo de áudio e vídeo" sourceRef="d1_c_push" targetRef="d1_i_recv" />
+    <bpmn:textAnnotation id="d1_n1">
+      <bpmn:text>Repassar a fonte sem recodificar é o caminho de menor latência; recodificar a grade inteira acrescenta tempo de máquina antes de o primeiro segmento existir. É o primeiro trade-off do pipeline, e ele é invisível ao espectador.</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="d1_n2">
+      <bpmn:text>Grade observada na saída (EV-02): 1080p60 fonte ~6,5 Mbit/s; 720p60 ~3,4; 480p ~1,4; 360p ~0,63; 160p ~0,23; somente áudio ~0,16.</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="d1_n3">
+      <bpmn:text>Duração de segmento observada: 2,000 s (EV-03). O intervalo de quadro-chave do codificador precisa dividir esse valor — se não dividir, o empacotador é obrigado a recodificar e a latência sobe.</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="d1_n4">
+      <bpmn:text>As marcações de anúncio observadas ficam na própria linha do tempo, com descontinuidade e um segmento curto de 0,2 s para alinhar a fronteira. Isso obriga o manifesto de mídia a ser montado por sessão, e, por consequência, a nao ser cacheável</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="d1_n5">
+      <bpmn:text>Este sinal é o mesmo que D5 entrega aos espectadores pelo tópico de reprodução do canal, e é o gatilho de 'canal ao vivo' consumido em D0.</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="as_d1_n1" associationDirection="None" sourceRef="d1_t_dec" targetRef="d1_n1" />
+    <bpmn:association id="as_d1_n2" associationDirection="None" sourceRef="d1_t_multi" targetRef="d1_n2" />
+    <bpmn:association id="as_d1_n3" associationDirection="None" sourceRef="d1_t_pack" targetRef="d1_n3" />
+    <bpmn:association id="as_d1_n4" associationDirection="None" sourceRef="d1_t_ads" targetRef="d1_n4" />
+    <bpmn:association id="as_d1_n5" associationDirection="None" sourceRef="d1_rt_sig" targetRef="d1_n5" />
+  </bpmn:collaboration>
+  <bpmn:process id="d1_proc_criador" isExecutable="false">
+    <bpmn:startEvent id="d1_c_start" name="Decide iniciar a transmissão">
+      <bpmn:outgoing>fl_0</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sendTask id="d1_c_push" name="Enviar áudio e vídeo continuamente">
+      <bpmn:incoming>fl_6</bpmn:incoming>
+      <bpmn:incoming>fl_9</bpmn:incoming>
+      <bpmn:outgoing>fl_7</bpmn:outgoing>
+      <bpmn:standardLoopCharacteristics />
+    </bpmn:sendTask>
+    <bpmn:boundaryEvent id="d1_b_drop" name="Queda da conexão" attachedToRef="d1_c_push">
+      <bpmn:outgoing>fl_8</bpmn:outgoing>
+      <bpmn:errorEventDefinition id="d1_b_drop_def" errorRef="error_1" />
+    </bpmn:boundaryEvent>
+    <bpmn:sequenceFlow id="fl_0" sourceRef="d1_c_start" targetRef="d1_c_conf" />
+    <bpmn:sequenceFlow id="fl_1" sourceRef="d1_c_conf" targetRef="d1_c_key" />
+    <bpmn:sequenceFlow id="fl_2" sourceRef="d1_c_key" targetRef="d1_c_open" />
+    <bpmn:sequenceFlow id="fl_3" sourceRef="d1_c_open" targetRef="d1_c_wait" />
+    <bpmn:sequenceFlow id="fl_4" sourceRef="d1_c_wait" targetRef="d1_c_gw" />
+    <bpmn:sequenceFlow id="fl_5" name="não" sourceRef="d1_c_gw" targetRef="d1_c_rej">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">não</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="fl_6" name="sim" sourceRef="d1_c_gw" targetRef="d1_c_push">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">sim</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="fl_7" sourceRef="d1_c_push" targetRef="d1_c_end" />
+    <bpmn:sequenceFlow id="fl_8" sourceRef="d1_b_drop" targetRef="d1_c_recon" />
+    <bpmn:sequenceFlow id="fl_9" name="retomar o envio" sourceRef="d1_c_recon" targetRef="d1_c_push" />
+    <bpmn:userTask id="d1_c_conf" name="Configurar o codificador: resolução, taxa de bits e intervalo de quadro-chave">
+      <bpmn:incoming>fl_0</bpmn:incoming>
+      <bpmn:outgoing>fl_1</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="d1_c_key" name="Informar a chave de transmissão do canal">
+      <bpmn:incoming>fl_1</bpmn:incoming>
+      <bpmn:outgoing>fl_2</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sendTask id="d1_c_open" name="Abrir a conexão de ingestão">
+      <bpmn:incoming>fl_2</bpmn:incoming>
+      <bpmn:outgoing>fl_3</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:receiveTask id="d1_c_wait" name="Aguardar a resposta do ponto de ingestão">
+      <bpmn:incoming>fl_3</bpmn:incoming>
+      <bpmn:outgoing>fl_4</bpmn:outgoing>
+    </bpmn:receiveTask>
+    <bpmn:exclusiveGateway id="d1_c_gw" name="Conexão aceita?">
+      <bpmn:incoming>fl_4</bpmn:incoming>
+      <bpmn:outgoing>fl_5</bpmn:outgoing>
+      <bpmn:outgoing>fl_6</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="d1_c_recon" name="Reconectar ao ponto de ingestão">
+      <bpmn:incoming>fl_8</bpmn:incoming>
+      <bpmn:outgoing>fl_9</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="d1_c_end" name="Transmissão encerrada pelo criador">
+      <bpmn:incoming>fl_7</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:endEvent id="d1_c_rej" name="Corrigir a configuração e tentar de novo">
+      <bpmn:incoming>fl_5</bpmn:incoming>
+      <bpmn:errorEventDefinition id="d1_c_rej_def" errorRef="error_0" />
+    </bpmn:endEvent>
+  </bpmn:process>
+  <bpmn:process id="d1_proc_plat" isExecutable="false">
+    <bpmn:laneSet id="ls_d1_p_plat">
+      <bpmn:lane id="d1_l_ing" name="Ponto de ingestão (PoP)">
+        <bpmn:flowNodeRef>d1_i_start</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d1_i_val</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d1_i_gw</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d1_i_rej</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d1_i_par</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d1_i_acc</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d1_i_recv</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="d1_l_trans" name="Transcodificação e empacotamento">
+        <bpmn:flowNodeRef>d1_d_seg</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d1_ds_origin</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d1_t_dec</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d1_t_multi</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d1_t_pack</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d1_t_ads</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d1_t_pub</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d1_t_par</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d1_t_gw</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d1_t_end</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="d1_l_rt" name="Malha de tempo real">
+        <bpmn:flowNodeRef>d1_rt_sig</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d1_rt_end</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:sequenceFlow id="fl_10" sourceRef="d1_i_start" targetRef="d1_i_val" />
+    <bpmn:sequenceFlow id="fl_11" sourceRef="d1_i_val" targetRef="d1_i_gw" />
+    <bpmn:sequenceFlow id="fl_12" name="não" sourceRef="d1_i_gw" targetRef="d1_i_rej">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">não</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="fl_13" name="sim" sourceRef="d1_i_gw" targetRef="d1_i_par">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">sim</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="fl_14" sourceRef="d1_i_par" targetRef="d1_i_acc" />
+    <bpmn:sequenceFlow id="fl_15" sourceRef="d1_i_par" targetRef="d1_i_recv" />
+    <bpmn:sequenceFlow id="fl_16" sourceRef="d1_i_acc" targetRef="d1_i_recv" />
+    <bpmn:sequenceFlow id="fl_17" sourceRef="d1_i_recv" targetRef="d1_t_dec" />
+    <bpmn:sequenceFlow id="fl_24" sourceRef="d1_t_par" targetRef="d1_rt_sig" />
+    <bpmn:startEvent id="d1_i_start" name="Conexão de ingestão recebida">
+      <bpmn:outgoing>fl_10</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="d1_i_start_def" messageRef="message_0" />
+    </bpmn:startEvent>
+    <bpmn:businessRuleTask id="d1_i_val" name="Validar a chave e a elegibilidade do canal">
+      <bpmn:incoming>fl_10</bpmn:incoming>
+      <bpmn:outgoing>fl_11</bpmn:outgoing>
+    </bpmn:businessRuleTask>
+    <bpmn:exclusiveGateway id="d1_i_gw" name="Chave válida?">
+      <bpmn:incoming>fl_11</bpmn:incoming>
+      <bpmn:outgoing>fl_12</bpmn:outgoing>
+      <bpmn:outgoing>fl_13</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:endEvent id="d1_i_rej" name="Recusar a conexão">
+      <bpmn:incoming>fl_12</bpmn:incoming>
+      <bpmn:messageEventDefinition id="d1_i_rej_def" messageRef="message_1" />
+    </bpmn:endEvent>
+    <bpmn:parallelGateway id="d1_i_par" name="Aceitar e anunciar">
+      <bpmn:incoming>fl_13</bpmn:incoming>
+      <bpmn:outgoing>fl_14</bpmn:outgoing>
+      <bpmn:outgoing>fl_15</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:intermediateThrowEvent id="d1_i_acc" name="Confirmar a ingestão ao criador">
+      <bpmn:incoming>fl_14</bpmn:incoming>
+      <bpmn:outgoing>fl_16</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="d1_i_acc_def" messageRef="message_2" />
+    </bpmn:intermediateThrowEvent>
+    <bpmn:receiveTask id="d1_i_recv" name="Receber o fluxo contínuo do criador">
+      <bpmn:incoming>fl_15</bpmn:incoming>
+      <bpmn:incoming>fl_16</bpmn:incoming>
+      <bpmn:outgoing>fl_17</bpmn:outgoing>
+      <bpmn:standardLoopCharacteristics />
+    </bpmn:receiveTask>
+    <bpmn:businessRuleTask id="d1_t_dec" name="Decidir o modo: repassar a fonte ou recodificar">
+      <bpmn:incoming>fl_17</bpmn:incoming>
+      <bpmn:outgoing>fl_18</bpmn:outgoing>
+    </bpmn:businessRuleTask>
+    <bpmn:serviceTask id="d1_t_multi" name="Gerar cada qualidade da grade">
+      <bpmn:incoming>fl_18</bpmn:incoming>
+      <bpmn:outgoing>fl_19</bpmn:outgoing>
+      <bpmn:multiInstanceLoopCharacteristics />
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="d1_t_pack" name="Empacotar em segmentos de ~2 s com marcação de tempo absoluta">
+      <bpmn:incoming>fl_19</bpmn:incoming>
+      <bpmn:incoming>fl_25</bpmn:incoming>
+      <bpmn:outgoing>fl_20</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="d1_t_ads" name="Inserir as marcações de anúncio na linha do tempo">
+      <bpmn:incoming>fl_20</bpmn:incoming>
+      <bpmn:outgoing>fl_21</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="d1_t_pub" name="Publicar o segmento e deslizar a janela do manifesto">
+      <bpmn:incoming>fl_21</bpmn:incoming>
+      <bpmn:outgoing>fl_22</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="doa_d1_t_pub_0">
+        <bpmn:targetRef>d1_d_seg</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+      <bpmn:dataOutputAssociation id="doa_d1_t_pub_1">
+        <bpmn:targetRef>d1_ds_origin</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:serviceTask>
+    <bpmn:parallelGateway id="d1_t_par" name="Publicar e sinalizar">
+      <bpmn:incoming>fl_22</bpmn:incoming>
+      <bpmn:outgoing>fl_23</bpmn:outgoing>
+      <bpmn:outgoing>fl_24</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:exclusiveGateway id="d1_t_gw" name="Transmissão continua?">
+      <bpmn:incoming>fl_23</bpmn:incoming>
+      <bpmn:outgoing>fl_25</bpmn:outgoing>
+      <bpmn:outgoing>fl_26</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:endEvent id="d1_t_end" name="Janela de segmentos encerrada">
+      <bpmn:incoming>fl_26</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:dataObjectReference id="d1_d_seg" name="Segmento de ~2 s" dataObjectRef="d1_d_seg_obj" />
+    <bpmn:dataObject id="d1_d_seg_obj" />
+    <bpmn:dataStoreReference id="d1_ds_origin" name="Origem: janela deslizante de segmentos" dataStoreRef="d1_ds_origin_store" />
+    <bpmn:sequenceFlow id="fl_18" sourceRef="d1_t_dec" targetRef="d1_t_multi" />
+    <bpmn:sequenceFlow id="fl_19" sourceRef="d1_t_multi" targetRef="d1_t_pack" />
+    <bpmn:sequenceFlow id="fl_25" name="sim! próximo segmento" sourceRef="d1_t_gw" targetRef="d1_t_pack">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">sim — próximo segmento</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="fl_20" sourceRef="d1_t_pack" targetRef="d1_t_ads" />
+    <bpmn:sequenceFlow id="fl_21" sourceRef="d1_t_ads" targetRef="d1_t_pub" />
+    <bpmn:sequenceFlow id="fl_22" sourceRef="d1_t_pub" targetRef="d1_t_par" />
+    <bpmn:sequenceFlow id="fl_23" sourceRef="d1_t_par" targetRef="d1_t_gw" />
+    <bpmn:sequenceFlow id="fl_26" name="não" sourceRef="d1_t_gw" targetRef="d1_t_end">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">não</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:intermediateThrowEvent id="d1_rt_sig" name="Anunciar o canal como ao vivo">
+      <bpmn:incoming>fl_24</bpmn:incoming>
+      <bpmn:outgoing>Flow_0y87int</bpmn:outgoing>
+      <bpmn:signalEventDefinition id="d1_rt_sig_def" signalRef="signal_0" />
+    </bpmn:intermediateThrowEvent>
+    <bpmn:endEvent id="d1_rt_end" name="Anúncio publicado nos tópicos do canal">
+      <bpmn:incoming>Flow_0y87int</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0y87int" sourceRef="d1_rt_sig" targetRef="d1_rt_end" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diagram_1">
+    <bpmndi:BPMNPlane id="Plane_1" bpmnElement="Collab_D1">
+      <bpmndi:BPMNShape id="d1_p_criador_di" bpmnElement="d1_p_criador" isHorizontal="true">
+        <dc:Bounds x="200" y="90" width="2700" height="314" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d1_c_start_di" bpmnElement="d1_c_start">
+        <dc:Bounds x="272" y="134" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="235" y="176" width="110" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d1_c_push_di" bpmnElement="d1_c_push">
+        <dc:Bounds x="1420" y="112" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d1_c_conf_di" bpmnElement="d1_c_conf">
+        <dc:Bounds x="360" y="112" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d1_c_key_di" bpmnElement="d1_c_key">
+        <dc:Bounds x="540" y="112" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d1_c_open_di" bpmnElement="d1_c_open">
+        <dc:Bounds x="710" y="112" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d1_c_wait_di" bpmnElement="d1_c_wait">
+        <dc:Bounds x="930" y="112" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d1_c_gw_di" bpmnElement="d1_c_gw" isMarkerVisible="true">
+        <dc:Bounds x="1175" y="127" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1159" y="113" width="83" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d1_c_recon_di" bpmnElement="d1_c_recon">
+        <dc:Bounds x="1700" y="270" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d1_c_end_di" bpmnElement="d1_c_end">
+        <dc:Bounds x="1742" y="134" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1723" y="176" width="74" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d1_c_rej_di" bpmnElement="d1_c_rej">
+        <dc:Bounds x="1182" y="252" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1148" y="294" width="104" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d1_b_drop_di" bpmnElement="d1_b_drop">
+        <dc:Bounds x="1524" y="174" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1553" y="215" width="93" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="fl_0_di" bpmnElement="fl_0">
+        <di:waypoint x="308" y="152" />
+        <di:waypoint x="360" y="152" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_1_di" bpmnElement="fl_1">
+        <di:waypoint x="500" y="152" />
+        <di:waypoint x="540" y="152" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_2_di" bpmnElement="fl_2">
+        <di:waypoint x="680" y="152" />
+        <di:waypoint x="710" y="152" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_3_di" bpmnElement="fl_3">
+        <di:waypoint x="850" y="152" />
+        <di:waypoint x="930" y="152" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_4_di" bpmnElement="fl_4">
+        <di:waypoint x="1070" y="152" />
+        <di:waypoint x="1175" y="152" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_5_di" bpmnElement="fl_5">
+        <di:waypoint x="1200" y="177" />
+        <di:waypoint x="1200" y="252" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1220" y="179" width="19" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_6_di" bpmnElement="fl_6">
+        <di:waypoint x="1225" y="152" />
+        <di:waypoint x="1420" y="152" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1324" y="128" width="18" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_7_di" bpmnElement="fl_7">
+        <di:waypoint x="1560" y="152" />
+        <di:waypoint x="1742" y="152" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_8_di" bpmnElement="fl_8">
+        <di:waypoint x="1542" y="210" />
+        <di:waypoint x="1542" y="310" />
+        <di:waypoint x="1700" y="310" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_9_di" bpmnElement="fl_9">
+        <di:waypoint x="1770" y="350" />
+        <di:waypoint x="1770" y="370" />
+        <di:waypoint x="1490" y="370" />
+        <di:waypoint x="1490" y="192" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1781" y="363" width="77" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="d1_p_plat_di" bpmnElement="d1_p_plat" isHorizontal="true">
+        <dc:Bounds x="200" y="474" width="2700" height="826" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d1_l_rt_di" bpmnElement="d1_l_rt" isHorizontal="true">
+        <dc:Bounds x="230" y="1130" width="2670" height="170" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d1_l_trans_di" bpmnElement="d1_l_trans" isHorizontal="true">
+        <dc:Bounds x="230" y="750" width="2670" height="380" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d1_l_ing_di" bpmnElement="d1_l_ing" isHorizontal="true">
+        <dc:Bounds x="230" y="474" width="2670" height="276" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d1_i_start_di" bpmnElement="d1_i_start">
+        <dc:Bounds x="762" y="652" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="728" y="694" width="104" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d1_i_val_di" bpmnElement="d1_i_val">
+        <dc:Bounds x="850" y="630" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d1_i_gw_di" bpmnElement="d1_i_gw" isMarkerVisible="true">
+        <dc:Bounds x="1095" y="645" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1085" y="705" width="70" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d1_i_rej_di" bpmnElement="d1_i_rej">
+        <dc:Bounds x="1102" y="528" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1072" y="504" width="95" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d1_i_par_di" bpmnElement="d1_i_par">
+        <dc:Bounds x="1245" y="645" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1225" y="705" width="89" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d1_i_acc_di" bpmnElement="d1_i_acc">
+        <dc:Bounds x="1372" y="562" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1339" y="604" width="103" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d1_i_recv_di" bpmnElement="d1_i_recv">
+        <dc:Bounds x="1480" y="540" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d1_t_dec_di" bpmnElement="d1_t_dec">
+        <dc:Bounds x="1605" y="870" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d1_t_multi_di" bpmnElement="d1_t_multi">
+        <dc:Bounds x="1815" y="870" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d1_t_pack_di" bpmnElement="d1_t_pack">
+        <dc:Bounds x="2020" y="870" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d1_t_ads_di" bpmnElement="d1_t_ads">
+        <dc:Bounds x="2265" y="930" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d1_t_pub_di" bpmnElement="d1_t_pub">
+        <dc:Bounds x="2455" y="930" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d1_t_par_di" bpmnElement="d1_t_par">
+        <dc:Bounds x="2680" y="945" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2739.5" y="963" width="93" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d1_t_gw_di" bpmnElement="d1_t_gw" isMarkerVisible="true">
+        <dc:Bounds x="2680" y="825" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2673.5" y="787.5" width="63" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d1_t_end_di" bpmnElement="d1_t_end">
+        <dc:Bounds x="2817" y="832" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2782" y="794.5" width="105" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d1_d_seg_di" bpmnElement="d1_d_seg">
+        <dc:Bounds x="2447" y="1035" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2420" y="1091" width="90" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d1_ds_origin_di" bpmnElement="d1_ds_origin">
+        <dc:Bounds x="2567" y="1035" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2532" y="1091" width="123" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d1_rt_sig_di" bpmnElement="d1_rt_sig">
+        <dc:Bounds x="2687" y="1182" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2664" y="1228" width="82" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d1_rt_end_di" bpmnElement="d1_rt_end">
+        <dc:Bounds x="2797" y="1182" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2765" y="1224" width="101" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="fl_10_di" bpmnElement="fl_10">
+        <di:waypoint x="798" y="670" />
+        <di:waypoint x="850" y="670" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_11_di" bpmnElement="fl_11">
+        <di:waypoint x="990" y="670" />
+        <di:waypoint x="1095" y="670" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_12_di" bpmnElement="fl_12">
+        <di:waypoint x="1120" y="645" />
+        <di:waypoint x="1120" y="564" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1130" y="635" width="19" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_13_di" bpmnElement="fl_13">
+        <di:waypoint x="1145" y="670" />
+        <di:waypoint x="1245" y="670" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1173" y="653" width="18" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_14_di" bpmnElement="fl_14">
+        <di:waypoint x="1270" y="645" />
+        <di:waypoint x="1270" y="580" />
+        <di:waypoint x="1372" y="580" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_15_di" bpmnElement="fl_15">
+        <di:waypoint x="1295" y="670" />
+        <di:waypoint x="1550" y="670" />
+        <di:waypoint x="1550" y="620" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_16_di" bpmnElement="fl_16">
+        <di:waypoint x="1408" y="580" />
+        <di:waypoint x="1480" y="580" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_17_di" bpmnElement="fl_17">
+        <di:waypoint x="1620" y="580" />
+        <di:waypoint x="1675" y="580" />
+        <di:waypoint x="1675" y="870" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_24_di" bpmnElement="fl_24">
+        <di:waypoint x="2705" y="995" />
+        <di:waypoint x="2705" y="1182" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_18_di" bpmnElement="fl_18">
+        <di:waypoint x="1745" y="910" />
+        <di:waypoint x="1815" y="910" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_19_di" bpmnElement="fl_19">
+        <di:waypoint x="1955" y="910" />
+        <di:waypoint x="2020" y="910" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_25_di" bpmnElement="fl_25">
+        <di:waypoint x="2680" y="850" />
+        <di:waypoint x="2485" y="850" />
+        <di:waypoint x="2485" y="900" />
+        <di:waypoint x="2160" y="900" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2403" y="850" width="63" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_20_di" bpmnElement="fl_20">
+        <di:waypoint x="2090" y="950" />
+        <di:waypoint x="2090" y="970" />
+        <di:waypoint x="2265" y="970" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_21_di" bpmnElement="fl_21">
+        <di:waypoint x="2405" y="970" />
+        <di:waypoint x="2455" y="970" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_22_di" bpmnElement="fl_22">
+        <di:waypoint x="2595" y="970" />
+        <di:waypoint x="2680" y="970" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_23_di" bpmnElement="fl_23">
+        <di:waypoint x="2705" y="945" />
+        <di:waypoint x="2705" y="875" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_26_di" bpmnElement="fl_26">
+        <di:waypoint x="2730" y="850" />
+        <di:waypoint x="2817" y="850" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2768" y="826" width="19" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0y87int_di" bpmnElement="Flow_0y87int">
+        <di:waypoint x="2723" y="1200" />
+        <di:waypoint x="2797" y="1200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="as_d1_n1_di" bpmnElement="as_d1_n1">
+        <di:waypoint x="1605" y="928" />
+        <di:waypoint x="1530" y="947" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="as_d1_n2_di" bpmnElement="as_d1_n2">
+        <di:waypoint x="1885" y="950" />
+        <di:waypoint x="1780" y="990" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="as_d1_n3_di" bpmnElement="as_d1_n3">
+        <di:waypoint x="2058" y="870" />
+        <di:waypoint x="1997" y="846" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="as_d1_n4_di" bpmnElement="as_d1_n4">
+        <di:waypoint x="2265" y="982" />
+        <di:waypoint x="2214" y="1020" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="as_d1_n5_di" bpmnElement="as_d1_n5">
+        <di:waypoint x="2687" y="1202" />
+        <di:waypoint x="2575" y="1213" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="mf_0_di" bpmnElement="mf_0">
+        <di:waypoint x="780" y="192" />
+        <di:waypoint x="780" y="652" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="792" y="208" width="83" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="mf_1_di" bpmnElement="mf_1">
+        <di:waypoint x="1390" y="562" />
+        <di:waypoint x="1390" y="450" />
+        <di:waypoint x="1030" y="450" />
+        <di:waypoint x="1030" y="192" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1043" y="433" width="74" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="mf_2_di" bpmnElement="mf_2">
+        <di:waypoint x="1102" y="546" />
+        <di:waypoint x="980" y="546" />
+        <di:waypoint x="980" y="192" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1135" y="560" width="90" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="mf_3_di" bpmnElement="mf_3">
+        <di:waypoint x="1450" y="192" />
+        <di:waypoint x="1450" y="420" />
+        <di:waypoint x="1550" y="420" />
+        <di:waypoint x="1550" y="540" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1498" y="326" width="84" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="d1_n1_di" bpmnElement="d1_n1">
+        <dc:Bounds x="1300" y="918" width="230" height="116" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d1_n2_di" bpmnElement="d1_n2">
+        <dc:Bounds x="1665" y="990" width="230" height="74" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d1_n3_di" bpmnElement="d1_n3">
+        <dc:Bounds x="1925" y="760" width="232" height="86" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="doa_d1_t_pub_0_di" bpmnElement="doa_d1_t_pub_0">
+        <di:waypoint x="2498" y="1010" />
+        <di:waypoint x="2482" y="1035" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="doa_d1_t_pub_1_di" bpmnElement="doa_d1_t_pub_1">
+        <di:waypoint x="2561" y="1010" />
+        <di:waypoint x="2570" y="1035" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="d1_n4_di" bpmnElement="d1_n4">
+        <dc:Bounds x="1980" y="990" width="234" height="115" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d1_n5_di" bpmnElement="d1_n5">
+        <dc:Bounds x="2345" y="1180" width="230" height="88" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

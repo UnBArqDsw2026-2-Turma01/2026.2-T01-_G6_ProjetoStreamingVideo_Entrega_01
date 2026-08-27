@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_D3" targetNamespace="http://unb.fga/G7_ProjetoStreamingVideo" exporter="G7 SubEquipe_01 - tools/bpmn/gerador.py" exporterVersion="1.0">
+  <bpmn:collaboration id="Collab_D3">
+    <bpmn:participant id="d3_p_abr" name="Player — adaptação de qualidade" processRef="d3_proc_abr" />
+  </bpmn:collaboration>
+  <bpmn:process id="d3_proc_abr" isExecutable="false">
+    <bpmn:startEvent id="d3_start" name="Segmento anexado ao buffer">
+      <bpmn:outgoing>fl_0</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:parallelGateway id="d3_split" name="Coletar as entradas da decisão">
+      <bpmn:incoming>fl_0</bpmn:incoming>
+      <bpmn:outgoing>fl_1</bpmn:outgoing>
+      <bpmn:outgoing>fl_2</bpmn:outgoing>
+      <bpmn:outgoing>fl_3</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:serviceTask id="d3_m_thr" name="Medir a taxa de transferência do último segmento">
+      <bpmn:incoming>fl_1</bpmn:incoming>
+      <bpmn:outgoing>fl_4</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="d3_m_buf" name="Medir a ocupação do buffer">
+      <bpmn:incoming>fl_2</bpmn:incoming>
+      <bpmn:outgoing>fl_5</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="d3_m_view" name="Observar o tamanho de exibição do player">
+      <bpmn:incoming>fl_3</bpmn:incoming>
+      <bpmn:outgoing>fl_6</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:parallelGateway id="d3_join" name="Consolidar">
+      <bpmn:incoming>fl_4</bpmn:incoming>
+      <bpmn:incoming>fl_5</bpmn:incoming>
+      <bpmn:incoming>fl_6</bpmn:incoming>
+      <bpmn:outgoing>fl_7</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:businessRuleTask id="d3_est" name="Estimar a maior faixa sustentável">
+      <bpmn:incoming>fl_7</bpmn:incoming>
+      <bpmn:outgoing>fl_8</bpmn:outgoing>
+    </bpmn:businessRuleTask>
+    <bpmn:exclusiveGateway id="d3_gw1" name="Faixa alvo difere da atual?">
+      <bpmn:incoming>fl_8</bpmn:incoming>
+      <bpmn:outgoing>fl_9</bpmn:outgoing>
+      <bpmn:outgoing>fl_10</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:endEvent id="d3_keep" name="Manter a faixa atual">
+      <bpmn:incoming>fl_9</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:exclusiveGateway id="d3_gw2" name="Subir ou descer?">
+      <bpmn:incoming>fl_10</bpmn:incoming>
+      <bpmn:outgoing>fl_11</bpmn:outgoing>
+      <bpmn:outgoing>fl_12</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="d3_down" name="Descer de faixa imediatamente">
+      <bpmn:incoming>fl_12</bpmn:incoming>
+      <bpmn:outgoing>fl_17</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="d3_hold" name="Aguardar N segmentos estáveis antes de subir">
+      <bpmn:incoming>fl_11</bpmn:incoming>
+      <bpmn:outgoing>fl_13</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="d3_gw3" name="Continua estável?">
+      <bpmn:incoming>fl_13</bpmn:incoming>
+      <bpmn:outgoing>fl_14</bpmn:outgoing>
+      <bpmn:outgoing>fl_15</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="d3_up" name="Subir uma faixa">
+      <bpmn:incoming>fl_14</bpmn:incoming>
+      <bpmn:outgoing>fl_16</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="d3_apply" name="Aplicar a troca na próxima fronteira de segmento">
+      <bpmn:incoming>fl_16</bpmn:incoming>
+      <bpmn:incoming>fl_17</bpmn:incoming>
+      <bpmn:outgoing>fl_18</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="d3_end" name="Qualidade ajustada">
+      <bpmn:incoming>fl_18</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:endEvent id="d3_abort" name="Desistir da subida">
+      <bpmn:incoming>fl_15</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="fl_0" sourceRef="d3_start" targetRef="d3_split" />
+    <bpmn:sequenceFlow id="fl_1" sourceRef="d3_split" targetRef="d3_m_thr" />
+    <bpmn:sequenceFlow id="fl_2" sourceRef="d3_split" targetRef="d3_m_buf" />
+    <bpmn:sequenceFlow id="fl_3" sourceRef="d3_split" targetRef="d3_m_view" />
+    <bpmn:sequenceFlow id="fl_4" sourceRef="d3_m_thr" targetRef="d3_join" />
+    <bpmn:sequenceFlow id="fl_5" sourceRef="d3_m_buf" targetRef="d3_join" />
+    <bpmn:sequenceFlow id="fl_6" sourceRef="d3_m_view" targetRef="d3_join" />
+    <bpmn:sequenceFlow id="fl_7" sourceRef="d3_join" targetRef="d3_est" />
+    <bpmn:sequenceFlow id="fl_8" sourceRef="d3_est" targetRef="d3_gw1" />
+    <bpmn:sequenceFlow id="fl_9" sourceRef="d3_gw1" targetRef="d3_keep" name="não">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">não</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="fl_10" sourceRef="d3_gw1" targetRef="d3_gw2" name="sim">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">sim</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="fl_11" sourceRef="d3_gw2" targetRef="d3_hold" name="subir">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">subir</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="fl_12" sourceRef="d3_gw2" targetRef="d3_down" name="descer">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">descer</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="fl_13" sourceRef="d3_hold" targetRef="d3_gw3" />
+    <bpmn:sequenceFlow id="fl_14" sourceRef="d3_gw3" targetRef="d3_up" name="sim">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">sim</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="fl_15" sourceRef="d3_gw3" targetRef="d3_abort" name="não">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">não</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="fl_16" sourceRef="d3_up" targetRef="d3_apply" />
+    <bpmn:sequenceFlow id="fl_17" sourceRef="d3_down" targetRef="d3_apply" />
+    <bpmn:sequenceFlow id="fl_18" sourceRef="d3_apply" targetRef="d3_end" />
+    <bpmn:textAnnotation id="d3_n1">
+      <bpmn:text>Medição (EV-04): segmento de 720p60 com 859.724 B em 0,266 s ≈ 26 Mbit/s, contra 3,42 Mbit/s declarados para a faixa — margem de cerca de 7×.</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="as_d3_n1" sourceRef="d3_m_thr" targetRef="d3_n1" associationDirection="None" />
+    <bpmn:textAnnotation id="d3_n2">
+      <bpmn:text>Buffer observado: 4,1 s a 5,0 s à frente do ponto exibido (EV-05). É a reserva que o algoritmo tem para errar sem que o espectador perceba.</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="as_d3_n2" sourceRef="d3_m_buf" targetRef="d3_n2" associationDirection="None" />
+    <bpmn:textAnnotation id="d3_n3">
+      <bpmn:text>Observação de duas sessões distintas (EV-05): em uma delas o player estabilizou em 720p60 e na outra na fonte 1080p60, com a mesma janela de exibição de 700x394 CSS. A regra interna é caixa-preta (não-escopo FE03); o modelo registra as entradas, não o algoritmo.</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="as_d3_n3" sourceRef="d3_est" targetRef="d3_n3" associationDirection="None" />
+    <bpmn:textAnnotation id="d3_n4">
+      <bpmn:text>Assimetria deliberada: descer é imediato, subir espera confirmação. Errar para cima custa travamento; errar para baixo custa só nitidez. É o mesmo trade-off do SIG entre Baixa Latência e Continuidade (C01).</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="as_d3_n4" sourceRef="d3_gw2" targetRef="d3_n4" associationDirection="None" />
+    <bpmn:textAnnotation id="d3_n5">
+      <bpmn:text>A troca só vale na fronteira do próximo segmento, porque cada segmento começa em quadro-chave: entre decidir e ver o efeito há até uma duração de segmento (~2 s).</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="as_d3_n5" sourceRef="d3_apply" targetRef="d3_n5" associationDirection="None" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diagram_1">
+    <bpmndi:BPMNPlane id="Plane_1" bpmnElement="Collab_D3">
+      <bpmndi:BPMNShape id="d3_p_abr_di" bpmnElement="d3_p_abr" isHorizontal="true">
+        <dc:Bounds x="160" y="80" width="2550" height="504" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d3_start_di" bpmnElement="d3_start">
+        <dc:Bounds x="272" y="134" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="235" y="176" width="110" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d3_split_di" bpmnElement="d3_split">
+        <dc:Bounds x="465" y="127" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="435" y="91" width="110" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d3_m_thr_di" bpmnElement="d3_m_thr">
+        <dc:Bounds x="620" y="112" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d3_m_buf_di" bpmnElement="d3_m_buf">
+        <dc:Bounds x="620" y="232" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d3_m_view_di" bpmnElement="d3_m_view">
+        <dc:Bounds x="620" y="352" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d3_join_di" bpmnElement="d3_join">
+        <dc:Bounds x="865" y="127" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="835" y="105" width="110" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d3_est_di" bpmnElement="d3_est">
+        <dc:Bounds x="1020" y="112" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d3_gw1_di" bpmnElement="d3_gw1" isMarkerVisible="true">
+        <dc:Bounds x="1265" y="127" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1235" y="91" width="110" height="28" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d3_keep_di" bpmnElement="d3_keep">
+        <dc:Bounds x="1272" y="254" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1235" y="296" width="110" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d3_gw2_di" bpmnElement="d3_gw2" isMarkerVisible="true">
+        <dc:Bounds x="1465" y="127" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1435" y="105" width="110" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d3_down_di" bpmnElement="d3_down">
+        <dc:Bounds x="1620" y="232" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d3_hold_di" bpmnElement="d3_hold">
+        <dc:Bounds x="1620" y="112" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d3_gw3_di" bpmnElement="d3_gw3" isMarkerVisible="true">
+        <dc:Bounds x="1865" y="127" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1835" y="105" width="110" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d3_up_di" bpmnElement="d3_up">
+        <dc:Bounds x="2020" y="112" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d3_apply_di" bpmnElement="d3_apply">
+        <dc:Bounds x="2220" y="112" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d3_end_di" bpmnElement="d3_end">
+        <dc:Bounds x="2472" y="134" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2435" y="176" width="110" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d3_abort_di" bpmnElement="d3_abort">
+        <dc:Bounds x="1872" y="374" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1835" y="416" width="110" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d3_n1_di" bpmnElement="d3_n1">
+        <dc:Bounds x="575" y="468" width="230" height="88" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="as_d3_n1_di" bpmnElement="as_d3_n1">
+        <di:waypoint x="690" y="192" />
+        <di:waypoint x="690" y="468" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="d3_n2_di" bpmnElement="d3_n2">
+        <dc:Bounds x="975" y="468" width="230" height="88" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="as_d3_n2_di" bpmnElement="as_d3_n2">
+        <di:waypoint x="760" y="272" />
+        <di:waypoint x="975" y="512" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="d3_n3_di" bpmnElement="d3_n3">
+        <dc:Bounds x="1415" y="440" width="230" height="144" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="as_d3_n3_di" bpmnElement="as_d3_n3">
+        <di:waypoint x="1160" y="152" />
+        <di:waypoint x="1415" y="512" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="d3_n4_di" bpmnElement="d3_n4">
+        <dc:Bounds x="1855" y="454" width="230" height="116" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="as_d3_n4_di" bpmnElement="as_d3_n4">
+        <di:waypoint x="1515" y="152" />
+        <di:waypoint x="1855" y="512" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="d3_n5_di" bpmnElement="d3_n5">
+        <dc:Bounds x="2295" y="461" width="230" height="102" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="as_d3_n5_di" bpmnElement="as_d3_n5">
+        <di:waypoint x="2290" y="192" />
+        <di:waypoint x="2410" y="461" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_0_di" bpmnElement="fl_0">
+        <di:waypoint x="308" y="152" />
+        <di:waypoint x="465" y="152" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_1_di" bpmnElement="fl_1">
+        <di:waypoint x="515" y="152" />
+        <di:waypoint x="620" y="152" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_2_di" bpmnElement="fl_2">
+        <di:waypoint x="515" y="152" />
+        <di:waypoint x="568" y="152" />
+        <di:waypoint x="568" y="272" />
+        <di:waypoint x="620" y="272" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_3_di" bpmnElement="fl_3">
+        <di:waypoint x="515" y="152" />
+        <di:waypoint x="568" y="152" />
+        <di:waypoint x="568" y="392" />
+        <di:waypoint x="620" y="392" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_4_di" bpmnElement="fl_4">
+        <di:waypoint x="760" y="152" />
+        <di:waypoint x="865" y="152" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_5_di" bpmnElement="fl_5">
+        <di:waypoint x="760" y="272" />
+        <di:waypoint x="812" y="272" />
+        <di:waypoint x="812" y="152" />
+        <di:waypoint x="865" y="152" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_6_di" bpmnElement="fl_6">
+        <di:waypoint x="760" y="392" />
+        <di:waypoint x="812" y="392" />
+        <di:waypoint x="812" y="152" />
+        <di:waypoint x="865" y="152" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_7_di" bpmnElement="fl_7">
+        <di:waypoint x="915" y="152" />
+        <di:waypoint x="1020" y="152" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_8_di" bpmnElement="fl_8">
+        <di:waypoint x="1160" y="152" />
+        <di:waypoint x="1265" y="152" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_9_di" bpmnElement="fl_9">
+        <di:waypoint x="1290" y="177" />
+        <di:waypoint x="1290" y="254" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1298" y="185" width="90" height="18" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_10_di" bpmnElement="fl_10">
+        <di:waypoint x="1315" y="152" />
+        <di:waypoint x="1465" y="152" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1350" y="128" width="90" height="18" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_11_di" bpmnElement="fl_11">
+        <di:waypoint x="1515" y="152" />
+        <di:waypoint x="1620" y="152" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1528" y="128" width="90" height="18" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_12_di" bpmnElement="fl_12">
+        <di:waypoint x="1515" y="152" />
+        <di:waypoint x="1568" y="152" />
+        <di:waypoint x="1568" y="272" />
+        <di:waypoint x="1620" y="272" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1501" y="128" width="90" height="18" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_13_di" bpmnElement="fl_13">
+        <di:waypoint x="1760" y="152" />
+        <di:waypoint x="1865" y="152" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_14_di" bpmnElement="fl_14">
+        <di:waypoint x="1915" y="152" />
+        <di:waypoint x="2020" y="152" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1928" y="128" width="90" height="18" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_15_di" bpmnElement="fl_15">
+        <di:waypoint x="1890" y="177" />
+        <di:waypoint x="1890" y="374" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1898" y="185" width="90" height="18" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_16_di" bpmnElement="fl_16">
+        <di:waypoint x="2160" y="152" />
+        <di:waypoint x="2220" y="152" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_17_di" bpmnElement="fl_17">
+        <di:waypoint x="1760" y="272" />
+        <di:waypoint x="1990" y="272" />
+        <di:waypoint x="1990" y="152" />
+        <di:waypoint x="2220" y="152" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_18_di" bpmnElement="fl_18">
+        <di:waypoint x="2360" y="152" />
+        <di:waypoint x="2472" y="152" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
