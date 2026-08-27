@@ -28,7 +28,7 @@
 | FOCO_01 | [SIG · NFR Framework](Base/Relatorios/1.1.3.SubEquipe_03/2.NFRFramework.md) | 🟢 |
 | FOCO_02 | [Engenharia Reversa](Base/Relatorios/1.1.3.SubEquipe_03/3.EngenhariaReversa.md) | ⬜ |
 | FOCO_02 | [Modelagem BPMN](Base/Relatorios/1.1.3.SubEquipe_03/4.BPMN.md) | ⬜ |
-| FOCO_03 | [IA Generativa](Base/Relatorios/1.1.3.SubEquipe_03/5.IAGenerativa.md) | ⬜ |
+| FOCO_03 | [IA Generativa](Base/Relatorios/1.1.3.SubEquipe_03/5.IAGenerativa.md) | 🟨 |
 | — | [Referências](Base/Relatorios/1.1.3.SubEquipe_03/6.Referencias.md) | 🟢 |
 
 ## 4. Metodologia da Subequipe
@@ -42,6 +42,7 @@ A SubEquipe_03 trabalhou em estreita colaboração síncrona e assíncrona, comb
 | **Artefato Generalista (Rich Picture)** | Domínio de streaming ao vivo, UGC e plataformas de referência (Twitch/YouTube/Kick) | [SIG (NFR)](Base/Relatorios/1.1.3.SubEquipe_03/2.NFRFramework.md), [BPMN](Base/Relatorios/1.1.3.SubEquipe_03/4.BPMN.md) e [Escopo do Produto](Projeto/EscopoProduto.md) | Fornece os atores, dores/preocupações e fluxos sociotécnicos que originam os softgoals e os processos modelados. |
 | **SIG (NFR Framework)** | Rich Picture e pesquisa de arquiteturas resilientes | [Engenharia Reversa](Base/Relatorios/1.1.3.SubEquipe_03/3.EngenhariaReversa.md) e [BPMN](Base/Relatorios/1.1.3.SubEquipe_03/4.BPMN.md) | Decompõe os atributos de qualidade e trade-offs a serem verificados no sistema real. |
 | **Modelo BPMN** | Atores do Rich Picture e fluxo de chat/moderação sob concorrência | [Engenharia Reversa](Base/Relatorios/1.1.3.SubEquipe_03/3.EngenhariaReversa.md) | Detalha a sequência temporal e pools/lanes de interação síncrona. |
+| **IA Generativa (FOCO_03)** | Pesquisa terminológica, levantamento de padrões e debate de trade-offs | [Rich Picture](Base/Relatorios/1.1.3.SubEquipe_03/1.ArtefatoGeneralista.md) e [SIG (NFR)](Base/Relatorios/1.1.3.SubEquipe_03/2.NFRFramework.md) | Apoio na estruturação conceitual sob estrita filtragem contra alucinações. |
 
 ## 6. Senso Crítico (visão consolidada)
 
@@ -65,5 +66,6 @@ A combinação do Rich Picture (visão sistêmica qualitativa e holística) com 
 | 1.1 | 24/08/2026 | Definição do fluxo BPMN e registro das participações no FOCO_01 (NFR Framework) | Eduardo Lôbo Moreira | Equipe G6 |
 | 1.2 | 26/08/2026 | Atualização do status do Artefato Generalista (Rich Picture), consolidação de rastreabilidade, referências e participações de todos os membros | Eduardo Lôbo Moreira, Hugo Freitas Silva, Philipe Amâncio Reis Caetano | Equipe G6 |
 | 1.3 | 27/08/2026 | Correção das rotas e links internos para total compatibilidade com Docsify | Eduardo Lôbo Moreira, Hugo Freitas Silva, Philipe Amâncio Reis Caetano | Equipe G6 |
+| 1.4 | 27/08/2026 | Atualização do status do FOCO_03 (IA Generativa) e integração de rastreabilidade | Eduardo Lôbo Moreira, Hugo Freitas Silva, Philipe Amâncio Reis Caetano | Equipe G6 |
 
 
