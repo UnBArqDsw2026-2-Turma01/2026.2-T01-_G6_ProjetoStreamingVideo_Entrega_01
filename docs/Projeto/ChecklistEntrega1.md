@@ -11,7 +11,7 @@ Legenda: ⬜ pendente · 🟨 em andamento · ✅ concluído
 | # | Item exigido | Status | Responsável(is) | Link |
 | -- | -- | -- | -- | -- |
 | 1 | Um artefato generalista (Rich Picture **ou** Mapa Mental) | ⬜ | | |
-| 2 | Um SIG na notação do NFR Framework | ⬜ | | |
+| 2 | Um SIG na notação do NFR Framework | ✅ | Lucas Andrade Zanetti, Heitor Macedo Ricardo, Matheus Lemes Amaral | [2.NFRFramework.md](../Base/Relatorios/1.1.1.SubEquipe_01/2.NFRFramework.md) |
 | 3 | Um modelo BPMN do fluxo obtido via Engenharia Reversa | ⬜ | | |
 | 4 | Ponto de vista de **cada** membro sobre lições aprendidas e IA Generativa | ⬜ | | |
 
