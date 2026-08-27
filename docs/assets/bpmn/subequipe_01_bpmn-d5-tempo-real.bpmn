@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_D5" targetNamespace="http://unb.fga/G7_ProjetoStreamingVideo" exporter="G7 SubEquipe_01 - tools/bpmn/gerador.py" exporterVersion="1.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_D5" targetNamespace="http://unb.fga/G7_ProjetoStreamingVideo" exporter="Camunda Modeler" exporterVersion="5.50.1">
   <bpmn:message id="message_0" name="Página do canal montada" />
   <bpmn:message id="message_1" name="Notificação de tópico" />
   <bpmn:message id="message_2" name="Troca de canal" />
@@ -15,7 +15,22 @@
     <bpmn:messageFlow id="mf_3" name="cancelamentos + novas assinaturas" sourceRef="d5_resub" targetRef="d5_s_reg" />
     <bpmn:messageFlow id="mf_4" name="evento do tópico" sourceRef="d5_s_fan" targetRef="d5_c_notif" />
     <bpmn:messageFlow id="mf_5" name="keepalive" sourceRef="d5_s_send_ka" targetRef="d5_c_notif" />
-    <bpmn:messageFlow id="mf_6" name="fechamento" sourceRef="d5_c_close" targetRef="d5_s_close" />
+    <bpmn:textAnnotation id="d5_n1">
+      <bpmn:text>Uma única conexão carrega todos os tópicos do canal: 36 assinaturas foram emitidas em uma só troca de canal e nenhuma segunda conexão foi aberta. É o padrão publicar/assinar do SIG.</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="d5_n2">
+      <bpmn:text>A saudação observada já traz o intervalo de "keepalive" e uma URL de recuperação pronta: o caminho de reconexão é entregue antes de a falha acontecer. Evidência EV-06.</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="d5_n3">
+      <bpmn:text>Esta via não passa pela CDN nem pelo buffer do player. O evento de chat chega antes do vídeo correspondente  É o elo mais direto entre o softgoal de latência e o que o espectador sente.</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="d5_n4">
+      <bpmn:text>Na troca de canal foram observados 38 cancelamentos e 36 novas assinaturas na mesma conexão (EV-06): trocar de canal custa assinatura, não conexão — poupa o handshake e o TLS a cada navegação.</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="as_d5_n1" associationDirection="None" sourceRef="d5_open" targetRef="d5_n1" />
+    <bpmn:association id="as_d5_n2" associationDirection="None" sourceRef="d5_wel" targetRef="d5_n2" />
+    <bpmn:association id="as_d5_n4" associationDirection="None" sourceRef="d5_resub" targetRef="d5_n4" />
+    <bpmn:association id="as_d5_n3" associationDirection="None" sourceRef="d5_apply" targetRef="d5_n3" />
   </bpmn:collaboration>
   <bpmn:process id="d5_proc_cliente" isExecutable="false">
     <bpmn:laneSet id="ls_d5_p_cliente">
@@ -23,16 +38,16 @@
         <bpmn:flowNodeRef>d5_start</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>d5_open</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>d5_wel</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>d5_sub</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>d5_gwe</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>d5_c_notif</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>d5_c_ka</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>d5_c_nav</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>d5_c_close</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>d5_apply</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>d5_recover</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d5_sub</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>d5_resub</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d5_c_nav</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d5_apply</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d5_c_ka</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d5_recover</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d5_c_close</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>d5_end</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d5_c_notif</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:startEvent id="d5_start" name="Página do canal montada">
@@ -48,11 +63,6 @@
       <bpmn:incoming>fl_11</bpmn:incoming>
       <bpmn:outgoing>fl_2</bpmn:outgoing>
     </bpmn:receiveTask>
-    <bpmn:sendTask id="d5_sub" name="Assinar os tópicos do canal">
-      <bpmn:incoming>fl_2</bpmn:incoming>
-      <bpmn:outgoing>fl_3</bpmn:outgoing>
-      <bpmn:multiInstanceLoopCharacteristics isSequential="false" />
-    </bpmn:sendTask>
     <bpmn:eventBasedGateway id="d5_gwe" name="Aguardar o próximo evento">
       <bpmn:incoming>fl_3</bpmn:incoming>
       <bpmn:incoming>fl_9</bpmn:incoming>
@@ -62,11 +72,24 @@
       <bpmn:outgoing>fl_6</bpmn:outgoing>
       <bpmn:outgoing>fl_7</bpmn:outgoing>
     </bpmn:eventBasedGateway>
-    <bpmn:intermediateCatchEvent id="d5_c_notif" name="Notificação de tópico">
-      <bpmn:incoming>fl_4</bpmn:incoming>
-      <bpmn:outgoing>fl_8</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="d5_c_notif_def" messageRef="message_1" />
+    <bpmn:sendTask id="d5_sub" name="Assinar os tópicos do canal">
+      <bpmn:incoming>fl_2</bpmn:incoming>
+      <bpmn:outgoing>fl_3</bpmn:outgoing>
+      <bpmn:multiInstanceLoopCharacteristics />
+    </bpmn:sendTask>
+    <bpmn:sendTask id="d5_resub" name="Cancelar as assinaturas e assinar as do novo canal">
+      <bpmn:incoming>fl_12</bpmn:incoming>
+      <bpmn:outgoing>fl_13</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:intermediateCatchEvent id="d5_c_nav" name="Espectador troca de canal">
+      <bpmn:incoming>fl_6</bpmn:incoming>
+      <bpmn:outgoing>fl_12</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="d5_c_nav_def" messageRef="message_2" />
     </bpmn:intermediateCatchEvent>
+    <bpmn:serviceTask id="d5_apply" name="Aplicar o evento na interface">
+      <bpmn:incoming>fl_8</bpmn:incoming>
+      <bpmn:outgoing>fl_9</bpmn:outgoing>
+    </bpmn:serviceTask>
     <bpmn:intermediateCatchEvent id="d5_c_ka" name="Sem keepalive por 15 s">
       <bpmn:incoming>fl_5</bpmn:incoming>
       <bpmn:outgoing>fl_10</bpmn:outgoing>
@@ -74,76 +97,52 @@
         <bpmn:timeCycle xsi:type="bpmn:tFormalExpression">PT15S</bpmn:timeCycle>
       </bpmn:timerEventDefinition>
     </bpmn:intermediateCatchEvent>
-    <bpmn:intermediateCatchEvent id="d5_c_nav" name="Espectador troca de canal">
-      <bpmn:incoming>fl_6</bpmn:incoming>
-      <bpmn:outgoing>fl_12</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="d5_c_nav_def" messageRef="message_2" />
-    </bpmn:intermediateCatchEvent>
+    <bpmn:serviceTask id="d5_recover" name="Reconectar pela URL de recuperação">
+      <bpmn:incoming>fl_10</bpmn:incoming>
+      <bpmn:outgoing>fl_11</bpmn:outgoing>
+    </bpmn:serviceTask>
     <bpmn:intermediateCatchEvent id="d5_c_close" name="Espectador sai da página">
       <bpmn:incoming>fl_7</bpmn:incoming>
       <bpmn:outgoing>fl_14</bpmn:outgoing>
       <bpmn:messageEventDefinition id="d5_c_close_def" messageRef="message_3" />
     </bpmn:intermediateCatchEvent>
-    <bpmn:serviceTask id="d5_apply" name="Aplicar o evento na interface">
-      <bpmn:incoming>fl_8</bpmn:incoming>
-      <bpmn:outgoing>fl_9</bpmn:outgoing>
-    </bpmn:serviceTask>
-    <bpmn:serviceTask id="d5_recover" name="Reconectar pela URL de recuperação">
-      <bpmn:incoming>fl_10</bpmn:incoming>
-      <bpmn:outgoing>fl_11</bpmn:outgoing>
-    </bpmn:serviceTask>
-    <bpmn:sendTask id="d5_resub" name="Cancelar as assinaturas e assinar as do novo canal">
-      <bpmn:incoming>fl_12</bpmn:incoming>
-      <bpmn:outgoing>fl_13</bpmn:outgoing>
-    </bpmn:sendTask>
     <bpmn:endEvent id="d5_end" name="Conexão encerrada">
       <bpmn:incoming>fl_14</bpmn:incoming>
       <bpmn:terminateEventDefinition id="d5_end_def" />
     </bpmn:endEvent>
+    <bpmn:intermediateCatchEvent id="d5_c_notif" name="Notificação de tópico">
+      <bpmn:incoming>fl_4</bpmn:incoming>
+      <bpmn:outgoing>fl_8</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="d5_c_notif_def" messageRef="message_1" />
+    </bpmn:intermediateCatchEvent>
     <bpmn:sequenceFlow id="fl_0" sourceRef="d5_start" targetRef="d5_open" />
     <bpmn:sequenceFlow id="fl_1" sourceRef="d5_open" targetRef="d5_wel" />
+    <bpmn:sequenceFlow id="fl_11" name="retomar a sessão" sourceRef="d5_recover" targetRef="d5_wel" />
     <bpmn:sequenceFlow id="fl_2" sourceRef="d5_wel" targetRef="d5_sub" />
     <bpmn:sequenceFlow id="fl_3" sourceRef="d5_sub" targetRef="d5_gwe" />
+    <bpmn:sequenceFlow id="fl_9" name="voltar a aguardar" sourceRef="d5_apply" targetRef="d5_gwe" />
+    <bpmn:sequenceFlow id="fl_13" name="voltar a aguardar" sourceRef="d5_resub" targetRef="d5_gwe" />
     <bpmn:sequenceFlow id="fl_4" sourceRef="d5_gwe" targetRef="d5_c_notif" />
     <bpmn:sequenceFlow id="fl_5" sourceRef="d5_gwe" targetRef="d5_c_ka" />
     <bpmn:sequenceFlow id="fl_6" sourceRef="d5_gwe" targetRef="d5_c_nav" />
     <bpmn:sequenceFlow id="fl_7" sourceRef="d5_gwe" targetRef="d5_c_close" />
-    <bpmn:sequenceFlow id="fl_8" sourceRef="d5_c_notif" targetRef="d5_apply" />
-    <bpmn:sequenceFlow id="fl_9" sourceRef="d5_apply" targetRef="d5_gwe" name="voltar a aguardar" />
-    <bpmn:sequenceFlow id="fl_10" sourceRef="d5_c_ka" targetRef="d5_recover" />
-    <bpmn:sequenceFlow id="fl_11" sourceRef="d5_recover" targetRef="d5_wel" name="retomar a sessão" />
     <bpmn:sequenceFlow id="fl_12" sourceRef="d5_c_nav" targetRef="d5_resub" />
-    <bpmn:sequenceFlow id="fl_13" sourceRef="d5_resub" targetRef="d5_gwe" name="voltar a aguardar" />
+    <bpmn:sequenceFlow id="fl_8" sourceRef="d5_c_notif" targetRef="d5_apply" />
+    <bpmn:sequenceFlow id="fl_10" sourceRef="d5_c_ka" targetRef="d5_recover" />
     <bpmn:sequenceFlow id="fl_14" sourceRef="d5_c_close" targetRef="d5_end" />
-    <bpmn:textAnnotation id="d5_n1">
-      <bpmn:text>Uma única conexão carrega todos os tópicos do canal (EV-06): 36 assinaturas foram emitidas em uma só troca de canal e nenhuma segunda conexão foi aberta. É o padrão publicar/assinar do SIG (O18) visto de fora.</bpmn:text>
-    </bpmn:textAnnotation>
-    <bpmn:association id="as_d5_n1" sourceRef="d5_open" targetRef="d5_n1" associationDirection="None" />
-    <bpmn:textAnnotation id="d5_n2">
-      <bpmn:text>A saudação observada já traz o intervalo de keepalive (15 s) e uma URL de recuperação pronta: o caminho de reconexão é entregue ANTES de a falha acontecer. Evidência EV-06.</bpmn:text>
-    </bpmn:textAnnotation>
-    <bpmn:association id="as_d5_n2" sourceRef="d5_wel" targetRef="d5_n2" associationDirection="None" />
-    <bpmn:textAnnotation id="d5_n3">
-      <bpmn:text>Esta via não passa pela CDN nem pelo buffer do player. O evento de chat chega antes do vídeo correspondente — a dessincronia percebida entre chat e imagem é o preço de otimizar as duas vias em separado. É o elo mais direto entre o softgoal de latência e o que o espectador sente.</bpmn:text>
-    </bpmn:textAnnotation>
-    <bpmn:association id="as_d5_n3" sourceRef="d5_apply" targetRef="d5_n3" associationDirection="None" />
-    <bpmn:textAnnotation id="d5_n4">
-      <bpmn:text>Na troca de canal foram observados 38 cancelamentos e 36 novas assinaturas na mesma conexão (EV-06): trocar de canal custa assinatura, não conexão — poupa o handshake e o TLS a cada navegação.</bpmn:text>
-    </bpmn:textAnnotation>
-    <bpmn:association id="as_d5_n4" sourceRef="d5_resub" targetRef="d5_n4" associationDirection="None" />
   </bpmn:process>
   <bpmn:process id="d5_proc_rt" isExecutable="false">
     <bpmn:laneSet id="ls_d5_p_rt">
       <bpmn:lane id="d5_l_rt" name="Distribuição de eventos">
         <bpmn:flowNodeRef>d5_s_start</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>d5_s_wel</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>d5_s_reg</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>d5_s_gw</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d5_s_reg</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d5_s_fan</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>d5_s_evt</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d5_s_send_ka</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>d5_s_ka</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>d5_s_close</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>d5_s_fan</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>d5_s_send_ka</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>d5_s_end</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
@@ -155,10 +154,6 @@
       <bpmn:incoming>fl_15</bpmn:incoming>
       <bpmn:outgoing>fl_16</bpmn:outgoing>
     </bpmn:sendTask>
-    <bpmn:receiveTask id="d5_s_reg" name="Registrar as assinaturas de tópico da conexão">
-      <bpmn:incoming>fl_16</bpmn:incoming>
-      <bpmn:outgoing>fl_17</bpmn:outgoing>
-    </bpmn:receiveTask>
     <bpmn:eventBasedGateway id="d5_s_gw" name="Aguardar">
       <bpmn:incoming>fl_17</bpmn:incoming>
       <bpmn:incoming>fl_22</bpmn:incoming>
@@ -167,11 +162,23 @@
       <bpmn:outgoing>fl_19</bpmn:outgoing>
       <bpmn:outgoing>fl_20</bpmn:outgoing>
     </bpmn:eventBasedGateway>
+    <bpmn:receiveTask id="d5_s_reg" name="Registrar as assinaturas de tópico da conexão">
+      <bpmn:incoming>fl_16</bpmn:incoming>
+      <bpmn:outgoing>fl_17</bpmn:outgoing>
+    </bpmn:receiveTask>
+    <bpmn:sendTask id="d5_s_fan" name="Distribuir o evento a todas as conexões assinantes">
+      <bpmn:incoming>fl_21</bpmn:incoming>
+      <bpmn:outgoing>fl_22</bpmn:outgoing>
+    </bpmn:sendTask>
     <bpmn:intermediateCatchEvent id="d5_s_evt" name="Evento publicado em tópico assinado">
       <bpmn:incoming>fl_18</bpmn:incoming>
       <bpmn:outgoing>fl_21</bpmn:outgoing>
       <bpmn:conditionalEventDefinition id="d5_s_evt_def" />
     </bpmn:intermediateCatchEvent>
+    <bpmn:sendTask id="d5_s_send_ka" name="Enviar keepalive">
+      <bpmn:incoming>fl_23</bpmn:incoming>
+      <bpmn:outgoing>fl_24</bpmn:outgoing>
+    </bpmn:sendTask>
     <bpmn:intermediateCatchEvent id="d5_s_ka" name="A cada 15 s">
       <bpmn:incoming>fl_19</bpmn:incoming>
       <bpmn:outgoing>fl_23</bpmn:outgoing>
@@ -184,381 +191,356 @@
       <bpmn:outgoing>fl_25</bpmn:outgoing>
       <bpmn:messageEventDefinition id="d5_s_close_def" messageRef="message_5" />
     </bpmn:intermediateCatchEvent>
-    <bpmn:sendTask id="d5_s_fan" name="Distribuir o evento a todas as conexões assinantes">
-      <bpmn:incoming>fl_21</bpmn:incoming>
-      <bpmn:outgoing>fl_22</bpmn:outgoing>
-    </bpmn:sendTask>
-    <bpmn:sendTask id="d5_s_send_ka" name="Enviar keepalive">
-      <bpmn:incoming>fl_23</bpmn:incoming>
-      <bpmn:outgoing>fl_24</bpmn:outgoing>
-    </bpmn:sendTask>
     <bpmn:endEvent id="d5_s_end" name="Assinaturas liberadas">
       <bpmn:incoming>fl_25</bpmn:incoming>
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="fl_15" sourceRef="d5_s_start" targetRef="d5_s_wel" />
     <bpmn:sequenceFlow id="fl_16" sourceRef="d5_s_wel" targetRef="d5_s_reg" />
     <bpmn:sequenceFlow id="fl_17" sourceRef="d5_s_reg" targetRef="d5_s_gw" />
+    <bpmn:sequenceFlow id="fl_22" name="voltar a aguardar" sourceRef="d5_s_fan" targetRef="d5_s_gw" />
+    <bpmn:sequenceFlow id="fl_24" name="voltar a aguardar" sourceRef="d5_s_send_ka" targetRef="d5_s_gw" />
     <bpmn:sequenceFlow id="fl_18" sourceRef="d5_s_gw" targetRef="d5_s_evt" />
     <bpmn:sequenceFlow id="fl_19" sourceRef="d5_s_gw" targetRef="d5_s_ka" />
     <bpmn:sequenceFlow id="fl_20" sourceRef="d5_s_gw" targetRef="d5_s_close" />
     <bpmn:sequenceFlow id="fl_21" sourceRef="d5_s_evt" targetRef="d5_s_fan" />
-    <bpmn:sequenceFlow id="fl_22" sourceRef="d5_s_fan" targetRef="d5_s_gw" name="voltar a aguardar" />
     <bpmn:sequenceFlow id="fl_23" sourceRef="d5_s_ka" targetRef="d5_s_send_ka" />
-    <bpmn:sequenceFlow id="fl_24" sourceRef="d5_s_send_ka" targetRef="d5_s_gw" name="voltar a aguardar" />
     <bpmn:sequenceFlow id="fl_25" sourceRef="d5_s_close" targetRef="d5_s_end" />
-    <bpmn:textAnnotation id="d5_n5">
-      <bpmn:text>Uma publicação alcança N assinantes sem N chamadas do cliente: é o fanout que sustenta chat sob pico de audiência (recorte da SubEquipe_02).</bpmn:text>
-    </bpmn:textAnnotation>
-    <bpmn:association id="as_d5_n5" sourceRef="d5_s_fan" targetRef="d5_n5" associationDirection="None" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="Diagram_1">
     <bpmndi:BPMNPlane id="Plane_1" bpmnElement="Collab_D5">
       <bpmndi:BPMNShape id="d5_p_cliente_di" bpmnElement="d5_p_cliente" isHorizontal="true">
-        <dc:Bounds x="160" y="80" width="1870" height="624" />
+        <dc:Bounds x="160" y="80" width="1490" height="610" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="d5_l_cli_di" bpmnElement="d5_l_cli" isHorizontal="true">
-        <dc:Bounds x="190" y="80" width="1840" height="624" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="d5_p_rt_di" bpmnElement="d5_p_rt" isHorizontal="true">
-        <dc:Bounds x="160" y="774" width="1870" height="504" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="d5_l_rt_di" bpmnElement="d5_l_rt" isHorizontal="true">
-        <dc:Bounds x="190" y="774" width="1840" height="504" />
+        <dc:Bounds x="190" y="80" width="1460" height="610" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="d5_start_di" bpmnElement="d5_start">
-        <dc:Bounds x="272" y="134" width="36" height="36" />
+        <dc:Bounds x="252" y="312" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="235" y="176" width="110" height="28" />
+          <dc:Bounds x="231" y="354" width="79" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="d5_open_di" bpmnElement="d5_open">
-        <dc:Bounds x="420" y="112" width="140" height="80" />
+        <dc:Bounds x="340" y="290" width="140" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="d5_wel_di" bpmnElement="d5_wel">
-        <dc:Bounds x="620" y="112" width="140" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="d5_sub_di" bpmnElement="d5_sub">
-        <dc:Bounds x="820" y="112" width="140" height="80" />
+        <dc:Bounds x="530" y="290" width="140" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="d5_gwe_di" bpmnElement="d5_gwe">
-        <dc:Bounds x="1065" y="127" width="50" height="50" />
+        <dc:Bounds x="1015" y="305" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1035" y="91" width="110" height="28" />
+          <dc:Bounds x="931" y="296" width="97" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="d5_c_notif_di" bpmnElement="d5_c_notif">
-        <dc:Bounds x="1272" y="134" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1235" y="176" width="110" height="28" />
-        </bpmndi:BPMNLabel>
+      <bpmndi:BPMNShape id="d5_sub_di" bpmnElement="d5_sub">
+        <dc:Bounds x="710" y="290" width="140" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="d5_c_ka_di" bpmnElement="d5_c_ka">
-        <dc:Bounds x="1272" y="254" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1235" y="296" width="110" height="28" />
-        </bpmndi:BPMNLabel>
+      <bpmndi:BPMNShape id="d5_resub_di" bpmnElement="d5_resub">
+        <dc:Bounds x="970" y="550" width="140" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="d5_c_nav_di" bpmnElement="d5_c_nav">
-        <dc:Bounds x="1272" y="374" width="36" height="36" />
+        <dc:Bounds x="1042" y="472" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1235" y="416" width="110" height="28" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="d5_c_close_di" bpmnElement="d5_c_close">
-        <dc:Bounds x="1272" y="494" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1235" y="536" width="110" height="28" />
+          <dc:Bounds x="1084.5" y="476" width="99" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="d5_apply_di" bpmnElement="d5_apply">
-        <dc:Bounds x="1420" y="112" width="140" height="80" />
+        <dc:Bounds x="1150" y="170" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d5_c_ka_di" bpmnElement="d5_c_ka">
+        <dc:Bounds x="952" y="132" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="923" y="94.5" width="94" height="27" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="d5_recover_di" bpmnElement="d5_recover">
-        <dc:Bounds x="1420" y="232" width="140" height="80" />
+        <dc:Bounds x="740" y="110" width="140" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="d5_resub_di" bpmnElement="d5_resub">
-        <dc:Bounds x="1420" y="352" width="140" height="80" />
+      <bpmndi:BPMNShape id="d5_c_close_di" bpmnElement="d5_c_close">
+        <dc:Bounds x="1222" y="396" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1215" y="435.5" width="89" height="27" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="d5_end_di" bpmnElement="d5_end">
-        <dc:Bounds x="1472" y="494" width="36" height="36" />
+        <dc:Bounds x="1352" y="452" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1435" y="536" width="110" height="14" />
+          <dc:Bounds x="1322" y="494" width="97" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="d5_s_start_di" bpmnElement="d5_s_start">
-        <dc:Bounds x="472" y="828" width="36" height="36" />
+      <bpmndi:BPMNShape id="d5_c_notif_di" bpmnElement="d5_c_notif">
+        <dc:Bounds x="1432" y="312" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="435" y="870" width="110" height="14" />
+          <dc:Bounds x="1338" y="303" width="103" height="14" />
         </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="d5_s_wel_di" bpmnElement="d5_s_wel">
-        <dc:Bounds x="620" y="806" width="140" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="d5_s_reg_di" bpmnElement="d5_s_reg">
-        <dc:Bounds x="820" y="806" width="140" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="d5_s_gw_di" bpmnElement="d5_s_gw">
-        <dc:Bounds x="1065" y="821" width="50" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1035" y="799" width="110" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="d5_s_evt_di" bpmnElement="d5_s_evt">
-        <dc:Bounds x="1272" y="828" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1235" y="870" width="110" height="28" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="d5_s_ka_di" bpmnElement="d5_s_ka">
-        <dc:Bounds x="1272" y="948" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1235" y="990" width="110" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="d5_s_close_di" bpmnElement="d5_s_close">
-        <dc:Bounds x="1272" y="1068" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1235" y="1110" width="110" height="28" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="d5_s_fan_di" bpmnElement="d5_s_fan">
-        <dc:Bounds x="1420" y="806" width="140" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="d5_s_send_ka_di" bpmnElement="d5_s_send_ka">
-        <dc:Bounds x="1420" y="926" width="140" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="d5_s_end_di" bpmnElement="d5_s_end">
-        <dc:Bounds x="1472" y="1068" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1435" y="1110" width="110" height="28" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="d5_n1_di" bpmnElement="d5_n1">
-        <dc:Bounds x="375" y="574" width="230" height="116" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="as_d5_n1_di" bpmnElement="as_d5_n1">
-        <di:waypoint x="490" y="192" />
-        <di:waypoint x="490" y="574" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="d5_n2_di" bpmnElement="d5_n2">
-        <dc:Bounds x="775" y="581" width="230" height="102" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="as_d5_n2_di" bpmnElement="as_d5_n2">
-        <di:waypoint x="690" y="192" />
-        <di:waypoint x="890" y="581" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="d5_n3_di" bpmnElement="d5_n3">
-        <dc:Bounds x="1255" y="560" width="230" height="144" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="as_d5_n3_di" bpmnElement="as_d5_n3">
-        <di:waypoint x="1490" y="192" />
-        <di:waypoint x="1370" y="560" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="d5_n4_di" bpmnElement="d5_n4">
-        <dc:Bounds x="1695" y="574" width="230" height="116" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="as_d5_n4_di" bpmnElement="as_d5_n4">
-        <di:waypoint x="1560" y="392" />
-        <di:waypoint x="1695" y="632" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="d5_n5_di" bpmnElement="d5_n5">
-        <dc:Bounds x="1375" y="1162" width="230" height="88" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="as_d5_n5_di" bpmnElement="as_d5_n5">
-        <di:waypoint x="1490" y="886" />
-        <di:waypoint x="1490" y="1162" />
+        <di:waypoint x="434" y="370" />
+        <di:waypoint x="481" y="450" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="fl_0_di" bpmnElement="fl_0">
-        <di:waypoint x="308" y="152" />
-        <di:waypoint x="420" y="152" />
+        <di:waypoint x="288" y="330" />
+        <di:waypoint x="340" y="330" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="fl_1_di" bpmnElement="fl_1">
-        <di:waypoint x="560" y="152" />
-        <di:waypoint x="620" y="152" />
+        <di:waypoint x="480" y="330" />
+        <di:waypoint x="530" y="330" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="fl_2_di" bpmnElement="fl_2">
-        <di:waypoint x="760" y="152" />
-        <di:waypoint x="820" y="152" />
+        <di:waypoint x="670" y="330" />
+        <di:waypoint x="710" y="330" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="fl_3_di" bpmnElement="fl_3">
-        <di:waypoint x="960" y="152" />
-        <di:waypoint x="1065" y="152" />
+        <di:waypoint x="850" y="330" />
+        <di:waypoint x="1015" y="330" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="fl_4_di" bpmnElement="fl_4">
-        <di:waypoint x="1115" y="152" />
-        <di:waypoint x="1272" y="152" />
+        <di:waypoint x="1065" y="330" />
+        <di:waypoint x="1432" y="330" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="fl_5_di" bpmnElement="fl_5">
-        <di:waypoint x="1115" y="152" />
-        <di:waypoint x="1194" y="152" />
-        <di:waypoint x="1194" y="272" />
-        <di:waypoint x="1272" y="272" />
+        <di:waypoint x="1030" y="315" />
+        <di:waypoint x="1030" y="150" />
+        <di:waypoint x="988" y="150" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="fl_6_di" bpmnElement="fl_6">
-        <di:waypoint x="1115" y="152" />
-        <di:waypoint x="1194" y="152" />
-        <di:waypoint x="1194" y="392" />
-        <di:waypoint x="1272" y="392" />
+        <di:waypoint x="1050" y="345" />
+        <di:waypoint x="1050" y="414" />
+        <di:waypoint x="1060" y="414" />
+        <di:waypoint x="1060" y="472" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="fl_7_di" bpmnElement="fl_7">
-        <di:waypoint x="1115" y="152" />
-        <di:waypoint x="1194" y="152" />
-        <di:waypoint x="1194" y="512" />
-        <di:waypoint x="1272" y="512" />
+        <di:waypoint x="1055" y="340" />
+        <di:waypoint x="1240" y="340" />
+        <di:waypoint x="1240" y="396" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="fl_8_di" bpmnElement="fl_8">
-        <di:waypoint x="1308" y="152" />
-        <di:waypoint x="1420" y="152" />
+        <di:waypoint x="1450" y="312" />
+        <di:waypoint x="1450" y="210" />
+        <di:waypoint x="1290" y="210" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="fl_9_di" bpmnElement="fl_9">
-        <di:waypoint x="1490" y="192" />
-        <di:waypoint x="1490" y="237" />
-        <di:waypoint x="1090" y="237" />
-        <di:waypoint x="1090" y="177" />
+        <di:waypoint x="1150" y="210" />
+        <di:waypoint x="1050" y="210" />
+        <di:waypoint x="1050" y="315" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1498" y="200" width="90" height="18" />
+          <dc:Bounds x="1053" y="223" width="84" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="fl_10_di" bpmnElement="fl_10">
-        <di:waypoint x="1308" y="272" />
-        <di:waypoint x="1420" y="272" />
+        <di:waypoint x="952" y="150" />
+        <di:waypoint x="880" y="150" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="fl_11_di" bpmnElement="fl_11">
-        <di:waypoint x="1490" y="312" />
-        <di:waypoint x="1490" y="357" />
-        <di:waypoint x="690" y="357" />
-        <di:waypoint x="690" y="192" />
+        <di:waypoint x="740" y="150" />
+        <di:waypoint x="600" y="150" />
+        <di:waypoint x="600" y="290" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1498" y="320" width="90" height="18" />
+          <dc:Bounds x="601" y="163" width="85" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="fl_12_di" bpmnElement="fl_12">
-        <di:waypoint x="1308" y="392" />
-        <di:waypoint x="1420" y="392" />
+        <di:waypoint x="1060" y="508" />
+        <di:waypoint x="1060" y="550" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="fl_13_di" bpmnElement="fl_13">
-        <di:waypoint x="1490" y="432" />
-        <di:waypoint x="1490" y="477" />
-        <di:waypoint x="1090" y="477" />
-        <di:waypoint x="1090" y="177" />
+        <di:waypoint x="1020" y="550" />
+        <di:waypoint x="1020" y="453" />
+        <di:waypoint x="1040" y="453" />
+        <di:waypoint x="1040" y="355" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1498" y="440" width="90" height="18" />
+          <dc:Bounds x="950" y="378" width="84" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="fl_14_di" bpmnElement="fl_14">
-        <di:waypoint x="1308" y="512" />
-        <di:waypoint x="1472" y="512" />
+        <di:waypoint x="1258" y="414" />
+        <di:waypoint x="1330" y="414" />
+        <di:waypoint x="1330" y="470" />
+        <di:waypoint x="1352" y="470" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="d5_p_rt_di" bpmnElement="d5_p_rt" isHorizontal="true">
+        <dc:Bounds x="160" y="698" width="1490" height="352" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d5_l_rt_di" bpmnElement="d5_l_rt" isHorizontal="true">
+        <dc:Bounds x="190" y="698" width="1460" height="352" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d5_s_start_di" bpmnElement="d5_s_start">
+        <dc:Bounds x="352" y="906" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="325" y="948" width="90" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d5_s_wel_di" bpmnElement="d5_s_wel">
+        <dc:Bounds x="430" y="884" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d5_s_gw_di" bpmnElement="d5_s_gw">
+        <dc:Bounds x="875" y="899" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="837" y="897" width="46" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d5_s_reg_di" bpmnElement="d5_s_reg">
+        <dc:Bounds x="650" y="884" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d5_s_fan_di" bpmnElement="d5_s_fan">
+        <dc:Bounds x="1370" y="710" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d5_s_evt_di" bpmnElement="d5_s_evt">
+        <dc:Bounds x="1192" y="732" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1159" y="774" width="103" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d5_s_send_ka_di" bpmnElement="d5_s_send_ka">
+        <dc:Bounds x="1490" y="830" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d5_s_ka_di" bpmnElement="d5_s_ka">
+        <dc:Bounds x="1242" y="852" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1230" y="828" width="59" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d5_s_close_di" bpmnElement="d5_s_close">
+        <dc:Bounds x="882" y="972" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="857" y="1014" width="87" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d5_s_end_di" bpmnElement="d5_s_end">
+        <dc:Bounds x="1002" y="972" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="967" y="1014" width="106" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="fl_15_di" bpmnElement="fl_15">
-        <di:waypoint x="508" y="846" />
-        <di:waypoint x="620" y="846" />
+        <di:waypoint x="388" y="924" />
+        <di:waypoint x="430" y="924" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="fl_16_di" bpmnElement="fl_16">
-        <di:waypoint x="760" y="846" />
-        <di:waypoint x="820" y="846" />
+        <di:waypoint x="570" y="924" />
+        <di:waypoint x="650" y="924" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="fl_17_di" bpmnElement="fl_17">
-        <di:waypoint x="960" y="846" />
-        <di:waypoint x="1065" y="846" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="fl_18_di" bpmnElement="fl_18">
-        <di:waypoint x="1115" y="846" />
-        <di:waypoint x="1272" y="846" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="fl_19_di" bpmnElement="fl_19">
-        <di:waypoint x="1115" y="846" />
-        <di:waypoint x="1194" y="846" />
-        <di:waypoint x="1194" y="966" />
-        <di:waypoint x="1272" y="966" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="fl_20_di" bpmnElement="fl_20">
-        <di:waypoint x="1115" y="846" />
-        <di:waypoint x="1194" y="846" />
-        <di:waypoint x="1194" y="1086" />
-        <di:waypoint x="1272" y="1086" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="fl_21_di" bpmnElement="fl_21">
-        <di:waypoint x="1308" y="846" />
-        <di:waypoint x="1420" y="846" />
+        <di:waypoint x="790" y="924" />
+        <di:waypoint x="875" y="924" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="fl_22_di" bpmnElement="fl_22">
-        <di:waypoint x="1490" y="886" />
-        <di:waypoint x="1490" y="931" />
-        <di:waypoint x="1090" y="931" />
-        <di:waypoint x="1090" y="871" />
+        <di:waypoint x="1440" y="790" />
+        <di:waypoint x="1440" y="810" />
+        <di:waypoint x="900" y="810" />
+        <di:waypoint x="900" y="899" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1498" y="894" width="90" height="18" />
+          <dc:Bounds x="1360" y="814" width="84" height="14" />
         </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="fl_23_di" bpmnElement="fl_23">
-        <di:waypoint x="1308" y="966" />
-        <di:waypoint x="1420" y="966" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="fl_24_di" bpmnElement="fl_24">
-        <di:waypoint x="1490" y="1006" />
-        <di:waypoint x="1490" y="1051" />
-        <di:waypoint x="1090" y="1051" />
-        <di:waypoint x="1090" y="871" />
+        <di:waypoint x="1560" y="910" />
+        <di:waypoint x="1560" y="924" />
+        <di:waypoint x="925" y="924" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1498" y="1014" width="90" height="18" />
+          <dc:Bounds x="1528" y="911" width="84" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_18_di" bpmnElement="fl_18">
+        <di:waypoint x="890" y="909" />
+        <di:waypoint x="890" y="750" />
+        <di:waypoint x="1192" y="750" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_19_di" bpmnElement="fl_19">
+        <di:waypoint x="910" y="909" />
+        <di:waypoint x="910" y="870" />
+        <di:waypoint x="1242" y="870" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_20_di" bpmnElement="fl_20">
+        <di:waypoint x="900" y="949" />
+        <di:waypoint x="900" y="972" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_23_di" bpmnElement="fl_23">
+        <di:waypoint x="1278" y="870" />
+        <di:waypoint x="1490" y="870" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_21_di" bpmnElement="fl_21">
+        <di:waypoint x="1228" y="750" />
+        <di:waypoint x="1370" y="750" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="fl_25_di" bpmnElement="fl_25">
-        <di:waypoint x="1308" y="1086" />
-        <di:waypoint x="1472" y="1086" />
+        <di:waypoint x="918" y="990" />
+        <di:waypoint x="1002" y="990" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="as_d5_n2_di" bpmnElement="as_d5_n2">
+        <di:waypoint x="547" y="290" />
+        <di:waypoint x="489" y="216" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="as_d5_n4_di" bpmnElement="as_d5_n4">
+        <di:waypoint x="1110" y="590" />
+        <di:waypoint x="1180" y="618" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="as_d5_n3_di" bpmnElement="as_d5_n3">
+        <di:waypoint x="1290" y="196" />
+        <di:waypoint x="1374" y="176" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="mf_0_di" bpmnElement="mf_0">
-        <di:waypoint x="490" y="192" />
-        <di:waypoint x="490" y="828" />
+        <di:waypoint x="370" y="370" />
+        <di:waypoint x="370" y="906" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="498" y="200" width="90" height="18" />
+          <dc:Bounds x="311" y="471" width="57" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="mf_1_di" bpmnElement="mf_1">
-        <di:waypoint x="690" y="806" />
-        <di:waypoint x="690" y="192" />
+        <di:waypoint x="500" y="884" />
+        <di:waypoint x="500" y="660" />
+        <di:waypoint x="630" y="660" />
+        <di:waypoint x="630" y="370" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="698" y="814" width="90" height="18" />
+          <dc:Bounds x="558" y="616" width="63" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="mf_2_di" bpmnElement="mf_2">
-        <di:waypoint x="890" y="192" />
-        <di:waypoint x="890" y="806" />
+        <di:waypoint x="720" y="370" />
+        <di:waypoint x="720" y="884" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="898" y="200" width="90" height="18" />
+          <dc:Bounds x="737" y="375" width="72" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="mf_3_di" bpmnElement="mf_3">
-        <di:waypoint x="1490" y="432" />
-        <di:waypoint x="1490" y="806" />
-        <di:waypoint x="890" y="806" />
+        <di:waypoint x="1000" y="630" />
+        <di:waypoint x="1000" y="660" />
+        <di:waypoint x="760" y="660" />
+        <di:waypoint x="760" y="884" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1498" y="440" width="90" height="18" />
+          <dc:Bounds x="856" y="626" width="89" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="mf_4_di" bpmnElement="mf_4">
-        <di:waypoint x="1490" y="806" />
-        <di:waypoint x="1490" y="170" />
-        <di:waypoint x="1290" y="170" />
+        <di:waypoint x="1450" y="710" />
+        <di:waypoint x="1450" y="348" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1498" y="814" width="90" height="18" />
+          <dc:Bounds x="1459" y="530" width="81" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="mf_5_di" bpmnElement="mf_5">
-        <di:waypoint x="1490" y="926" />
-        <di:waypoint x="1490" y="170" />
-        <di:waypoint x="1290" y="170" />
+        <di:waypoint x="1560" y="830" />
+        <di:waypoint x="1560" y="330" />
+        <di:waypoint x="1468" y="330" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1498" y="934" width="90" height="18" />
+          <dc:Bounds x="1566" y="698" width="47" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="mf_6_di" bpmnElement="mf_6">
-        <di:waypoint x="1290" y="530" />
-        <di:waypoint x="1290" y="1068" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1298" y="538" width="90" height="18" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="d5_n1_di" bpmnElement="d5_n1">
+        <dc:Bounds x="400" y="450" width="210" height="100" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d5_n2_di" bpmnElement="d5_n2">
+        <dc:Bounds x="320" y="130" width="232" height="86" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d5_n4_di" bpmnElement="d5_n4">
+        <dc:Bounds x="1180" y="560" width="230" height="116" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d5_n3_di" bpmnElement="d5_n3">
+        <dc:Bounds x="1340" y="90" width="232" height="86" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>
