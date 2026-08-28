@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Visualizacao interativa do BPMN</title>
+  <link rel="stylesheet" href="vendor/diagram-js.css">
+  <link rel="stylesheet" href="vendor/bpmn-js.css">
+  <style>
+    :root {
+      color-scheme: light;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body,
+    main,
+    #canvas {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+    }
+
+    body {
+      overflow: hidden;
+      background: #ffffff;
+    }
+
+    main {
+      position: relative;
+    }
+
+    #canvas {
+      background: #ffffff;
+    }
+
+    .toolbar {
+      position: absolute;
+      z-index: 10;
+      top: 12px;
+      right: 12px;
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      padding: 6px;
+      border: 1px solid #d7d7dc;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.96);
+      box-shadow: 0 2px 8px rgba(28, 25, 35, 0.12);
+    }
+
+    .toolbar select,
+    .toolbar button {
+      height: 38px;
+      border: 1px solid #c7c5cc;
+      border-radius: 4px;
+      background: #ffffff;
+      color: #2d2933;
+      font: inherit;
+    }
+
+    .toolbar select {
+      width: min(290px, 42vw);
+      padding: 0 34px 0 10px;
+    }
+
+    .toolbar button {
+      width: 38px;
+      padding: 0;
+      font-size: 21px;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .toolbar button:hover,
+    .toolbar select:hover {
+      border-color: #6a1b9a;
+      color: #6a1b9a;
+    }
+
+    .toolbar button:focus-visible,
+    .toolbar select:focus-visible {
+      outline: 3px solid rgba(106, 27, 154, 0.25);
+      outline-offset: 1px;
+    }
+
+    .status {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      color: #59545f;
+      background: #ffffff;
+      text-align: center;
+    }
+
+    .status[hidden] {
+      display: none;
+    }
+
+    .bjs-powered-by {
+      display: none !important;
+    }
+
+    @media (max-width: 680px) {
+      .toolbar {
+        right: 8px;
+        left: 8px;
+        top: 8px;
+      }
+
+      .toolbar select {
+        flex: 1;
+        width: auto;
+        min-width: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main id="viewer" aria-label="Diagrama BPMN interativo">
+    <div id="canvas"></div>
+
+    <div class="toolbar" aria-label="Controles do diagrama">
+      <select id="pool" aria-label="Selecionar area do diagrama">
+        <option value="">Visao geral</option>
+        <option value="Participant_Client">Pool 1 - Cliente Web</option>
+        <option value="Participant_Backend">Pool 2 - Backend Central</option>
+        <option value="Participant_Edge">Pool 3 - Camada de Borda</option>
+        <option value="Participant_Weaver">Pool 4 - Video e Ingestao</option>
+        <option value="Participant_TMI">Pool 5 - Chat e AutoMod</option>
+        <option value="Participant_Spade">Pool 6 - Telemetria e Anti-Fraude</option>
+        <option value="Participant_Auth">Pool 7 - Identidade e Sessoes</option>
+        <option value="Participant_Database">Pool 8 - Banco de Dados</option>
+        <option value="Participant_Social">Pool 9 - Relacionamentos Sociais</option>
+        <option value="Participant_Commerce">Pool 10 - Monetizacao</option>
+        <option value="Participant_VOD">Pool 11 - VOD</option>
+        <option value="Participant_GuestStar">Pool 12 - Guest Star</option>
+        <option value="Participant_Video_Safety">Pool 13 - Moderacao de Video</option>
+      </select>
+      <button id="zoom-out" type="button" title="Diminuir zoom" aria-label="Diminuir zoom">&minus;</button>
+      <button id="zoom-in" type="button" title="Aumentar zoom" aria-label="Aumentar zoom">+</button>
+      <button id="fit" type="button" title="Ajustar diagrama" aria-label="Ajustar diagrama">&#9633;</button>
+      <button id="fullscreen" type="button" title="Tela cheia" aria-label="Abrir em tela cheia">&#x26F6;</button>
+    </div>
+
+    <div id="status" class="status">Carregando o modelo BPMN...</div>
+  </main>
+
+  <script src="vendor/bpmn-navigated-viewer.production.min.js"></script>
+  <script>
+    const viewerElement = document.querySelector('#viewer');
+    const statusElement = document.querySelector('#status');
+    const poolSelect = document.querySelector('#pool');
+    const viewer = new BpmnJS({ container: '#canvas' });
+
+    function canvas() {
+      return viewer.get('canvas');
+    }
+
+    function fitDiagram() {
+      poolSelect.value = '';
+      canvas().zoom('fit-viewport');
+    }
+
+    function changeZoom(direction) {
+      const current = canvas().zoom();
+      const next = Math.min(4, Math.max(0.15, current * (direction > 0 ? 1.2 : 1 / 1.2)));
+      canvas().zoom(next);
+    }
+
+    document.querySelector('#zoom-in').addEventListener('click', () => changeZoom(1));
+    document.querySelector('#zoom-out').addEventListener('click', () => changeZoom(-1));
+    document.querySelector('#fit').addEventListener('click', fitDiagram);
+
+    document.querySelector('#fullscreen').addEventListener('click', async () => {
+      if (document.fullscreenElement) {
+        await document.exitFullscreen();
+      } else {
+        await viewerElement.requestFullscreen();
+      }
+    });
+
+    document.addEventListener('fullscreenchange', () => {
+      window.setTimeout(() => {
+        canvas().resized();
+        if (!poolSelect.value) {
+          fitDiagram();
+        }
+      }, 100);
+    });
+
+    poolSelect.addEventListener('change', () => {
+      if (!poolSelect.value) {
+        fitDiagram();
+        return;
+      }
+
+      const element = viewer.get('elementRegistry').get(poolSelect.value);
+      if (!element) {
+        return;
+      }
+
+      const padding = 40;
+      canvas().viewbox({
+        x: element.x - padding,
+        y: element.y - padding,
+        width: element.width + padding * 2,
+        height: element.height + padding * 2,
+      });
+    });
+
+    fetch('subequipe_03_bpmn.bpmn')
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Nao foi possivel carregar o arquivo BPMN.');
+        }
+        return response.text();
+      })
+      .then((xml) => viewer.importXML(xml))
+      .then(() => {
+        statusElement.hidden = true;
+        fitDiagram();
+      })
+      .catch((error) => {
+        statusElement.textContent = error.message;
+      });
+  </script>
+</body>
+</html>

@@ -1,0 +1,1588 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:color="http://www.omg.org/spec/BPMN/non-normative/color/1.0" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_Twitch_Complete_Architecture" targetNamespace="http://unb.br/engenharia/twitch" exporter="bpmn-js (https://demo.bpmn.io)" exporterVersion="18.25.1">
+  <bpmn:collaboration id="Collaboration_Twitch">
+    <bpmn:participant id="Participant_Client" name="Pool 1: Cliente Web (Navegador do Usuário / Frontend SPA &#38; Mod View)" processRef="Process_Client" />
+    <bpmn:participant id="Participant_Backend" name="Pool 2: Backend Central (GraphQL BFF &#38; Defesa Kasada Anti-Bot)" processRef="Process_Backend" />
+    <bpmn:participant id="Participant_Edge" name="Pool 3: Camada de Borda (Usher Edge CDN - Entrega Rápida)" processRef="Process_Edge" />
+    <bpmn:participant id="Participant_Weaver" name="Pool 4: Fábrica de Vídeo &#38; Ingestão Segura (RTMP Ingest, Twitch DJ Program, Audible Magic &#38; Weaver)" processRef="Process_Weaver" />
+    <bpmn:participant id="Participant_TMI" name="Pool 5: Central de Chat em Tempo Real &#38; AutoMod (IRC v3 / TMI, NLP Deep Learning &#38; Quarentena)" processRef="Process_TMI" />
+    <bpmn:participant id="Participant_Spade" name="Pool 6: Central de Telemetria e Anti-Fraude (Data Lake Spade &#38; Anti-Viewbot)" processRef="Process_Spade" />
+    <bpmn:participant id="Participant_Auth" name="Pool 7: Identidade, Segurança &#38; Gestão de Sessões (OAuth2 PKCE / OIDC / TOTP / WebAuthn / JWT RTR)" processRef="Process_Auth" />
+    <bpmn:participant id="Participant_Database" name="Pool 8: Banco de Dados &#38; Persistência (Modelo Relacional de 8 Domínios + Segurança)" processRef="Process_Database" />
+    <bpmn:participant id="Participant_Social" name="Pool 9: Relacionamentos Sociais (Follows, Bloqueios, Whispers)" processRef="Process_Social" />
+    <bpmn:participant id="Participant_Commerce" name="Pool 10: Monetização &#38; Comércio (Subs Tier 1/2/3, Bits, Emotes &#38; Hype Train)" processRef="Process_Commerce" />
+    <bpmn:participant id="Participant_VOD" name="Pool 11: Conteúdo Sob Demanda (VODs com Mute DMCA, Clips, Highlights &#38; VOD CDN)" processRef="Process_VOD" />
+    <bpmn:participant id="Participant_GuestStar" name="Pool 12: Guest Star &#38; Colaboração (Sessões, Slots &#38; Co-streaming Multi-Host)" processRef="Process_GuestStar" />
+    <bpmn:participant id="Participant_Video_Safety" name="Pool 13: Moderação de Vídeo &#38; IA de Segurança (Computer Vision, Detecção Nudez/Gore &#38; Kill-Switch ⚡)" processRef="Process_Video_Safety" />
+    <bpmn:messageFlow id="MF_GQL_Req" name="1. POST /gql (PlaybackAccessToken)" sourceRef="Task_Req_Token" targetRef="Task_Resolve_GQL" />
+    <bpmn:messageFlow id="MF_GQL_Res" name="2. Retorno {sig, token}" sourceRef="Task_Mint_Token" targetRef="Task_Req_Token" />
+    <bpmn:messageFlow id="MF_Usher_Req" name="3. GET /channel.m3u8?sig=..&#38;token=.." sourceRef="Task_Fetch_Master" targetRef="Task_Validate_HMAC" />
+    <bpmn:messageFlow id="MF_Usher_Res" name="4. Master Playlist ABR" sourceRef="Task_Serve_Manifest" targetRef="Task_Fetch_Master" />
+    <bpmn:messageFlow id="MF_Video_Chunks" name="5. Chunks MPEG-TS (188B)" sourceRef="Task_Package_TS" targetRef="Task_Download_Segments" />
+    <bpmn:messageFlow id="MF_IRC_Handshake" name="6. WebSocket IRC Handshake" sourceRef="Task_Connect_IRC" targetRef="Task_TMI_Receive" />
+    <bpmn:messageFlow id="MF_IRC_Stream" name="7. PRIVMSG e PING contínuo" sourceRef="Task_TMI_Fanout" targetRef="Task_IRC_Loop" />
+    <bpmn:messageFlow id="MF_Spade_Beacon" name="8. POST /track (Base64)" sourceRef="Task_Send_Spade" targetRef="Task_Ingest_Spade" />
+    <bpmn:messageFlow id="MF_Auth_Request" name="9. Login OAuth2 + PKCE" sourceRef="Task_Init_SPA" targetRef="Task_Login_OAuth" />
+    <bpmn:messageFlow id="MF_Auth_Response" name="10. JWT (RS256) + Refresh Token" sourceRef="Task_Issue_JWT_RTR" targetRef="Task_Init_SPA" />
+    <bpmn:messageFlow id="MF_Auth_DB" name="11. Persistir Sessão &#38; 2FA" sourceRef="Task_Issue_JWT_RTR" targetRef="Task_DB_Users" />
+    <bpmn:messageFlow id="MF_Auth_Redis" name="12. Blacklist de Token" sourceRef="Task_Revoke_Blacklist" targetRef="Task_DB_Users" />
+    <bpmn:messageFlow id="MF_OBS_RTMP" name="13. RTMP Handshake (Stream Key)" sourceRef="Task_Init_SPA" targetRef="Task_Ingest_RTMP" />
+    <bpmn:messageFlow id="MF_Ingest_DB_Check" name="14. Validar Key &#38; Status TOS" sourceRef="Task_Validate_StreamKey" targetRef="Task_DB_Users" />
+    <bpmn:messageFlow id="MF_Audible_Magic_Match" name="15. Match Fonograma DMCA" sourceRef="Task_Audible_Magic" targetRef="Task_DB_Content" />
+    <bpmn:messageFlow id="MF_Held_To_ModView" name="17. Mensagem Retida (Mod View)" sourceRef="Task_Quarantine_Held" targetRef="Task_IRC_Loop" />
+    <bpmn:messageFlow id="MF_Mod_Decision" name="18. Decisão do Moderador" sourceRef="Task_IRC_Loop" targetRef="Task_Quarantine_Held" />
+    <bpmn:messageFlow id="MF_AutoMod_DB_Log" name="19. Log Quarentena &#38; Strikes" sourceRef="Task_Apply_Chat_Ban" targetRef="Task_DB_Moderation" />
+    <bpmn:messageFlow id="MF_Weaver_Keyframes" name="20. Keyframes (2-5s)" sourceRef="Task_Package_TS" targetRef="Task_Extract_Keyframes" />
+    <bpmn:messageFlow id="MF_Kill_Stream_Cmd" name="21. KILL STREAM RTMP" sourceRef="Task_Auto_Kill_Stream" targetRef="Task_Ingest_RTMP" />
+    <bpmn:messageFlow id="MF_Safety_Strike_DB" name="22. Registrar Strike TOS" sourceRef="Task_Process_Strikes" targetRef="Task_DB_Moderation" />
+    <bpmn:messageFlow id="MF_Social_DB" name="23. Persistir Follow/Block" sourceRef="Task_Follow" targetRef="Task_DB_Social" />
+    <bpmn:messageFlow id="MF_Commerce_DB" name="24. Persistir Subs/Bits" sourceRef="Task_Activate_Sub" targetRef="Task_DB_Monetization" />
+    <bpmn:messageFlow id="MF_VOD_Record" name="25. Gravar Segmentos VOD" sourceRef="Task_Package_TS" targetRef="Task_Record_VOD" />
+    <bpmn:messageFlow id="MF_GuestStar_DB" name="26. Persistir Colaborações" sourceRef="Task_Create_GS_Session" targetRef="Task_DB_GuestStar" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_Client" isExecutable="false">
+    <bpmn:startEvent id="Start_Access_Live" name="Início: Espectador Abre a Transmissão&#10;[Navegador carrega aplicação SPA React]">
+      <bpmn:outgoing>Seq_C1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:task id="Task_Init_SPA" name="1.1 Carregar Interface Web &#38; Antifraude&#10;[Baixa SPA React 18 e Executa Prova-de-Trabalho Kasada PoW]">
+      <bpmn:incoming>Seq_C1</bpmn:incoming>
+      <bpmn:incoming>Seq_Retry</bpmn:incoming>
+      <bpmn:outgoing>Seq_C2</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_Req_Token" name="1.2 Solicitar Autorização de Acesso ao Vídeo&#10;[Envia Consulta GraphQL PlaybackAccessToken com Hash SHA-256]">
+      <bpmn:incoming>Seq_C2</bpmn:incoming>
+      <bpmn:outgoing>Seq_C3</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="Gateway_Token_Valid" name="Token Autorizado?&#10;[Live Online &#38; Assinatura Válida]">
+      <bpmn:incoming>Seq_C3</bpmn:incoming>
+      <bpmn:outgoing>Seq_Token_Sim</bpmn:outgoing>
+      <bpmn:outgoing>Seq_Retry</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="Task_Fetch_Master" name="1.3 Obter Lista de Qualidades do Vídeo&#10;[GET Master Playlist .m3u8 via Usher Edge CDN]">
+      <bpmn:incoming>Seq_Token_Sim</bpmn:incoming>
+      <bpmn:outgoing>Seq_C4</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_Select_ABR" name="1.4 Escolher Qualidade de Vídeo Automática&#10;[Algoritmo ABR Adaptativo de 160p a 1080p60]">
+      <bpmn:incoming>Seq_C4</bpmn:incoming>
+      <bpmn:outgoing>Seq_C5</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_Download_Segments" name="1.5 Baixar e Tocar Pedaços de Vídeo&#10;[Buffer Contínuo de Chunks MPEG-TS de 2s via HLS.js]">
+      <bpmn:incoming>Seq_C5</bpmn:incoming>
+      <bpmn:outgoing>Seq_C6</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_Connect_IRC" name="1.6 Conectar à Sala de Chat ao Vivo&#10;[Handshake WebSocket IRC v3 com Autenticação de Badges]">
+      <bpmn:incoming>Seq_C6</bpmn:incoming>
+      <bpmn:outgoing>Seq_C7</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_IRC_Loop" name="1.7 Exibir Chat, Badges &#38; Painel de Moderação&#10;[Renderização de Mensagens, Emotes e Painel Mod View]">
+      <bpmn:incoming>Seq_C7</bpmn:incoming>
+      <bpmn:outgoing>Seq_C8</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_Send_Spade" name="1.8 Enviar Relatório de Audiência e Retenção&#10;[Emissão de Beacon Periódico Base64 via /track para o Spade]">
+      <bpmn:incoming>Seq_C8</bpmn:incoming>
+      <bpmn:outgoing>Seq_C9</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="End_Playback_Active" name="Fim: Transmissão em Reprodução Suave&#10;[Vídeo e Chat Sincronizados com Baixa Latência]">
+      <bpmn:incoming>Seq_C9</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Seq_C1" sourceRef="Start_Access_Live" targetRef="Task_Init_SPA" />
+    <bpmn:sequenceFlow id="Seq_Retry" name="Não (Canal Offline)" sourceRef="Gateway_Token_Valid" targetRef="Task_Init_SPA" />
+    <bpmn:sequenceFlow id="Seq_C2" sourceRef="Task_Init_SPA" targetRef="Task_Req_Token" />
+    <bpmn:sequenceFlow id="Seq_C3" sourceRef="Task_Req_Token" targetRef="Gateway_Token_Valid" />
+    <bpmn:sequenceFlow id="Seq_Token_Sim" name="Sim (Live Online)" sourceRef="Gateway_Token_Valid" targetRef="Task_Fetch_Master" />
+    <bpmn:sequenceFlow id="Seq_C4" sourceRef="Task_Fetch_Master" targetRef="Task_Select_ABR" />
+    <bpmn:sequenceFlow id="Seq_C5" sourceRef="Task_Select_ABR" targetRef="Task_Download_Segments" />
+    <bpmn:sequenceFlow id="Seq_C6" sourceRef="Task_Download_Segments" targetRef="Task_Connect_IRC" />
+    <bpmn:sequenceFlow id="Seq_C7" sourceRef="Task_Connect_IRC" targetRef="Task_IRC_Loop" />
+    <bpmn:sequenceFlow id="Seq_C8" sourceRef="Task_IRC_Loop" targetRef="Task_Send_Spade" />
+    <bpmn:sequenceFlow id="Seq_C9" sourceRef="Task_Send_Spade" targetRef="End_Playback_Active" />
+  </bpmn:process>
+  <bpmn:process id="Process_Backend" isExecutable="false">
+    <bpmn:task id="Task_Kasada_BFF" name="2.1 Defesa de Borda Antirrobô (Kasada)&#10;[Valida Assinatura Biométrica x-kpsdk-ct e Desafio Arkose]">
+      <bpmn:outgoing>Seq_B1</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_Resolve_GQL" name="2.2 Identificar Consulta Pré-Compilada&#10;[Resolução Instantânea APQ via Hash SHA-256 sem Parse de String]">
+      <bpmn:incoming>Seq_B1</bpmn:incoming>
+      <bpmn:outgoing>Seq_B2</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_Mint_Token" name="2.3 Gerar Selo Digital de Autorização (Token)&#10;[Empacota Regras de Adblock/Subs e Assina com HMAC-SHA256]">
+      <bpmn:incoming>Seq_B2</bpmn:incoming>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="Seq_B1" sourceRef="Task_Kasada_BFF" targetRef="Task_Resolve_GQL" />
+    <bpmn:sequenceFlow id="Seq_B2" sourceRef="Task_Resolve_GQL" targetRef="Task_Mint_Token" />
+  </bpmn:process>
+  <bpmn:process id="Process_Edge" isExecutable="false">
+    <bpmn:task id="Task_Validate_HMAC" name="3.1 Validação Instantânea na Borda (Edge)&#10;[Verifica Selo HMAC em O(1) sem Bloquear o Banco de Dados]">
+      <bpmn:outgoing>Seq_E1</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_Serve_Manifest" name="3.2 Entregar Playlist de Resoluções (.m3u8)&#10;[Lista de URLs dos Servidores de Vídeo Mais Próximos]">
+      <bpmn:incoming>Seq_E1</bpmn:incoming>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="Seq_E1" sourceRef="Task_Validate_HMAC" targetRef="Task_Serve_Manifest" />
+  </bpmn:process>
+  <bpmn:process id="Process_Weaver" isExecutable="false">
+    <bpmn:startEvent id="Start_Ingest_RTMP" name="Início: Streamer Inicia a Transmissão&#10;[Software OBS/vMix Conecta ao Servidor de Ingestão]">
+      <bpmn:outgoing>Seq_W1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:task id="Task_Ingest_RTMP" name="4.1 Receber Sinal de Vídeo Bruto&#10;[Ingestão RTMP :1935 / SRT AES :443 com Stream Key]">
+      <bpmn:incoming>Seq_W1</bpmn:incoming>
+      <bpmn:outgoing>Seq_W2</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_Validate_StreamKey" name="4.2 Validar Permissão e Chave de Transmissão&#10;[Checa Integridade live_uid_hmac, 2FA Ativo e Status de TOS]">
+      <bpmn:incoming>Seq_W2</bpmn:incoming>
+      <bpmn:outgoing>Seq_W3</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="GW_StreamKey_Valid" name="Chave e Canal Válidos?">
+      <bpmn:incoming>Seq_W3</bpmn:incoming>
+      <bpmn:outgoing>Seq_Key_Sim</bpmn:outgoing>
+      <bpmn:outgoing>Seq_Key_Nao</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="Task_Reject_Stream" name="4.3 Rejeitar Conexão com Erro 403&#10;[Encerra Socket TCP Imediatamente por Chave Inválida ou Ban]">
+      <bpmn:incoming>Seq_Key_Nao</bpmn:incoming>
+      <bpmn:outgoing>Seq_W_Drop</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_Check_DJ" name="4.4 Validação do Programa Twitch DJ&#10;[Checa is_participating_dj vs. Catálogo de Músicas Autorizadas]">
+      <bpmn:incoming>Seq_Key_Sim</bpmn:incoming>
+      <bpmn:outgoing>Seq_W4</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_Audible_Magic" name="4.5 Detectar Músicas Protegidas por Direitos&#10;[Extrai Hash Acústico em Tempo Real e Cruza com Base DMCA]">
+      <bpmn:incoming>Seq_W4</bpmn:incoming>
+      <bpmn:outgoing>Seq_W5</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="GW_DMCA_Check" name="Música Protegida sem Direitos?">
+      <bpmn:incoming>Seq_W5</bpmn:incoming>
+      <bpmn:outgoing>Seq_DMCA_Sim</bpmn:outgoing>
+      <bpmn:outgoing>Seq_DMCA_Nao</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="Task_Transcode_ABR" name="4.7 Criar Versões em Várias Resoluções&#10;[Codifica Vídeo em 1080p, 720p, 480p, 360p, 160p]">
+      <bpmn:incoming>Seq_DMCA_Nao</bpmn:incoming>
+      <bpmn:incoming>Seq_Mute_Done</bpmn:incoming>
+      <bpmn:outgoing>Seq_W6</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_SSAI_Stitch" name="4.8 Injetar Propagandas Diretamente no Vídeo&#10;[Costura Anúncio no Fluxo Binário com Metadados ID3 TXXX]">
+      <bpmn:incoming>Seq_W6</bpmn:incoming>
+      <bpmn:outgoing>Seq_W7</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_Package_TS" name="4.9 Fatiar Vídeo em Pedaços de 2 Segundos&#10;[Gera Arquivos .ts com Relógio de Hardware PCR a 27MHz]">
+      <bpmn:incoming>Seq_W7</bpmn:incoming>
+      <bpmn:outgoing>Seq_W8</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="End_Stream_Active" name="Fim: Fluxo de Mídia Pronto para Entrega&#10;[Segmentos Transcodificados Disponíveis para a CDN]">
+      <bpmn:incoming>Seq_W8</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:endEvent id="End_Stream_Rejected" name="Fim: Ingestão Abortada&#10;[Transmissão Bloqueada por Segurança]">
+      <bpmn:incoming>Seq_W_Drop</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:task id="Task_Apply_Mute" name="4.6 Aplicar Silenciamento Seletivo de Áudio&#10;[Alerta Streamer e Marca muted_segments_offset no VOD]">
+      <bpmn:incoming>Seq_DMCA_Sim</bpmn:incoming>
+      <bpmn:outgoing>Seq_Mute_Done</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="Seq_W1" sourceRef="Start_Ingest_RTMP" targetRef="Task_Ingest_RTMP" />
+    <bpmn:sequenceFlow id="Seq_W2" sourceRef="Task_Ingest_RTMP" targetRef="Task_Validate_StreamKey" />
+    <bpmn:sequenceFlow id="Seq_W3" sourceRef="Task_Validate_StreamKey" targetRef="GW_StreamKey_Valid" />
+    <bpmn:sequenceFlow id="Seq_Key_Sim" name="Sim" sourceRef="GW_StreamKey_Valid" targetRef="Task_Check_DJ" />
+    <bpmn:sequenceFlow id="Seq_Key_Nao" name="Não" sourceRef="GW_StreamKey_Valid" targetRef="Task_Reject_Stream" />
+    <bpmn:sequenceFlow id="Seq_W_Drop" sourceRef="Task_Reject_Stream" targetRef="End_Stream_Rejected" />
+    <bpmn:sequenceFlow id="Seq_W4" sourceRef="Task_Check_DJ" targetRef="Task_Audible_Magic" />
+    <bpmn:sequenceFlow id="Seq_W5" sourceRef="Task_Audible_Magic" targetRef="GW_DMCA_Check" />
+    <bpmn:sequenceFlow id="Seq_DMCA_Sim" name="Sim (Violação)" sourceRef="GW_DMCA_Check" targetRef="Task_Apply_Mute" />
+    <bpmn:sequenceFlow id="Seq_DMCA_Nao" name="Não" sourceRef="GW_DMCA_Check" targetRef="Task_Transcode_ABR" />
+    <bpmn:sequenceFlow id="Seq_Mute_Done" sourceRef="Task_Apply_Mute" targetRef="Task_Transcode_ABR" />
+    <bpmn:sequenceFlow id="Seq_W6" sourceRef="Task_Transcode_ABR" targetRef="Task_SSAI_Stitch" />
+    <bpmn:sequenceFlow id="Seq_W7" sourceRef="Task_SSAI_Stitch" targetRef="Task_Package_TS" />
+    <bpmn:sequenceFlow id="Seq_W8" sourceRef="Task_Package_TS" targetRef="End_Stream_Active" />
+  </bpmn:process>
+  <bpmn:process id="Process_TMI" isExecutable="false">
+    <bpmn:task id="Task_TMI_Receive" name="5.1 Ingestão WebSocket TMI do Chat&#10;[Recebe Mensagem IRC v3 e Extrai Badges e Metadados]">
+      <bpmn:outgoing>Seq_T1</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_AutoMod_NLP" name="5.2 Analisar Mensagem com IA (AutoMod NLP)&#10;[Classificador Neural Detecta Toxicidade, Assédio e Leet-Speak]">
+      <bpmn:incoming>Seq_T1</bpmn:incoming>
+      <bpmn:outgoing>Seq_T2</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_Suspicious_User" name="5.3 Detectar Evasão de Banimento no Chat&#10;[Suspicious User ML: Cruza Fingerprint de Hardware e Subnet IP]">
+      <bpmn:incoming>Seq_T2</bpmn:incoming>
+      <bpmn:outgoing>Seq_T3</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="GW_AutoMod_Risk" name="Severidade do Risco da Mensagem?">
+      <bpmn:incoming>Seq_T3</bpmn:incoming>
+      <bpmn:outgoing>Seq_Risk_Low</bpmn:outgoing>
+      <bpmn:outgoing>Seq_Risk_High</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="Task_TMI_Fanout" name="5.4 Distribuir Mensagem para Todos no Chat&#10;[Roteamento em Memória O(1) para 100k+ Pessoas]">
+      <bpmn:incoming>Seq_Risk_Low</bpmn:incoming>
+      <bpmn:incoming>Seq_Mod_Approved</bpmn:incoming>
+    </bpmn:task>
+    <bpmn:task id="Task_Quarantine_Held" name="5.5 Reter Mensagem Suspeita em Quarentena&#10;[Oculta do Chat Público e Despacha para o Mod View]">
+      <bpmn:incoming>Seq_Risk_High</bpmn:incoming>
+      <bpmn:outgoing>Seq_T_Mod</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="GW_Mod_Decision" name="Decisão do Moderador?">
+      <bpmn:incoming>Seq_T_Mod</bpmn:incoming>
+      <bpmn:outgoing>Seq_Mod_Approved</bpmn:outgoing>
+      <bpmn:outgoing>Seq_Mod_Denied</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="Task_Apply_Chat_Ban" name="5.6 Aplicar Punição ao Usuário Infrator&#10;[Timeout Temporário de 10m ou Ban Permanente do Canal]">
+      <bpmn:incoming>Seq_Mod_Denied</bpmn:incoming>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="Seq_T1" sourceRef="Task_TMI_Receive" targetRef="Task_AutoMod_NLP" />
+    <bpmn:sequenceFlow id="Seq_T2" sourceRef="Task_AutoMod_NLP" targetRef="Task_Suspicious_User" />
+    <bpmn:sequenceFlow id="Seq_T3" sourceRef="Task_Suspicious_User" targetRef="GW_AutoMod_Risk" />
+    <bpmn:sequenceFlow id="Seq_Risk_Low" name="Baixo Risco" sourceRef="GW_AutoMod_Risk" targetRef="Task_TMI_Fanout" />
+    <bpmn:sequenceFlow id="Seq_Risk_High" name="Alto Risco" sourceRef="GW_AutoMod_Risk" targetRef="Task_Quarantine_Held" />
+    <bpmn:sequenceFlow id="Seq_Mod_Approved" name="Aprovar" sourceRef="GW_Mod_Decision" targetRef="Task_TMI_Fanout" />
+    <bpmn:sequenceFlow id="Seq_T_Mod" sourceRef="Task_Quarantine_Held" targetRef="GW_Mod_Decision" />
+    <bpmn:sequenceFlow id="Seq_Mod_Denied" name="Recusar" sourceRef="GW_Mod_Decision" targetRef="Task_Apply_Chat_Ban" />
+  </bpmn:process>
+  <bpmn:process id="Process_Spade" isExecutable="false">
+    <bpmn:task id="Task_Ingest_Spade" name="6.1 Processar Métricas e Bloquear Viewbots&#10;[Auditoria de Minutos Assistidos, Foco da Janela e Anti-Bot]" />
+  </bpmn:process>
+  <bpmn:process id="Process_Auth" isExecutable="false">
+    <bpmn:startEvent id="Start_Auth" name="Início: Usuário Inicia Autenticação&#10;[Início do Fluxo de Login Seguro]">
+      <bpmn:outgoing>Seq_Auth1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:task id="Task_Register_Account" name="7.1 Registro de Conta com Hash Forte&#10;[Criptografia Argon2id + users, user_roles]">
+      <bpmn:incoming>Seq_Auth1</bpmn:incoming>
+      <bpmn:outgoing>Seq_Auth2</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_Login_OAuth" name="7.2 Login OAuth2 com Proteção PKCE&#10;[Desafio SHA-256 via OpenID Connect sem Expor Credenciais]">
+      <bpmn:incoming>Seq_Auth2</bpmn:incoming>
+      <bpmn:outgoing>Seq_Auth3</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_Val_Creds_Bloom" name="7.3 Validar Senha contra Base de Vazamentos&#10;[Consulta Instantânea em Bloom Filter de Senhas Expostas]">
+      <bpmn:incoming>Seq_Auth3</bpmn:incoming>
+      <bpmn:outgoing>Seq_Auth4</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="GW_2FA_Enabled" name="Autenticação em 2 Etapas (2FA) Ativa?">
+      <bpmn:incoming>Seq_Auth4</bpmn:incoming>
+      <bpmn:outgoing>Seq_Auth5_Sim</bpmn:outgoing>
+      <bpmn:outgoing>Seq_Auth5_Nao</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="Task_Verify_2FA" name="7.4 Validar Segundo Fator de Autenticação&#10;[Checa Código TOTP RFC 6238, Passkey FIDO2 ou SMS]">
+      <bpmn:incoming>Seq_Auth5_Sim</bpmn:incoming>
+      <bpmn:outgoing>Seq_Auth6</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_Issue_JWT_RTR" name="7.5 Emitir Tokens de Acesso com Rotação (RTR)&#10;[Access Token RS256 de 4h + Refresh Token Rotativo]">
+      <bpmn:incoming>Seq_Auth6</bpmn:incoming>
+      <bpmn:incoming>Seq_Auth5_Nao</bpmn:incoming>
+      <bpmn:outgoing>Seq_Auth7</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_Revoke_Blacklist" name="7.6 Gestão de Sessões &#38; Revogação Distribuída&#10;[Atualiza auth_sessions e Blacklist no Redis Cluster]">
+      <bpmn:incoming>Seq_Auth7</bpmn:incoming>
+      <bpmn:outgoing>Seq_Auth8</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="End_Auth" name="Fim: Sessão Autenticada com Sucesso&#10;[Usuário Conectado e Autorizado]">
+      <bpmn:incoming>Seq_Auth8</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Seq_Auth1" sourceRef="Start_Auth" targetRef="Task_Register_Account" />
+    <bpmn:sequenceFlow id="Seq_Auth2" sourceRef="Task_Register_Account" targetRef="Task_Login_OAuth" />
+    <bpmn:sequenceFlow id="Seq_Auth3" sourceRef="Task_Login_OAuth" targetRef="Task_Val_Creds_Bloom" />
+    <bpmn:sequenceFlow id="Seq_Auth4" sourceRef="Task_Val_Creds_Bloom" targetRef="GW_2FA_Enabled" />
+    <bpmn:sequenceFlow id="Seq_Auth5_Sim" name="Sim" sourceRef="GW_2FA_Enabled" targetRef="Task_Verify_2FA" />
+    <bpmn:sequenceFlow id="Seq_Auth5_Nao" name="Não (Sem 2FA)" sourceRef="GW_2FA_Enabled" targetRef="Task_Issue_JWT_RTR" />
+    <bpmn:sequenceFlow id="Seq_Auth6" sourceRef="Task_Verify_2FA" targetRef="Task_Issue_JWT_RTR" />
+    <bpmn:sequenceFlow id="Seq_Auth7" sourceRef="Task_Issue_JWT_RTR" targetRef="Task_Revoke_Blacklist" />
+    <bpmn:sequenceFlow id="Seq_Auth8" sourceRef="Task_Revoke_Blacklist" targetRef="End_Auth" />
+  </bpmn:process>
+  <bpmn:process id="Process_Database" isExecutable="false">
+    <bpmn:task id="Task_DB_Users" name="8.1 Usuários, Sessões &#38; Chaves de Ingestão&#10;[users, user_roles, auth_sessions, 2fa_configs, stream_keys]" />
+    <bpmn:task id="Task_DB_Games" name="8.2 Catálogo de Jogos &#38; Transmissões ao Vivo&#10;[games, streams, costream_details, ccl_records]" />
+    <bpmn:task id="Task_DB_Taxonomy" name="8.3 Taxonomia, Tags &#38; Classificação Etária&#10;[tags, freeform_tags, content_classification_labels]" />
+    <bpmn:task id="Task_DB_Monetization" name="8.4 Monetização, Assinaturas &#38; Moeda Virtual&#10;[subscription_products, emote_sets, emotes, bits]" />
+    <bpmn:task id="Task_DB_GuestStar" name="8.5 Sessões Colaborativas &#38; Guest Star&#10;[guest_star_sessions, guest_star_slots, collaborations]" />
+    <bpmn:task id="Task_DB_Content" name="8.6 Conteúdo Gravado, VODs &#38; Trilha DMCA&#10;[vods, clips, highlights, muted_segments_offset]" />
+    <bpmn:task id="Task_DB_Social" name="8.7 Relacionamentos Sociais &#38; Mensagens Privadas&#10;[follows, blocks, whispers]" />
+    <bpmn:task id="Task_DB_Moderation" name="8.8 Moderação, Quarentena &#38; Sanções TOS&#10;[automod_rules, held_messages, moderation_strikes]" />
+  </bpmn:process>
+  <bpmn:process id="Process_Social" isExecutable="false">
+    <bpmn:startEvent id="Start_Social" name="Início: Ação Social Solicitada&#10;[Interação entre Usuários]">
+      <bpmn:outgoing>Seq_Soc1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:task id="Task_Follow" name="9.1 Seguir ou Deixar de Seguir Canal&#10;[follows(follower_id, followed_id, created_at)]">
+      <bpmn:incoming>Seq_Soc1</bpmn:incoming>
+      <bpmn:outgoing>Seq_Soc2</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_Block" name="9.2 Bloquear ou Desbloquear Usuário&#10;[blocks(blocker_id, blocked_id)]">
+      <bpmn:incoming>Seq_Soc2</bpmn:incoming>
+      <bpmn:outgoing>Seq_Soc3</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="GW_Blocked" name="Destinatário Bloqueou o Remetente?">
+      <bpmn:incoming>Seq_Soc3</bpmn:incoming>
+      <bpmn:outgoing>Seq_Soc4_Nao</bpmn:outgoing>
+      <bpmn:outgoing>Seq_Soc4_Sim</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="Task_Whisper" name="9.3 Enviar Mensagem Privada (Whisper)&#10;[Roteamento P2P via Servidores TMI / API Privada]">
+      <bpmn:incoming>Seq_Soc4_Nao</bpmn:incoming>
+      <bpmn:outgoing>Seq_Soc5</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="End_Social" name="Fim: Ação Social Processada com Sucesso&#10;[Operação Registrada no Sistema]">
+      <bpmn:incoming>Seq_Soc5</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:endEvent id="End_Blocked" name="Fim: Interação Bloqueada&#10;[Mensagem Privada Não Entregue]">
+      <bpmn:incoming>Seq_Soc4_Sim</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Seq_Soc1" sourceRef="Start_Social" targetRef="Task_Follow" />
+    <bpmn:sequenceFlow id="Seq_Soc2" sourceRef="Task_Follow" targetRef="Task_Block" />
+    <bpmn:sequenceFlow id="Seq_Soc3" sourceRef="Task_Block" targetRef="GW_Blocked" />
+    <bpmn:sequenceFlow id="Seq_Soc4_Nao" name="Não" sourceRef="GW_Blocked" targetRef="Task_Whisper" />
+    <bpmn:sequenceFlow id="Seq_Soc4_Sim" name="Sim (Bloqueado)" sourceRef="GW_Blocked" targetRef="End_Blocked" />
+    <bpmn:sequenceFlow id="Seq_Soc5" sourceRef="Task_Whisper" targetRef="End_Social" />
+  </bpmn:process>
+  <bpmn:process id="Process_Commerce" isExecutable="false">
+    <bpmn:startEvent id="Start_Commerce" name="Início: Ação de Compra ou Inscrição&#10;[Apoio Financeiro ao Criador]">
+      <bpmn:outgoing>Seq_Com1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:task id="Task_Subscribe" name="10.1 Processar Inscrição no Canal (Sub)&#10;[subscription_products: Tier 1/2/3, Prime Gaming, Turbo]">
+      <bpmn:incoming>Seq_Com1</bpmn:incoming>
+      <bpmn:outgoing>Seq_Com2</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="GW_Payment" name="Pagamento Aprovado pela Operadora?">
+      <bpmn:incoming>Seq_Com2</bpmn:incoming>
+      <bpmn:outgoing>Seq_Com3_Sim</bpmn:outgoing>
+      <bpmn:outgoing>Seq_Com3_Nao</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="Task_Activate_Sub" name="10.2 Ativar Benefícios de Assinante&#10;[Libera Emblemas, Live sem Anúncios e Status Sub]">
+      <bpmn:incoming>Seq_Com3_Sim</bpmn:incoming>
+      <bpmn:outgoing>Seq_Com4</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_Emotes" name="10.3 Carregar Emotes Exclusivos do Canal&#10;[emote_sets, emotes(token, asset_type)]">
+      <bpmn:incoming>Seq_Com4</bpmn:incoming>
+      <bpmn:outgoing>Seq_Com5</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_Bits" name="10.4 Processar Compra de Bits &#38; Cheers&#10;[Moeda Virtual, Animação de Cheer e Hype Train]">
+      <bpmn:incoming>Seq_Com5</bpmn:incoming>
+      <bpmn:outgoing>Seq_Com6</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="End_Commerce" name="Fim: Compra Processada com Sucesso&#10;[Benefícios Vinculados à Conta]">
+      <bpmn:incoming>Seq_Com6</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:endEvent id="End_Payment_Failed" name="Fim: Pagamento Rejeitado&#10;[Falha na Operadora de Pagamentos]">
+      <bpmn:incoming>Seq_Com3_Nao</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Seq_Com1" sourceRef="Start_Commerce" targetRef="Task_Subscribe" />
+    <bpmn:sequenceFlow id="Seq_Com2" sourceRef="Task_Subscribe" targetRef="GW_Payment" />
+    <bpmn:sequenceFlow id="Seq_Com3_Sim" name="Sim" sourceRef="GW_Payment" targetRef="Task_Activate_Sub" />
+    <bpmn:sequenceFlow id="Seq_Com3_Nao" name="Não (Recusado)" sourceRef="GW_Payment" targetRef="End_Payment_Failed" />
+    <bpmn:sequenceFlow id="Seq_Com4" sourceRef="Task_Activate_Sub" targetRef="Task_Emotes" />
+    <bpmn:sequenceFlow id="Seq_Com5" sourceRef="Task_Emotes" targetRef="Task_Bits" />
+    <bpmn:sequenceFlow id="Seq_Com6" sourceRef="Task_Bits" targetRef="End_Commerce" />
+  </bpmn:process>
+  <bpmn:process id="Process_VOD" isExecutable="false">
+    <bpmn:startEvent id="Start_VOD" name="Início: Evento de Conteúdo Gravado&#10;[Transmissão Encerrada ou Criação de Clip]">
+      <bpmn:outgoing>Seq_VOD1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:exclusiveGateway id="GW_VOD_Enabled" name="Gravação de VOD Ativada no Canal?">
+      <bpmn:incoming>Seq_VOD1</bpmn:incoming>
+      <bpmn:outgoing>Seq_VOD2_Sim</bpmn:outgoing>
+      <bpmn:outgoing>Seq_VOD2_Nao</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="Task_Record_VOD" name="11.1 Gravar VOD Automático com Mute DMCA&#10;[Arquiva Vídeo com Segmentos Protegidos Silenciados]">
+      <bpmn:incoming>Seq_VOD2_Sim</bpmn:incoming>
+      <bpmn:outgoing>Seq_VOD3</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_Create_Clip" name="11.2 Gerar Clip Curto do Momento (5-60s)&#10;[clips(broadcaster_id, creator_id, vod_offset)]">
+      <bpmn:incoming>Seq_VOD3</bpmn:incoming>
+      <bpmn:outgoing>Seq_VOD4</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_Create_Highlight" name="11.3 Criar Destaque (Highlight) Editado&#10;[Edição dos Melhores Momentos pelo Streamer]">
+      <bpmn:incoming>Seq_VOD4</bpmn:incoming>
+      <bpmn:outgoing>Seq_VOD5</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_Transcode_VOD" name="11.4 Transcodificar &#38; Distribuir na CDN&#10;[Gera Playlist ABR .m3u8 para Visualização Sob Demanda]">
+      <bpmn:incoming>Seq_VOD5</bpmn:incoming>
+      <bpmn:outgoing>Seq_VOD6</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="End_VOD" name="Fim: Conteúdo Disponível na Biblioteca&#10;[VOD ou Clip Acessível para o Público]">
+      <bpmn:incoming>Seq_VOD6</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:endEvent id="End_VOD_Disabled" name="Fim: Gravação Ignorada&#10;[VODs Desativados nas Opções do Canal]">
+      <bpmn:incoming>Seq_VOD2_Nao</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Seq_VOD1" sourceRef="Start_VOD" targetRef="GW_VOD_Enabled" />
+    <bpmn:sequenceFlow id="Seq_VOD2_Sim" name="Sim" sourceRef="GW_VOD_Enabled" targetRef="Task_Record_VOD" />
+    <bpmn:sequenceFlow id="Seq_VOD2_Nao" name="Não" sourceRef="GW_VOD_Enabled" targetRef="End_VOD_Disabled" />
+    <bpmn:sequenceFlow id="Seq_VOD3" sourceRef="Task_Record_VOD" targetRef="Task_Create_Clip" />
+    <bpmn:sequenceFlow id="Seq_VOD4" sourceRef="Task_Create_Clip" targetRef="Task_Create_Highlight" />
+    <bpmn:sequenceFlow id="Seq_VOD5" sourceRef="Task_Create_Highlight" targetRef="Task_Transcode_VOD" />
+    <bpmn:sequenceFlow id="Seq_VOD6" sourceRef="Task_Transcode_VOD" targetRef="End_VOD" />
+  </bpmn:process>
+  <bpmn:process id="Process_GuestStar" isExecutable="false">
+    <bpmn:startEvent id="Start_GS" name="Início: Iniciar Sessão Guest Star&#10;[Abertura de Sala para Colaboração ao Vivo]">
+      <bpmn:outgoing>Seq_GS1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:task id="Task_Create_GS_Session" name="12.1 Criar Sessão Guest Star&#10;[guest_star_sessions(id, host_id)]">
+      <bpmn:incoming>Seq_GS1</bpmn:incoming>
+      <bpmn:outgoing>Seq_GS2</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_Manage_Slots" name="12.2 Gerenciar Vagas de Convidados&#10;[guest_star_slots(id, session_id, user_id)]">
+      <bpmn:incoming>Seq_GS2</bpmn:incoming>
+      <bpmn:outgoing>Seq_GS3</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="GW_Can_Join" name="Convidado Autorizado a Entrar?">
+      <bpmn:incoming>Seq_GS3</bpmn:incoming>
+      <bpmn:outgoing>Seq_GS4_Sim</bpmn:outgoing>
+      <bpmn:outgoing>Seq_GS4_Nao</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="Task_Join_Session" name="12.3 Conectar Convidado à Sala&#10;[collaborations(can_drop_in, is_favorite) + WebRTC]">
+      <bpmn:incoming>Seq_GS4_Sim</bpmn:incoming>
+      <bpmn:outgoing>Seq_GS5</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_Costream" name="12.4 Transmissão Conjunta Multi-Host&#10;[costream_details(organizer_id, costreamers_count)]">
+      <bpmn:incoming>Seq_GS5</bpmn:incoming>
+      <bpmn:outgoing>Seq_GS6</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="End_GS" name="Fim: Sessão Colaborativa Ativa&#10;[Painel Multi-Host Transmitindo]">
+      <bpmn:incoming>Seq_GS6</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:endEvent id="End_GS_Denied" name="Fim: Entrada Negada&#10;[Permissão Insuficiente ou Sala Cheia]">
+      <bpmn:incoming>Seq_GS4_Nao</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Seq_GS1" sourceRef="Start_GS" targetRef="Task_Create_GS_Session" />
+    <bpmn:sequenceFlow id="Seq_GS2" sourceRef="Task_Create_GS_Session" targetRef="Task_Manage_Slots" />
+    <bpmn:sequenceFlow id="Seq_GS3" sourceRef="Task_Manage_Slots" targetRef="GW_Can_Join" />
+    <bpmn:sequenceFlow id="Seq_GS4_Sim" name="Sim" sourceRef="GW_Can_Join" targetRef="Task_Join_Session" />
+    <bpmn:sequenceFlow id="Seq_GS4_Nao" name="Não" sourceRef="GW_Can_Join" targetRef="End_GS_Denied" />
+    <bpmn:sequenceFlow id="Seq_GS5" sourceRef="Task_Join_Session" targetRef="Task_Costream" />
+    <bpmn:sequenceFlow id="Seq_GS6" sourceRef="Task_Costream" targetRef="End_GS" />
+  </bpmn:process>
+  <bpmn:process id="Process_Video_Safety" isExecutable="false">
+    <bpmn:startEvent id="Start_Video_Feed" name="Início: Feed de Mídia Contínuo da Live&#10;[Amostragem em Tempo Real do Fluxo Transmitido]">
+      <bpmn:outgoing>Seq_Vid_1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:task id="Task_Extract_Keyframes" name="13.1 Amostragem Periódica de Keyframes&#10;[Extrai 1 Frame a cada 2 a 5 Segundos]">
+      <bpmn:incoming>Seq_Vid_1</bpmn:incoming>
+      <bpmn:outgoing>Seq_Vid_2</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_CV_Classifiers" name="13.2 Analisar Frames com Visão Computacional&#10;[IA Detecta Nudez, Gore, Violência, Armas e Terrorismo]">
+      <bpmn:incoming>Seq_Vid_2</bpmn:incoming>
+      <bpmn:outgoing>Seq_Vid_3</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="GW_Video_Risk_Level" name="Severidade da Violação Visual Detectada?">
+      <bpmn:incoming>Seq_Vid_3</bpmn:incoming>
+      <bpmn:outgoing>Seq_Vid_Safe</bpmn:outgoing>
+      <bpmn:outgoing>Seq_Vid_Critical</bpmn:outgoing>
+      <bpmn:outgoing>Seq_Vid_Moderate</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="Task_Video_Safety_OK" name="13.3 Aprovar Transmissão em Conformidade&#10;[Nenhuma Violação das Diretrizes Encontrada]">
+      <bpmn:incoming>Seq_Vid_Safe</bpmn:incoming>
+      <bpmn:outgoing>Seq_Vid_End_OK</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_Auto_Kill_Stream" name="13.4 Kill-Switch Automático de Emergência (P0)&#10;[Derruba Socket RTMP e Bloqueia Canal Instantaneamente]">
+      <bpmn:incoming>Seq_Vid_Critical</bpmn:incoming>
+      <bpmn:outgoing>Seq_Vid_To_Strike</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_Dispatch_Human_Audit" name="13.5 Fila de Auditoria Humana Urgente 24/7&#10;[Equipe Trust &#38; Safety Analisa Incidente em &#60; 30s]">
+      <bpmn:incoming>Seq_Vid_Moderate</bpmn:incoming>
+      <bpmn:outgoing>Seq_Vid_Audit_Strike</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="Task_Process_Strikes" name="13.6 Aplicação de Sanções e Strikes TOS&#10;[Registra Infração em moderation_strikes: Suspensão ou Ban]">
+      <bpmn:incoming>Seq_Vid_To_Strike</bpmn:incoming>
+      <bpmn:incoming>Seq_Vid_Audit_Strike</bpmn:incoming>
+      <bpmn:outgoing>Seq_Vid_End_Terminated</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="End_Stream_Terminated" name="Fim: Live Encerrada por Violação Grave&#10;[Transmissão Abortada e Canal Suspenso]">
+      <bpmn:incoming>Seq_Vid_End_Terminated</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:endEvent id="End_Video_Safe" name="Fim: Vídeo Aprovado e Seguro&#10;[Transmissão Continua Normalmente]">
+      <bpmn:incoming>Seq_Vid_End_OK</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Seq_Vid_1" sourceRef="Start_Video_Feed" targetRef="Task_Extract_Keyframes" />
+    <bpmn:sequenceFlow id="Seq_Vid_2" sourceRef="Task_Extract_Keyframes" targetRef="Task_CV_Classifiers" />
+    <bpmn:sequenceFlow id="Seq_Vid_3" sourceRef="Task_CV_Classifiers" targetRef="GW_Video_Risk_Level" />
+    <bpmn:sequenceFlow id="Seq_Vid_Safe" name="Sem Violação" sourceRef="GW_Video_Risk_Level" targetRef="Task_Video_Safety_OK" />
+    <bpmn:sequenceFlow id="Seq_Vid_Critical" name="Crítica P0" sourceRef="GW_Video_Risk_Level" targetRef="Task_Auto_Kill_Stream" />
+    <bpmn:sequenceFlow id="Seq_Vid_Moderate" name="Média Suspeita" sourceRef="GW_Video_Risk_Level" targetRef="Task_Dispatch_Human_Audit" />
+    <bpmn:sequenceFlow id="Seq_Vid_End_OK" sourceRef="Task_Video_Safety_OK" targetRef="End_Video_Safe" />
+    <bpmn:sequenceFlow id="Seq_Vid_To_Strike" sourceRef="Task_Auto_Kill_Stream" targetRef="Task_Process_Strikes" />
+    <bpmn:sequenceFlow id="Seq_Vid_Audit_Strike" sourceRef="Task_Dispatch_Human_Audit" targetRef="Task_Process_Strikes" />
+    <bpmn:sequenceFlow id="Seq_Vid_End_Terminated" sourceRef="Task_Process_Strikes" targetRef="End_Stream_Terminated" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_Twitch">
+    <bpmndi:BPMNPlane id="BPMNPlane_Twitch" bpmnElement="Collaboration_Twitch">
+      <bpmndi:BPMNShape id="Shape_Participant_Client" bpmnElement="Participant_Client" isHorizontal="true" bioc:stroke="#6f42c1" bioc:fill="#f8f4ff" color:background-color="#f8f4ff" color:border-color="#6f42c1">
+        <dc:Bounds x="390" y="50" width="3450" height="340" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Start_Access_Live" bpmnElement="Start_Access_Live" bioc:stroke="#198754" bioc:fill="#d1e7dd" color:background-color="#d1e7dd" color:border-color="#198754">
+        <dc:Bounds x="520" y="190" width="40" height="40" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="497" y="230" width="87" height="80" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Init_SPA" bpmnElement="Task_Init_SPA" bioc:stroke="#6f42c1" bioc:fill="#ede4ff" color:background-color="#ede4ff" color:border-color="#6f42c1">
+        <dc:Bounds x="610" y="155" width="240" height="110" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Req_Token" bpmnElement="Task_Req_Token" bioc:stroke="#6f42c1" bioc:fill="#ede4ff" color:background-color="#ede4ff" color:border-color="#6f42c1">
+        <dc:Bounds x="910" y="155" width="240" height="110" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Gateway_Token_Valid" bpmnElement="Gateway_Token_Valid" isMarkerVisible="true" bioc:stroke="#ffc107" bioc:fill="#fff3cd" color:background-color="#fff3cd" color:border-color="#ffc107">
+        <dc:Bounds x="1210" y="180" width="60" height="60" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1196" y="240" width="89" height="53" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Fetch_Master" bpmnElement="Task_Fetch_Master" bioc:stroke="#6f42c1" bioc:fill="#ede4ff" color:background-color="#ede4ff" color:border-color="#6f42c1">
+        <dc:Bounds x="1330" y="155" width="230" height="110" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Select_ABR" bpmnElement="Task_Select_ABR" bioc:stroke="#6f42c1" bioc:fill="#ede4ff" color:background-color="#ede4ff" color:border-color="#6f42c1">
+        <dc:Bounds x="1620" y="155" width="230" height="110" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Download_Segments" bpmnElement="Task_Download_Segments" bioc:stroke="#6f42c1" bioc:fill="#ede4ff" color:background-color="#ede4ff" color:border-color="#6f42c1">
+        <dc:Bounds x="1910" y="155" width="250" height="110" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Connect_IRC" bpmnElement="Task_Connect_IRC" bioc:stroke="#6f42c1" bioc:fill="#ede4ff" color:background-color="#ede4ff" color:border-color="#6f42c1">
+        <dc:Bounds x="2220" y="155" width="240" height="110" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_IRC_Loop" bpmnElement="Task_IRC_Loop" bioc:stroke="#6f42c1" bioc:fill="#ede4ff" color:background-color="#ede4ff" color:border-color="#6f42c1">
+        <dc:Bounds x="2520" y="155" width="260" height="110" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Send_Spade" bpmnElement="Task_Send_Spade" bioc:stroke="#6f42c1" bioc:fill="#ede4ff" color:background-color="#ede4ff" color:border-color="#6f42c1">
+        <dc:Bounds x="2840" y="155" width="240" height="110" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_Playback_Active" bpmnElement="End_Playback_Active" bioc:stroke="#198754" bioc:fill="#d1e7dd" color:background-color="#d1e7dd" color:border-color="#198754">
+        <dc:Bounds x="3150" y="190" width="40" height="40" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3130" y="247" width="81" height="106" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Edge_Seq_C1" bpmnElement="Seq_C1" bioc:stroke="#6f42c1" color:border-color="#6f42c1">
+        <di:waypoint x="560" y="210" />
+        <di:waypoint x="610" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_Retry" bpmnElement="Seq_Retry" bioc:stroke="#dc3545" color:border-color="#dc3545">
+        <di:waypoint x="1240" y="180" />
+        <di:waypoint x="1240" y="90" />
+        <di:waypoint x="730" y="90" />
+        <di:waypoint x="730" y="155" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="962" y="96" width="56" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_C2" bpmnElement="Seq_C2" bioc:stroke="#6f42c1" color:border-color="#6f42c1">
+        <di:waypoint x="850" y="210" />
+        <di:waypoint x="910" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_C3" bpmnElement="Seq_C3" bioc:stroke="#6f42c1" color:border-color="#6f42c1">
+        <di:waypoint x="1150" y="210" />
+        <di:waypoint x="1210" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_Token_Sim" bpmnElement="Seq_Token_Sim" bioc:stroke="#198754" color:border-color="#198754">
+        <di:waypoint x="1270" y="210" />
+        <di:waypoint x="1330" y="210" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1247" y="173" width="85" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_C4" bpmnElement="Seq_C4" bioc:stroke="#6f42c1" color:border-color="#6f42c1">
+        <di:waypoint x="1560" y="210" />
+        <di:waypoint x="1620" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_C5" bpmnElement="Seq_C5" bioc:stroke="#6f42c1" color:border-color="#6f42c1">
+        <di:waypoint x="1850" y="210" />
+        <di:waypoint x="1910" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_C6" bpmnElement="Seq_C6" bioc:stroke="#6f42c1" color:border-color="#6f42c1">
+        <di:waypoint x="2160" y="210" />
+        <di:waypoint x="2220" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_C7" bpmnElement="Seq_C7" bioc:stroke="#6f42c1" color:border-color="#6f42c1">
+        <di:waypoint x="2460" y="210" />
+        <di:waypoint x="2520" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_C8" bpmnElement="Seq_C8" bioc:stroke="#6f42c1" color:border-color="#6f42c1">
+        <di:waypoint x="2780" y="210" />
+        <di:waypoint x="2840" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_C9" bpmnElement="Seq_C9" bioc:stroke="#6f42c1" color:border-color="#6f42c1">
+        <di:waypoint x="3080" y="210" />
+        <di:waypoint x="3150" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Shape_Participant_Backend" bpmnElement="Participant_Backend" isHorizontal="true" bioc:stroke="#0d6efd" bioc:fill="#f0f7ff" color:background-color="#f0f7ff" color:border-color="#0d6efd">
+        <dc:Bounds x="390" y="470" width="1350" height="260" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Kasada_BFF" bpmnElement="Task_Kasada_BFF" bioc:stroke="#0d6efd" bioc:fill="#e7f1ff" color:background-color="#e7f1ff" color:border-color="#0d6efd">
+        <dc:Bounds x="490" y="545" width="260" height="110" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Resolve_GQL" bpmnElement="Task_Resolve_GQL" bioc:stroke="#0d6efd" bioc:fill="#e7f1ff" color:background-color="#e7f1ff" color:border-color="#0d6efd">
+        <dc:Bounds x="820" y="545" width="270" height="110" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Mint_Token" bpmnElement="Task_Mint_Token" bioc:stroke="#0d6efd" bioc:fill="#e7f1ff" color:background-color="#e7f1ff" color:border-color="#0d6efd">
+        <dc:Bounds x="1160" y="545" width="290" height="110" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Edge_Seq_B1" bpmnElement="Seq_B1" bioc:stroke="#0d6efd" color:border-color="#0d6efd">
+        <di:waypoint x="750" y="600" />
+        <di:waypoint x="820" y="600" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_B2" bpmnElement="Seq_B2" bioc:stroke="#0d6efd" color:border-color="#0d6efd">
+        <di:waypoint x="1090" y="600" />
+        <di:waypoint x="1160" y="600" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Shape_Participant_Edge" bpmnElement="Participant_Edge" isHorizontal="true" bioc:stroke="#0aa2c0" bioc:fill="#f0fbff" color:background-color="#f0fbff" color:border-color="#0aa2c0">
+        <dc:Bounds x="1790" y="470" width="950" height="260" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Validate_HMAC" bpmnElement="Task_Validate_HMAC" bioc:stroke="#0aa2c0" bioc:fill="#e0f7fa" color:background-color="#e0f7fa" color:border-color="#0aa2c0">
+        <dc:Bounds x="1870" y="545" width="280" height="110" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Serve_Manifest" bpmnElement="Task_Serve_Manifest" bioc:stroke="#0aa2c0" bioc:fill="#e0f7fa" color:background-color="#e0f7fa" color:border-color="#0aa2c0">
+        <dc:Bounds x="2210" y="545" width="280" height="110" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Edge_Seq_E1" bpmnElement="Seq_E1" bioc:stroke="#0aa2c0" color:border-color="#0aa2c0">
+        <di:waypoint x="2150" y="600" />
+        <di:waypoint x="2210" y="600" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Shape_Participant_Weaver" bpmnElement="Participant_Weaver" isHorizontal="true" bioc:stroke="#d63384" bioc:fill="#fff0f6" color:background-color="#fff0f6" color:border-color="#d63384">
+        <dc:Bounds x="390" y="810" width="2200" height="320" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Start_Ingest_RTMP" bpmnElement="Start_Ingest_RTMP" bioc:stroke="#198754" bioc:fill="#d1e7dd" color:background-color="#d1e7dd" color:border-color="#198754">
+        <dc:Bounds x="430" y="950" width="40" height="40" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="421" y="990" width="78" height="106" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Ingest_RTMP" bpmnElement="Task_Ingest_RTMP" bioc:stroke="#d63384" bioc:fill="#fce8f3" color:background-color="#fce8f3" color:border-color="#d63384">
+        <dc:Bounds x="500" y="915" width="220" height="110" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Validate_StreamKey" bpmnElement="Task_Validate_StreamKey" bioc:stroke="#d63384" bioc:fill="#fce8f3" color:background-color="#fce8f3" color:border-color="#d63384">
+        <dc:Bounds x="750" y="915" width="220" height="110" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW_StreamKey_Valid" bpmnElement="GW_StreamKey_Valid" isMarkerVisible="true" bioc:stroke="#ffc107" bioc:fill="#fff3cd" color:background-color="#fff3cd" color:border-color="#ffc107">
+        <dc:Bounds x="1000" y="940" width="60" height="60" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="994" y="1000" width="73" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Reject_Stream" bpmnElement="Task_Reject_Stream" bioc:stroke="#dc3545" bioc:fill="#f8d7da" color:background-color="#f8d7da" color:border-color="#dc3545">
+        <dc:Bounds x="990" y="830" width="180" height="75" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Check_DJ" bpmnElement="Task_Check_DJ" bioc:stroke="#d63384" bioc:fill="#fce8f3" color:background-color="#fce8f3" color:border-color="#d63384">
+        <dc:Bounds x="1090" y="915" width="220" height="110" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Audible_Magic" bpmnElement="Task_Audible_Magic" bioc:stroke="#d63384" bioc:fill="#fce8f3" color:background-color="#fce8f3" color:border-color="#d63384">
+        <dc:Bounds x="1340" y="915" width="220" height="110" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW_DMCA_Check" bpmnElement="GW_DMCA_Check" isMarkerVisible="true" bioc:stroke="#ffc107" bioc:fill="#fff3cd" color:background-color="#fff3cd" color:border-color="#ffc107">
+        <dc:Bounds x="1590" y="940" width="60" height="60" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1578" y="1000" width="85" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Transcode_ABR" bpmnElement="Task_Transcode_ABR" bioc:stroke="#d63384" bioc:fill="#fce8f3" color:background-color="#fce8f3" color:border-color="#d63384">
+        <dc:Bounds x="1680" y="915" width="220" height="110" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_SSAI_Stitch" bpmnElement="Task_SSAI_Stitch" bioc:stroke="#d63384" bioc:fill="#fce8f3" color:background-color="#fce8f3" color:border-color="#d63384">
+        <dc:Bounds x="1930" y="915" width="220" height="110" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Package_TS" bpmnElement="Task_Package_TS" bioc:stroke="#d63384" bioc:fill="#fce8f3" color:background-color="#fce8f3" color:border-color="#d63384">
+        <dc:Bounds x="2180" y="915" width="220" height="110" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_Stream_Active" bpmnElement="End_Stream_Active" bioc:stroke="#198754" bioc:fill="#d1e7dd" color:background-color="#d1e7dd" color:border-color="#198754">
+        <dc:Bounds x="2430" y="950" width="40" height="40" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2406" y="996" width="88" height="93" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_Stream_Rejected" bpmnElement="End_Stream_Rejected" bioc:stroke="#dc3545" bioc:fill="#f8d7da" color:background-color="#f8d7da" color:border-color="#dc3545">
+        <dc:Bounds x="1190" y="848" width="40" height="40" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1234" y="837" width="72" height="66" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Apply_Mute" bpmnElement="Task_Apply_Mute" bioc:stroke="#dc3545" bioc:fill="#f8d7da" color:background-color="#f8d7da" color:border-color="#dc3545">
+        <dc:Bounds x="1580" y="822" width="190" height="75" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Edge_Seq_W1" bpmnElement="Seq_W1" bioc:stroke="#d63384" color:border-color="#d63384">
+        <di:waypoint x="470" y="970" />
+        <di:waypoint x="500" y="970" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_W2" bpmnElement="Seq_W2" bioc:stroke="#d63384" color:border-color="#d63384">
+        <di:waypoint x="720" y="970" />
+        <di:waypoint x="750" y="970" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_W3" bpmnElement="Seq_W3" bioc:stroke="#d63384" color:border-color="#d63384">
+        <di:waypoint x="970" y="970" />
+        <di:waypoint x="1000" y="970" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_Key_Sim" bpmnElement="Seq_Key_Sim" bioc:stroke="#198754" color:border-color="#198754">
+        <di:waypoint x="1060" y="970" />
+        <di:waypoint x="1090" y="970" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1055" y="943" width="19" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_Key_Nao" bpmnElement="Seq_Key_Nao" bioc:stroke="#dc3545" color:border-color="#dc3545">
+        <di:waypoint x="1030" y="940" />
+        <di:waypoint x="1030" y="905" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1095" y="920" width="21" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_W_Drop" bpmnElement="Seq_W_Drop" bioc:stroke="#dc3545" color:border-color="#dc3545">
+        <di:waypoint x="1170" y="868" />
+        <di:waypoint x="1190" y="868" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_W4" bpmnElement="Seq_W4" bioc:stroke="#d63384" color:border-color="#d63384">
+        <di:waypoint x="1310" y="970" />
+        <di:waypoint x="1340" y="970" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_W5" bpmnElement="Seq_W5" bioc:stroke="#d63384" color:border-color="#d63384">
+        <di:waypoint x="1560" y="970" />
+        <di:waypoint x="1590" y="970" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_DMCA_Sim" bpmnElement="Seq_DMCA_Sim" bioc:stroke="#dc3545" color:border-color="#dc3545">
+        <di:waypoint x="1620" y="940" />
+        <di:waypoint x="1620" y="897" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1775" y="843" width="72" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_DMCA_Nao" bpmnElement="Seq_DMCA_Nao" bioc:stroke="#198754" color:border-color="#198754">
+        <di:waypoint x="1650" y="970" />
+        <di:waypoint x="1680" y="970" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1649" y="943" width="21" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_Mute_Done" bpmnElement="Seq_Mute_Done" bioc:stroke="#d63384" color:border-color="#d63384">
+        <di:waypoint x="1770" y="860" />
+        <di:waypoint x="1790" y="860" />
+        <di:waypoint x="1790" y="915" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_W6" bpmnElement="Seq_W6" bioc:stroke="#d63384" color:border-color="#d63384">
+        <di:waypoint x="1900" y="970" />
+        <di:waypoint x="1930" y="970" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_W7" bpmnElement="Seq_W7" bioc:stroke="#d63384" color:border-color="#d63384">
+        <di:waypoint x="2150" y="970" />
+        <di:waypoint x="2180" y="970" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_W8" bpmnElement="Seq_W8" bioc:stroke="#d63384" color:border-color="#d63384">
+        <di:waypoint x="2400" y="970" />
+        <di:waypoint x="2430" y="970" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Shape_Participant_TMI" bpmnElement="Participant_TMI" isHorizontal="true" bioc:stroke="#198754" bioc:fill="#f0fff4" color:background-color="#f0fff4" color:border-color="#198754">
+        <dc:Bounds x="2640" y="810" width="1200" height="320" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_TMI_Receive" bpmnElement="Task_TMI_Receive" bioc:stroke="#198754" bioc:fill="#e8f5e9" color:background-color="#e8f5e9" color:border-color="#198754">
+        <dc:Bounds x="2690" y="915" width="220" height="110" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_AutoMod_NLP" bpmnElement="Task_AutoMod_NLP" bioc:stroke="#198754" bioc:fill="#e8f5e9" color:background-color="#e8f5e9" color:border-color="#198754">
+        <dc:Bounds x="2940" y="915" width="230" height="110" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Suspicious_User" bpmnElement="Task_Suspicious_User" bioc:stroke="#198754" bioc:fill="#e8f5e9" color:background-color="#e8f5e9" color:border-color="#198754">
+        <dc:Bounds x="3200" y="915" width="230" height="110" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW_AutoMod_Risk" bpmnElement="GW_AutoMod_Risk" isMarkerVisible="true" bioc:stroke="#ffc107" bioc:fill="#fff3cd" color:background-color="#fff3cd" color:border-color="#ffc107">
+        <dc:Bounds x="3460" y="940" width="60" height="60" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3455" y="900" width="71" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_TMI_Fanout" bpmnElement="Task_TMI_Fanout" bioc:stroke="#198754" bioc:fill="#e8f5e9" color:background-color="#e8f5e9" color:border-color="#198754">
+        <dc:Bounds x="3560" y="915" width="250" height="110" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Quarantine_Held" bpmnElement="Task_Quarantine_Held" bioc:stroke="#198754" bioc:fill="#e8f5e9" color:background-color="#e8f5e9" color:border-color="#198754">
+        <dc:Bounds x="3450" y="1035" width="220" height="75" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW_Mod_Decision" bpmnElement="GW_Mod_Decision" isMarkerVisible="true" bioc:stroke="#ffc107" bioc:fill="#fff3cd" color:background-color="#fff3cd" color:border-color="#ffc107">
+        <dc:Bounds x="3700" y="1042" width="60" height="60" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3740" y="1096" width="60" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Apply_Chat_Ban" bpmnElement="Task_Apply_Chat_Ban" bioc:stroke="#dc3545" bioc:fill="#f8d7da" color:background-color="#f8d7da" color:border-color="#dc3545">
+        <dc:Bounds x="3610" y="830" width="200" height="75" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Edge_Seq_T1" bpmnElement="Seq_T1" bioc:stroke="#198754" color:border-color="#198754">
+        <di:waypoint x="2910" y="970" />
+        <di:waypoint x="2940" y="970" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_T2" bpmnElement="Seq_T2" bioc:stroke="#198754" color:border-color="#198754">
+        <di:waypoint x="3170" y="970" />
+        <di:waypoint x="3200" y="970" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_T3" bpmnElement="Seq_T3" bioc:stroke="#198754" color:border-color="#198754">
+        <di:waypoint x="3430" y="970" />
+        <di:waypoint x="3460" y="970" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_Risk_Low" bpmnElement="Seq_Risk_Low" bioc:stroke="#198754" color:border-color="#198754">
+        <di:waypoint x="3520" y="970" />
+        <di:waypoint x="3560" y="970" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3511" y="945" width="59" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_Risk_High" bpmnElement="Seq_Risk_High" bioc:stroke="#dc3545" color:border-color="#dc3545">
+        <di:waypoint x="3490" y="1000" />
+        <di:waypoint x="3490" y="1035" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3495" y="1003" width="50" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_Mod_Approved" bpmnElement="Seq_Mod_Approved" bioc:stroke="#198754" color:border-color="#198754">
+        <di:waypoint x="3730" y="1042" />
+        <di:waypoint x="3730" y="1025" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3736" y="1030" width="39" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_T_Mod" bpmnElement="Seq_T_Mod" bioc:stroke="#198754" color:border-color="#198754">
+        <di:waypoint x="3670" y="1072" />
+        <di:waypoint x="3700" y="1072" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_Mod_Denied" bpmnElement="Seq_Mod_Denied" bioc:stroke="#dc3545" color:border-color="#dc3545">
+        <di:waypoint x="3760" y="1072" />
+        <di:waypoint x="3830" y="1072" />
+        <di:waypoint x="3830" y="868" />
+        <di:waypoint x="3810" y="868" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3779" y="1053" width="41" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Shape_Participant_Spade" bpmnElement="Participant_Spade" isHorizontal="true" bioc:stroke="#fd7e14" bioc:fill="#fff8f0" color:background-color="#fff8f0" color:border-color="#fd7e14">
+        <dc:Bounds x="2790" y="470" width="1050" height="260" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Ingest_Spade" bpmnElement="Task_Ingest_Spade" bioc:stroke="#fd7e14" bioc:fill="#fff3e0" color:background-color="#fff3e0" color:border-color="#fd7e14">
+        <dc:Bounds x="2910" y="545" width="370" height="110" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Participant_Auth" bpmnElement="Participant_Auth" isHorizontal="true" bioc:stroke="#5a189a" bioc:fill="#f5f0ff" color:background-color="#f5f0ff" color:border-color="#5a189a">
+        <dc:Bounds x="390" y="1210" width="1800" height="320" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Start_Auth" bpmnElement="Start_Auth" bioc:stroke="#198754" bioc:fill="#d1e7dd" color:background-color="#d1e7dd" color:border-color="#198754">
+        <dc:Bounds x="430" y="1350" width="40" height="40" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="418" y="1390" width="84" height="66" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Register_Account" bpmnElement="Task_Register_Account" bioc:stroke="#5a189a" bioc:fill="#ede7f6" color:background-color="#ede7f6" color:border-color="#5a189a">
+        <dc:Bounds x="500" y="1315" width="210" height="110" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Login_OAuth" bpmnElement="Task_Login_OAuth" bioc:stroke="#5a189a" bioc:fill="#ede7f6" color:background-color="#ede7f6" color:border-color="#5a189a">
+        <dc:Bounds x="740" y="1315" width="210" height="110" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Val_Creds_Bloom" bpmnElement="Task_Val_Creds_Bloom" bioc:stroke="#5a189a" bioc:fill="#ede7f6" color:background-color="#ede7f6" color:border-color="#5a189a">
+        <dc:Bounds x="980" y="1315" width="210" height="110" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW_2FA_Enabled" bpmnElement="GW_2FA_Enabled" isMarkerVisible="true" bioc:stroke="#ffc107" bioc:fill="#fff3cd" color:background-color="#fff3cd" color:border-color="#ffc107">
+        <dc:Bounds x="1220" y="1340" width="60" height="60" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1209" y="1300" width="82" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Verify_2FA" bpmnElement="Task_Verify_2FA" bioc:stroke="#5a189a" bioc:fill="#ede7f6" color:background-color="#ede7f6" color:border-color="#5a189a">
+        <dc:Bounds x="1310" y="1315" width="210" height="110" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Issue_JWT_RTR" bpmnElement="Task_Issue_JWT_RTR" bioc:stroke="#5a189a" bioc:fill="#ede7f6" color:background-color="#ede7f6" color:border-color="#5a189a">
+        <dc:Bounds x="1550" y="1315" width="210" height="110" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Revoke_Blacklist" bpmnElement="Task_Revoke_Blacklist" bioc:stroke="#5a189a" bioc:fill="#ede7f6" color:background-color="#ede7f6" color:border-color="#5a189a">
+        <dc:Bounds x="1790" y="1315" width="210" height="110" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_Auth" bpmnElement="End_Auth" bioc:stroke="#198754" bioc:fill="#d1e7dd" color:background-color="#d1e7dd" color:border-color="#198754">
+        <dc:Bounds x="2040" y="1350" width="40" height="40" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2019" y="1390" width="82" height="80" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Edge_Seq_Auth1" bpmnElement="Seq_Auth1" bioc:stroke="#5a189a" color:border-color="#5a189a">
+        <di:waypoint x="470" y="1370" />
+        <di:waypoint x="500" y="1370" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_Auth2" bpmnElement="Seq_Auth2" bioc:stroke="#5a189a" color:border-color="#5a189a">
+        <di:waypoint x="710" y="1370" />
+        <di:waypoint x="740" y="1370" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_Auth3" bpmnElement="Seq_Auth3" bioc:stroke="#5a189a" color:border-color="#5a189a">
+        <di:waypoint x="950" y="1370" />
+        <di:waypoint x="980" y="1370" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_Auth4" bpmnElement="Seq_Auth4" bioc:stroke="#5a189a" color:border-color="#5a189a">
+        <di:waypoint x="1190" y="1370" />
+        <di:waypoint x="1220" y="1370" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_Auth5_Sim" bpmnElement="Seq_Auth5_Sim" bioc:stroke="#198754" color:border-color="#198754">
+        <di:waypoint x="1280" y="1370" />
+        <di:waypoint x="1310" y="1370" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1280" y="1383" width="19" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_Auth5_Nao" bpmnElement="Seq_Auth5_Nao" bioc:stroke="#dc3545" color:border-color="#dc3545">
+        <di:waypoint x="1250" y="1400" />
+        <di:waypoint x="1250" y="1460" />
+        <di:waypoint x="1655" y="1460" />
+        <di:waypoint x="1655" y="1425" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1552" y="1465" width="76" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_Auth6" bpmnElement="Seq_Auth6" bioc:stroke="#5a189a" color:border-color="#5a189a">
+        <di:waypoint x="1520" y="1370" />
+        <di:waypoint x="1550" y="1370" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_Auth7" bpmnElement="Seq_Auth7" bioc:stroke="#5a189a" color:border-color="#5a189a">
+        <di:waypoint x="1760" y="1370" />
+        <di:waypoint x="1790" y="1370" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_Auth8" bpmnElement="Seq_Auth8" bioc:stroke="#5a189a" color:border-color="#5a189a">
+        <di:waypoint x="2000" y="1370" />
+        <di:waypoint x="2040" y="1370" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Shape_Participant_Database" bpmnElement="Participant_Database" isHorizontal="true" bioc:stroke="#495057" bioc:fill="#f8f9fa" color:background-color="#f8f9fa" color:border-color="#495057">
+        <dc:Bounds x="2240" y="1210" width="1600" height="320" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_DB_Users" bpmnElement="Task_DB_Users" bioc:stroke="#495057" bioc:fill="#f8f9fa" color:background-color="#f8f9fa" color:border-color="#495057">
+        <dc:Bounds x="2280" y="1250" width="260" height="75" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_DB_Games" bpmnElement="Task_DB_Games" bioc:stroke="#495057" bioc:fill="#f8f9fa" color:background-color="#f8f9fa" color:border-color="#495057">
+        <dc:Bounds x="2570" y="1250" width="260" height="75" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_DB_Taxonomy" bpmnElement="Task_DB_Taxonomy" bioc:stroke="#495057" bioc:fill="#f8f9fa" color:background-color="#f8f9fa" color:border-color="#495057">
+        <dc:Bounds x="2860" y="1250" width="260" height="75" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_DB_Monetization" bpmnElement="Task_DB_Monetization" bioc:stroke="#495057" bioc:fill="#f8f9fa" color:background-color="#f8f9fa" color:border-color="#495057">
+        <dc:Bounds x="3150" y="1250" width="260" height="75" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_DB_GuestStar" bpmnElement="Task_DB_GuestStar" bioc:stroke="#495057" bioc:fill="#f8f9fa" color:background-color="#f8f9fa" color:border-color="#495057">
+        <dc:Bounds x="2280" y="1380" width="260" height="75" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_DB_Content" bpmnElement="Task_DB_Content" bioc:stroke="#495057" bioc:fill="#f8f9fa" color:background-color="#f8f9fa" color:border-color="#495057">
+        <dc:Bounds x="2570" y="1380" width="260" height="75" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_DB_Social" bpmnElement="Task_DB_Social" bioc:stroke="#495057" bioc:fill="#f8f9fa" color:background-color="#f8f9fa" color:border-color="#495057">
+        <dc:Bounds x="2860" y="1380" width="260" height="75" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_DB_Moderation" bpmnElement="Task_DB_Moderation" bioc:stroke="#495057" bioc:fill="#f8f9fa" color:background-color="#f8f9fa" color:border-color="#495057">
+        <dc:Bounds x="3150" y="1380" width="260" height="75" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Participant_Social" bpmnElement="Participant_Social" isHorizontal="true" bioc:stroke="#e83e8c" bioc:fill="#fff0f5" color:background-color="#fff0f5" color:border-color="#e83e8c">
+        <dc:Bounds x="390" y="1610" width="1700" height="300" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Start_Social" bpmnElement="Start_Social" bioc:stroke="#198754" bioc:fill="#d1e7dd" color:background-color="#d1e7dd" color:border-color="#198754">
+        <dc:Bounds x="440" y="1740" width="40" height="40" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="420" y="1780" width="81" height="53" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Follow" bpmnElement="Task_Follow" bioc:stroke="#e83e8c" bioc:fill="#fff0f5" color:background-color="#fff0f5" color:border-color="#e83e8c">
+        <dc:Bounds x="520" y="1705" width="240" height="110" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Block" bpmnElement="Task_Block" bioc:stroke="#e83e8c" bioc:fill="#fff0f5" color:background-color="#fff0f5" color:border-color="#e83e8c">
+        <dc:Bounds x="800" y="1705" width="240" height="110" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW_Blocked" bpmnElement="GW_Blocked" isMarkerVisible="true" bioc:stroke="#ffc107" bioc:fill="#fff3cd" color:background-color="#fff3cd" color:border-color="#ffc107">
+        <dc:Bounds x="1080" y="1730" width="60" height="60" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1080" y="1680" width="60" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Whisper" bpmnElement="Task_Whisper" bioc:stroke="#e83e8c" bioc:fill="#fff0f5" color:background-color="#fff0f5" color:border-color="#e83e8c">
+        <dc:Bounds x="1190" y="1705" width="240" height="110" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_Social" bpmnElement="End_Social" bioc:stroke="#198754" bioc:fill="#d1e7dd" color:background-color="#d1e7dd" color:border-color="#198754">
+        <dc:Bounds x="1480" y="1740" width="40" height="40" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1459" y="1780" width="83" height="80" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_Blocked" bpmnElement="End_Blocked" bioc:stroke="#dc3545" bioc:fill="#f8d7da" color:background-color="#f8d7da" color:border-color="#dc3545">
+        <dc:Bounds x="1090" y="1840" width="40" height="40" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1014" y="1827" width="71" height="66" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Edge_Seq_Soc1" bpmnElement="Seq_Soc1" bioc:stroke="#e83e8c" color:border-color="#e83e8c">
+        <di:waypoint x="480" y="1760" />
+        <di:waypoint x="520" y="1760" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_Soc2" bpmnElement="Seq_Soc2" bioc:stroke="#e83e8c" color:border-color="#e83e8c">
+        <di:waypoint x="760" y="1760" />
+        <di:waypoint x="800" y="1760" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_Soc3" bpmnElement="Seq_Soc3" bioc:stroke="#e83e8c" color:border-color="#e83e8c">
+        <di:waypoint x="1040" y="1760" />
+        <di:waypoint x="1080" y="1760" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_Soc4_Nao" bpmnElement="Seq_Soc4_Nao" bioc:stroke="#198754" color:border-color="#198754">
+        <di:waypoint x="1140" y="1760" />
+        <di:waypoint x="1190" y="1760" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1153" y="1773" width="21" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_Soc4_Sim" bpmnElement="Seq_Soc4_Sim" bioc:stroke="#dc3545" color:border-color="#dc3545">
+        <di:waypoint x="1110" y="1790" />
+        <di:waypoint x="1110" y="1840" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1150" y="1853" width="82" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_Soc5" bpmnElement="Seq_Soc5" bioc:stroke="#e83e8c" color:border-color="#e83e8c">
+        <di:waypoint x="1430" y="1760" />
+        <di:waypoint x="1480" y="1760" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Shape_Participant_Commerce" bpmnElement="Participant_Commerce" isHorizontal="true" bioc:stroke="#d97706" bioc:fill="#fffdf0" color:background-color="#fffdf0" color:border-color="#d97706">
+        <dc:Bounds x="2140" y="1610" width="1700" height="300" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Start_Commerce" bpmnElement="Start_Commerce" bioc:stroke="#198754" bioc:fill="#d1e7dd" color:background-color="#d1e7dd" color:border-color="#198754">
+        <dc:Bounds x="2190" y="1740" width="40" height="40" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2177" y="1780" width="86" height="66" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Subscribe" bpmnElement="Task_Subscribe" bioc:stroke="#d97706" bioc:fill="#fffdf0" color:background-color="#fffdf0" color:border-color="#d97706">
+        <dc:Bounds x="2270" y="1705" width="220" height="110" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW_Payment" bpmnElement="GW_Payment" isMarkerVisible="true" bioc:stroke="#ffc107" bioc:fill="#fff3cd" color:background-color="#fff3cd" color:border-color="#ffc107">
+        <dc:Bounds x="2530" y="1730" width="60" height="60" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2525" y="1670" width="71" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Activate_Sub" bpmnElement="Task_Activate_Sub" bioc:stroke="#d97706" bioc:fill="#fffdf0" color:background-color="#fffdf0" color:border-color="#d97706">
+        <dc:Bounds x="2630" y="1705" width="230" height="110" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Emotes" bpmnElement="Task_Emotes" bioc:stroke="#d97706" bioc:fill="#fffdf0" color:background-color="#fffdf0" color:border-color="#d97706">
+        <dc:Bounds x="2900" y="1705" width="220" height="110" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Bits" bpmnElement="Task_Bits" bioc:stroke="#d97706" bioc:fill="#fffdf0" color:background-color="#fffdf0" color:border-color="#d97706">
+        <dc:Bounds x="3160" y="1705" width="220" height="110" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_Commerce" bpmnElement="End_Commerce" bioc:stroke="#198754" bioc:fill="#d1e7dd" color:background-color="#d1e7dd" color:border-color="#198754">
+        <dc:Bounds x="3430" y="1740" width="40" height="40" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3409" y="1780" width="82" height="80" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_Payment_Failed" bpmnElement="End_Payment_Failed" bioc:stroke="#dc3545" bioc:fill="#f8d7da" color:background-color="#f8d7da" color:border-color="#dc3545">
+        <dc:Bounds x="2540" y="1840" width="40" height="40" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2449" y="1827" width="81" height="66" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Edge_Seq_Com1" bpmnElement="Seq_Com1" bioc:stroke="#d97706" color:border-color="#d97706">
+        <di:waypoint x="2230" y="1760" />
+        <di:waypoint x="2270" y="1760" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_Com2" bpmnElement="Seq_Com2" bioc:stroke="#d97706" color:border-color="#d97706">
+        <di:waypoint x="2490" y="1760" />
+        <di:waypoint x="2530" y="1760" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_Com3_Sim" bpmnElement="Seq_Com3_Sim" bioc:stroke="#198754" color:border-color="#198754">
+        <di:waypoint x="2590" y="1760" />
+        <di:waypoint x="2630" y="1760" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2600" y="1743" width="19" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_Com3_Nao" bpmnElement="Seq_Com3_Nao" bioc:stroke="#dc3545" color:border-color="#dc3545">
+        <di:waypoint x="2560" y="1790" />
+        <di:waypoint x="2560" y="1840" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2599" y="1853" width="81" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_Com4" bpmnElement="Seq_Com4" bioc:stroke="#d97706" color:border-color="#d97706">
+        <di:waypoint x="2860" y="1760" />
+        <di:waypoint x="2900" y="1760" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_Com5" bpmnElement="Seq_Com5" bioc:stroke="#d97706" color:border-color="#d97706">
+        <di:waypoint x="3120" y="1760" />
+        <di:waypoint x="3160" y="1760" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_Com6" bpmnElement="Seq_Com6" bioc:stroke="#d97706" color:border-color="#d97706">
+        <di:waypoint x="3380" y="1760" />
+        <di:waypoint x="3430" y="1760" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Shape_Participant_VOD" bpmnElement="Participant_VOD" isHorizontal="true" bioc:stroke="#084298" bioc:fill="#f0f4ff" color:background-color="#f0f4ff" color:border-color="#084298">
+        <dc:Bounds x="390" y="1990" width="1700" height="300" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Start_VOD" bpmnElement="Start_VOD" bioc:stroke="#198754" bioc:fill="#d1e7dd" color:background-color="#d1e7dd" color:border-color="#198754">
+        <dc:Bounds x="440" y="2120" width="40" height="40" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="419" y="2160" width="82" height="80" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW_VOD_Enabled" bpmnElement="GW_VOD_Enabled" isMarkerVisible="true" bioc:stroke="#ffc107" bioc:fill="#fff3cd" color:background-color="#fff3cd" color:border-color="#ffc107">
+        <dc:Bounds x="520" y="2110" width="60" height="60" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="505" y="2076" width="90" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Record_VOD" bpmnElement="Task_Record_VOD" bioc:stroke="#084298" bioc:fill="#f0f4ff" color:background-color="#f0f4ff" color:border-color="#084298">
+        <dc:Bounds x="620" y="2085" width="240" height="110" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Create_Clip" bpmnElement="Task_Create_Clip" bioc:stroke="#084298" bioc:fill="#f0f4ff" color:background-color="#f0f4ff" color:border-color="#084298">
+        <dc:Bounds x="900" y="2085" width="240" height="110" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Create_Highlight" bpmnElement="Task_Create_Highlight" bioc:stroke="#084298" bioc:fill="#f0f4ff" color:background-color="#f0f4ff" color:border-color="#084298">
+        <dc:Bounds x="1180" y="2085" width="240" height="110" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Transcode_VOD" bpmnElement="Task_Transcode_VOD" bioc:stroke="#084298" bioc:fill="#f0f4ff" color:background-color="#f0f4ff" color:border-color="#084298">
+        <dc:Bounds x="1460" y="2085" width="250" height="110" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_VOD" bpmnElement="End_VOD" bioc:stroke="#198754" bioc:fill="#d1e7dd" color:background-color="#d1e7dd" color:border-color="#198754">
+        <dc:Bounds x="1760" y="2120" width="40" height="40" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1739" y="2160" width="82" height="80" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_VOD_Disabled" bpmnElement="End_VOD_Disabled" bioc:stroke="#dc3545" bioc:fill="#f8d7da" color:background-color="#f8d7da" color:border-color="#dc3545">
+        <dc:Bounds x="530" y="2220" width="40" height="40" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="565" y="2217" width="89" height="66" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Edge_Seq_VOD1" bpmnElement="Seq_VOD1" bioc:stroke="#084298" color:border-color="#084298">
+        <di:waypoint x="480" y="2140" />
+        <di:waypoint x="520" y="2140" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_VOD2_Sim" bpmnElement="Seq_VOD2_Sim" bioc:stroke="#198754" color:border-color="#198754">
+        <di:waypoint x="580" y="2140" />
+        <di:waypoint x="620" y="2140" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="588" y="2115" width="19" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_VOD2_Nao" bpmnElement="Seq_VOD2_Nao" bioc:stroke="#dc3545" color:border-color="#dc3545">
+        <di:waypoint x="550" y="2170" />
+        <di:waypoint x="550" y="2220" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="519" y="2203" width="21" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_VOD3" bpmnElement="Seq_VOD3" bioc:stroke="#084298" color:border-color="#084298">
+        <di:waypoint x="860" y="2140" />
+        <di:waypoint x="900" y="2140" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_VOD4" bpmnElement="Seq_VOD4" bioc:stroke="#084298" color:border-color="#084298">
+        <di:waypoint x="1140" y="2140" />
+        <di:waypoint x="1180" y="2140" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_VOD5" bpmnElement="Seq_VOD5" bioc:stroke="#084298" color:border-color="#084298">
+        <di:waypoint x="1420" y="2140" />
+        <di:waypoint x="1460" y="2140" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_VOD6" bpmnElement="Seq_VOD6" bioc:stroke="#084298" color:border-color="#084298">
+        <di:waypoint x="1710" y="2140" />
+        <di:waypoint x="1760" y="2140" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Shape_Participant_GuestStar" bpmnElement="Participant_GuestStar" isHorizontal="true" bioc:stroke="#059669" bioc:fill="#f0fdf9" color:background-color="#f0fdf9" color:border-color="#059669">
+        <dc:Bounds x="2140" y="1990" width="1700" height="300" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Start_GS" bpmnElement="Start_GS" bioc:stroke="#198754" bioc:fill="#d1e7dd" color:background-color="#d1e7dd" color:border-color="#198754">
+        <dc:Bounds x="2190" y="2120" width="40" height="40" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2176" y="2160" width="88" height="80" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Create_GS_Session" bpmnElement="Task_Create_GS_Session" bioc:stroke="#059669" bioc:fill="#f0fdf9" color:background-color="#f0fdf9" color:border-color="#059669">
+        <dc:Bounds x="2270" y="2085" width="220" height="110" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Manage_Slots" bpmnElement="Task_Manage_Slots" bioc:stroke="#059669" bioc:fill="#f0fdf9" color:background-color="#f0fdf9" color:border-color="#059669">
+        <dc:Bounds x="2530" y="2085" width="220" height="110" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW_Can_Join" bpmnElement="GW_Can_Join" isMarkerVisible="true" bioc:stroke="#ffc107" bioc:fill="#fff3cd" color:background-color="#fff3cd" color:border-color="#ffc107">
+        <dc:Bounds x="2790" y="2110" width="60" height="60" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2789" y="2070" width="62" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Join_Session" bpmnElement="Task_Join_Session" bioc:stroke="#059669" bioc:fill="#f0fdf9" color:background-color="#f0fdf9" color:border-color="#059669">
+        <dc:Bounds x="2890" y="2085" width="230" height="110" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Costream" bpmnElement="Task_Costream" bioc:stroke="#059669" bioc:fill="#f0fdf9" color:background-color="#f0fdf9" color:border-color="#059669">
+        <dc:Bounds x="3160" y="2085" width="230" height="110" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_GS" bpmnElement="End_GS" bioc:stroke="#198754" bioc:fill="#d1e7dd" color:background-color="#d1e7dd" color:border-color="#198754">
+        <dc:Bounds x="3440" y="2120" width="40" height="40" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3415" y="2160" width="90" height="53" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_GS_Denied" bpmnElement="End_GS_Denied" bioc:stroke="#dc3545" bioc:fill="#f8d7da" color:background-color="#f8d7da" color:border-color="#dc3545">
+        <dc:Bounds x="2800" y="2220" width="40" height="40" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2724" y="2207" width="71" height="66" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Edge_Seq_GS1" bpmnElement="Seq_GS1" bioc:stroke="#059669" color:border-color="#059669">
+        <di:waypoint x="2230" y="2140" />
+        <di:waypoint x="2270" y="2140" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_GS2" bpmnElement="Seq_GS2" bioc:stroke="#059669" color:border-color="#059669">
+        <di:waypoint x="2490" y="2140" />
+        <di:waypoint x="2530" y="2140" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_GS3" bpmnElement="Seq_GS3" bioc:stroke="#059669" color:border-color="#059669">
+        <di:waypoint x="2750" y="2140" />
+        <di:waypoint x="2790" y="2140" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_GS4_Sim" bpmnElement="Seq_GS4_Sim" bioc:stroke="#198754" color:border-color="#198754">
+        <di:waypoint x="2850" y="2140" />
+        <di:waypoint x="2890" y="2140" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2858" y="2115" width="19" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_GS4_Nao" bpmnElement="Seq_GS4_Nao" bioc:stroke="#dc3545" color:border-color="#dc3545">
+        <di:waypoint x="2820" y="2170" />
+        <di:waypoint x="2820" y="2220" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2830" y="2185" width="21" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_GS5" bpmnElement="Seq_GS5" bioc:stroke="#059669" color:border-color="#059669">
+        <di:waypoint x="3120" y="2140" />
+        <di:waypoint x="3160" y="2140" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_GS6" bpmnElement="Seq_GS6" bioc:stroke="#059669" color:border-color="#059669">
+        <di:waypoint x="3390" y="2140" />
+        <di:waypoint x="3440" y="2140" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Shape_Participant_Video_Safety" bpmnElement="Participant_Video_Safety" isHorizontal="true" bioc:stroke="#dc3545" bioc:fill="#fff5f5" color:background-color="#fff5f5" color:border-color="#dc3545">
+        <dc:Bounds x="390" y="2370" width="3450" height="320" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Start_Video_Feed" bpmnElement="Start_Video_Feed" bioc:stroke="#198754" bioc:fill="#d1e7dd" color:background-color="#d1e7dd" color:border-color="#198754">
+        <dc:Bounds x="440" y="2510" width="40" height="40" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="425" y="2553" width="90" height="93" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Extract_Keyframes" bpmnElement="Task_Extract_Keyframes" bioc:stroke="#dc3545" bioc:fill="#fce8e6" color:background-color="#fce8e6" color:border-color="#dc3545">
+        <dc:Bounds x="520" y="2475" width="260" height="110" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_CV_Classifiers" bpmnElement="Task_CV_Classifiers" bioc:stroke="#dc3545" bioc:fill="#fce8e6" color:background-color="#fce8e6" color:border-color="#dc3545">
+        <dc:Bounds x="830" y="2475" width="290" height="110" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW_Video_Risk_Level" bpmnElement="GW_Video_Risk_Level" isMarkerVisible="true" bioc:stroke="#ffc107" bioc:fill="#fff3cd" color:background-color="#fff3cd" color:border-color="#ffc107">
+        <dc:Bounds x="1170" y="2500" width="60" height="60" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1126" y="2450" width="75" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Video_Safety_OK" bpmnElement="Task_Video_Safety_OK" bioc:stroke="#198754" bioc:fill="#d1e7dd" color:background-color="#d1e7dd" color:border-color="#198754">
+        <dc:Bounds x="1290" y="2475" width="230" height="110" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Auto_Kill_Stream" bpmnElement="Task_Auto_Kill_Stream" bioc:stroke="#dc3545" bioc:fill="#f8d7da" color:background-color="#f8d7da" color:border-color="#dc3545">
+        <dc:Bounds x="1290" y="2385" width="270" height="75" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Dispatch_Human_Audit" bpmnElement="Task_Dispatch_Human_Audit" bioc:stroke="#dc3545" bioc:fill="#fce8e6" color:background-color="#fce8e6" color:border-color="#dc3545">
+        <dc:Bounds x="1290" y="2600" width="280" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Process_Strikes" bpmnElement="Task_Process_Strikes" bioc:stroke="#dc3545" bioc:fill="#fce8e6" color:background-color="#fce8e6" color:border-color="#dc3545">
+        <dc:Bounds x="1630" y="2475" width="270" height="110" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_Stream_Terminated" bpmnElement="End_Stream_Terminated" bioc:stroke="#dc3545" bioc:fill="#f8d7da" color:background-color="#f8d7da" color:border-color="#dc3545">
+        <dc:Bounds x="1960" y="2510" width="40" height="40" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1937" y="2550" width="86" height="80" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_Video_Safe" bpmnElement="End_Video_Safe" bioc:stroke="#198754" bioc:fill="#d1e7dd" color:background-color="#d1e7dd" color:border-color="#198754">
+        <dc:Bounds x="1570" y="2470" width="40" height="40" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1525" y="2517" width="95" height="66" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Edge_Seq_Vid_1" bpmnElement="Seq_Vid_1" bioc:stroke="#dc3545" color:border-color="#dc3545">
+        <di:waypoint x="480" y="2530" />
+        <di:waypoint x="520" y="2530" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_Vid_2" bpmnElement="Seq_Vid_2" bioc:stroke="#dc3545" color:border-color="#dc3545">
+        <di:waypoint x="780" y="2530" />
+        <di:waypoint x="830" y="2530" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_Vid_3" bpmnElement="Seq_Vid_3" bioc:stroke="#dc3545" color:border-color="#dc3545">
+        <di:waypoint x="1120" y="2530" />
+        <di:waypoint x="1170" y="2530" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_Vid_Safe" bpmnElement="Seq_Vid_Safe" bioc:stroke="#198754" color:border-color="#198754">
+        <di:waypoint x="1230" y="2530" />
+        <di:waypoint x="1290" y="2530" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1226" y="2505" width="68" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_Vid_Critical" bpmnElement="Seq_Vid_Critical" bioc:stroke="#dc3545" color:border-color="#dc3545">
+        <di:waypoint x="1200" y="2500" />
+        <di:waypoint x="1200" y="2422" />
+        <di:waypoint x="1290" y="2422" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1211" y="2435" width="49" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_Vid_Moderate" bpmnElement="Seq_Vid_Moderate" bioc:stroke="#ffc107" color:border-color="#ffc107">
+        <di:waypoint x="1200" y="2560" />
+        <di:waypoint x="1200" y="2640" />
+        <di:waypoint x="1290" y="2640" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1202" y="2615" width="76" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_Vid_End_OK" bpmnElement="Seq_Vid_End_OK" bioc:stroke="#198754" color:border-color="#198754">
+        <di:waypoint x="1520" y="2490" />
+        <di:waypoint x="1570" y="2490" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_Vid_To_Strike" bpmnElement="Seq_Vid_To_Strike" bioc:stroke="#dc3545" color:border-color="#dc3545">
+        <di:waypoint x="1560" y="2422" />
+        <di:waypoint x="1765" y="2422" />
+        <di:waypoint x="1765" y="2475" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_Vid_Audit_Strike" bpmnElement="Seq_Vid_Audit_Strike" bioc:stroke="#dc3545" color:border-color="#dc3545">
+        <di:waypoint x="1570" y="2640" />
+        <di:waypoint x="1765" y="2640" />
+        <di:waypoint x="1765" y="2585" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Seq_Vid_End_Terminated" bpmnElement="Seq_Vid_End_Terminated" bioc:stroke="#dc3545" color:border-color="#dc3545">
+        <di:waypoint x="1900" y="2530" />
+        <di:waypoint x="1960" y="2530" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_MF_GQL_Req" bpmnElement="MF_GQL_Req" bioc:stroke="#6f42c1" color:border-color="#6f42c1">
+        <di:waypoint x="1030" y="265" />
+        <di:waypoint x="1030" y="545" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="906" y="416" width="117" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_MF_GQL_Res" bpmnElement="MF_GQL_Res" bioc:stroke="#0d6efd" color:border-color="#0d6efd">
+        <di:waypoint x="1305" y="545" />
+        <di:waypoint x="1305" y="440" />
+        <di:waypoint x="1080" y="440" />
+        <di:waypoint x="1080" y="265" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1125" y="423" width="109" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_MF_Usher_Req" bpmnElement="MF_Usher_Req" bioc:stroke="#6f42c1" color:border-color="#6f42c1">
+        <di:waypoint x="1445" y="265" />
+        <di:waypoint x="1445" y="450" />
+        <di:waypoint x="2010" y="450" />
+        <di:waypoint x="2010" y="545" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1547" y="420" width="146" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_MF_Usher_Res" bpmnElement="MF_Usher_Res" bioc:stroke="#0aa2c0" color:border-color="#0aa2c0">
+        <di:waypoint x="2300" y="545" />
+        <di:waypoint x="2300" y="400" />
+        <di:waypoint x="1510" y="400" />
+        <di:waypoint x="1510" y="265" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1869" y="403" width="110" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_MF_Video_Chunks" bpmnElement="MF_Video_Chunks" bioc:stroke="#d63384" color:border-color="#d63384">
+        <di:waypoint x="2290" y="915" />
+        <di:waypoint x="2290" y="770" />
+        <di:waypoint x="1770" y="770" />
+        <di:waypoint x="1770" y="350" />
+        <di:waypoint x="2035" y="350" />
+        <di:waypoint x="2035" y="265" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1940" y="750" width="139" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_MF_IRC_Handshake" bpmnElement="MF_IRC_Handshake" bioc:stroke="#6f42c1" color:border-color="#6f42c1">
+        <di:waypoint x="2340" y="265" />
+        <di:waypoint x="2340" y="430" />
+        <di:waypoint x="2610" y="430" />
+        <di:waypoint x="2610" y="970" />
+        <di:waypoint x="2690" y="970" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2455" y="763" width="149" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_MF_IRC_Stream" bpmnElement="MF_IRC_Stream" bioc:stroke="#198754" color:border-color="#198754">
+        <di:waypoint x="3810" y="970" />
+        <di:waypoint x="3870" y="970" />
+        <di:waypoint x="3870" y="440" />
+        <di:waypoint x="2650" y="440" />
+        <di:waypoint x="2650" y="265" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3188" y="423" width="148" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_MF_Spade_Beacon" bpmnElement="MF_Spade_Beacon" bioc:stroke="#6f42c1" color:border-color="#6f42c1">
+        <di:waypoint x="2960" y="265" />
+        <di:waypoint x="2960" y="545" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2970" y="403" width="120" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_MF_Auth_Request" bpmnElement="MF_Auth_Request" bioc:stroke="#6f42c1" color:border-color="#6f42c1">
+        <di:waypoint x="730" y="265" />
+        <di:waypoint x="730" y="430" />
+        <di:waypoint x="360" y="430" />
+        <di:waypoint x="360" y="1190" />
+        <di:waypoint x="800" y="1190" />
+        <di:waypoint x="800" y="1315" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="529" y="1193" width="122" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_MF_Auth_Response" bpmnElement="MF_Auth_Response" bioc:stroke="#5a189a" color:border-color="#5a189a">
+        <di:waypoint x="1655" y="1315" />
+        <di:waypoint x="1655" y="1170" />
+        <di:waypoint x="370" y="1170" />
+        <di:waypoint x="370" y="100" />
+        <di:waypoint x="650" y="100" />
+        <di:waypoint x="650" y="155" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="895" y="1153" width="169" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_MF_Auth_DB" bpmnElement="MF_Auth_DB" bioc:stroke="#5a189a" color:border-color="#5a189a">
+        <di:waypoint x="1700" y="1315" />
+        <di:waypoint x="1700" y="1260" />
+        <di:waypoint x="2280" y="1260" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1916" y="1226" width="108" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_MF_Auth_Redis" bpmnElement="MF_Auth_Redis" bioc:stroke="#5a189a" color:border-color="#5a189a">
+        <di:waypoint x="1895" y="1315" />
+        <di:waypoint x="1895" y="1287" />
+        <di:waypoint x="2280" y="1287" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2016" y="1290" width="107" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_MF_OBS_RTMP" bpmnElement="MF_OBS_RTMP" bioc:stroke="#6f42c1" color:border-color="#6f42c1">
+        <di:waypoint x="640" y="265" />
+        <di:waypoint x="640" y="380" />
+        <di:waypoint x="340" y="380" />
+        <di:waypoint x="340" y="870" />
+        <di:waypoint x="640" y="870" />
+        <di:waypoint x="640" y="915" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="152" y="623" width="176" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_MF_Ingest_DB_Check" bpmnElement="MF_Ingest_DB_Check" bioc:stroke="#d63384" color:border-color="#d63384">
+        <di:waypoint x="860" y="1025" />
+        <di:waypoint x="860" y="1200" />
+        <di:waypoint x="2320" y="1200" />
+        <di:waypoint x="2320" y="1250" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1168" y="1180" width="144" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_MF_Audible_Magic_Match" bpmnElement="MF_Audible_Magic_Match" bioc:stroke="#d63384" color:border-color="#d63384">
+        <di:waypoint x="1450" y="1025" />
+        <di:waypoint x="1450" y="1160" />
+        <di:waypoint x="2550" y="1160" />
+        <di:waypoint x="2550" y="1418" />
+        <di:waypoint x="2570" y="1418" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1955" y="1140" width="144" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_MF_Held_To_ModView" bpmnElement="MF_Held_To_ModView" bioc:stroke="#198754" color:border-color="#198754">
+        <di:waypoint x="3550" y="1110" />
+        <di:waypoint x="3550" y="1160" />
+        <di:waypoint x="2630" y="1160" />
+        <di:waypoint x="2630" y="770" />
+        <di:waypoint x="2720" y="770" />
+        <di:waypoint x="2720" y="265" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2636" y="773" width="167" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_MF_Mod_Decision" bpmnElement="MF_Mod_Decision" bioc:stroke="#6f42c1" color:border-color="#6f42c1">
+        <di:waypoint x="2650" y="155" />
+        <di:waypoint x="2650" y="100" />
+        <di:waypoint x="3900" y="100" />
+        <di:waypoint x="3900" y="1160" />
+        <di:waypoint x="3570" y="1160" />
+        <di:waypoint x="3570" y="1110" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3197" y="80" width="130" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_MF_AutoMod_DB_Log" bpmnElement="MF_AutoMod_DB_Log" bioc:stroke="#198754" color:border-color="#198754">
+        <di:waypoint x="3810" y="868" />
+        <di:waypoint x="3860" y="868" />
+        <di:waypoint x="3860" y="1418" />
+        <di:waypoint x="3410" y="1418" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3687" y="1423" width="145" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_MF_Weaver_Keyframes" bpmnElement="MF_Weaver_Keyframes" bioc:stroke="#d63384" color:border-color="#d63384">
+        <di:waypoint x="2230" y="1030" />
+        <di:waypoint x="2230" y="1590" />
+        <di:waypoint x="2120" y="1590" />
+        <di:waypoint x="2120" y="2330" />
+        <di:waypoint x="650" y="2330" />
+        <di:waypoint x="650" y="2475" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1423" y="2310" width="103" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_MF_Kill_Stream_Cmd" bpmnElement="MF_Kill_Stream_Cmd" bioc:stroke="#dc3545" color:border-color="#dc3545">
+        <di:waypoint x="1425" y="2385" />
+        <di:waypoint x="1425" y="2350" />
+        <di:waypoint x="340" y="2350" />
+        <di:waypoint x="340" y="1160" />
+        <di:waypoint x="610" y="1160" />
+        <di:waypoint x="610" y="1025" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="408" y="1140" width="124" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_MF_Safety_Strike_DB" bpmnElement="MF_Safety_Strike_DB" bioc:stroke="#dc3545" color:border-color="#dc3545">
+        <di:waypoint x="1810" y="2475" />
+        <di:waypoint x="1810" y="2350" />
+        <di:waypoint x="2110" y="2350" />
+        <di:waypoint x="2110" y="1570" />
+        <di:waypoint x="3280" y="1570" />
+        <di:waypoint x="3280" y="1455" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2540" y="1573" width="120" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_MF_Social_DB" bpmnElement="MF_Social_DB" bioc:stroke="#e83e8c" color:border-color="#e83e8c">
+        <di:waypoint x="640" y="1705" />
+        <di:waypoint x="640" y="1550" />
+        <di:waypoint x="2990" y="1550" />
+        <di:waypoint x="2990" y="1455" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1738" y="1553" width="123" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_MF_Commerce_DB" bpmnElement="MF_Commerce_DB" bioc:stroke="#d97706" color:border-color="#d97706">
+        <di:waypoint x="2745" y="1705" />
+        <di:waypoint x="2745" y="1590" />
+        <di:waypoint x="3480" y="1590" />
+        <di:waypoint x="3480" y="1288" />
+        <di:waypoint x="3410" y="1288" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="3055" y="1593" width="108" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_MF_VOD_Record" bpmnElement="MF_VOD_Record" bioc:stroke="#d63384" color:border-color="#d63384">
+        <di:waypoint x="2210" y="1030" />
+        <di:waypoint x="2210" y="1540" />
+        <di:waypoint x="2100" y="1540" />
+        <di:waypoint x="2100" y="1960" />
+        <di:waypoint x="740" y="1960" />
+        <di:waypoint x="740" y="2085" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1444" y="1940" width="138" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_MF_GuestStar_DB" bpmnElement="MF_GuestStar_DB" bioc:stroke="#059669" color:border-color="#059669">
+        <di:waypoint x="2380" y="2085" />
+        <di:waypoint x="2380" y="1960" />
+        <di:waypoint x="2130" y="1960" />
+        <di:waypoint x="2130" y="1600" />
+        <di:waypoint x="2410" y="1600" />
+        <di:waypoint x="2410" y="1455" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2196" y="1926" width="68" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
