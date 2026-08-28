@@ -6,53 +6,55 @@
 
 | Membro | GitHub | Papel na subequipe |
 | -- | -- | -- |
-| _(preencher)_ | | |
+| Davi Severiano Freitas | [@Davi-UnB](https://github.com/Davi-UnB) | Líder |
+| Daniel de Oliveira Lira | [@Daniellira540](https://github.com/Daniellira540) | dev |
+| Pedro Henrique Freire Rodrigues | [@Pedro-Henrique3](https://github.com/Pedro-Henrique3) | dev |
+| Mateus Rodrigues Barreto | [@Mateus0xC](https://github.com/Mateus0xC) | dev |
 
 ## 2. Escopo Trabalhado
 
 | Item | Definição | Justificativa |
 | -- | -- | -- |
-| Artefato generalista escolhido (Rich Picture **ou** Mapa Mental) | _a definir_ | |
-| Softgoal do SIG (NFR Framework) | _a definir_ | |
-| Fluxo modelado em BPMN | _a definir_ | |
+| Artefato generalista escolhido (Rich Picture **ou** Mapa Mental) | Rich Picture | Permite mapear visualmente os atores envolvidos (streamer, espectador, instituições financeiras), as fronteiras do sistema e, conectando-se ao foco de confiabilidade e disponibilidade ([Ata S2_01, D02](../../../Projeto/Atas/Atas_Sg2/ata-S2-01-2026-08-23.md#decisões)). |
+| Softgoal do SIG (NFR Framework) | Confiabilidade / Disponibilidade | Transmissões ao vivo não toleram quedas frequentes de stream nem travamentos no chat em picos de público; além disso, falhas em transações de Bits e doações causam prejuízo financeiro imediato e quebram a confiança do usuário ([Escopo do Produto §6](../../../Projeto/EscopoProduto.md#_6-requisitos-não-funcionais-candidatos-insumo-para-os-sigs)). |
+| Fluxo modelado em BPMN | (1) Envio de mensagem no chat;<br>(2) Compra de Bits;<br>(3) Recuperação de falha de transmissão. | Cobrem os cenários mais sensíveis da subequipe: a concorrência massiva de mensagens no chat sob pico de carga (mínimo obrigatório), a segurança transacional na compra de Bits e a resiliência com reconexão automática em caso de queda de rede ([Escopo do Produto §5](../../../Projeto/EscopoProduto.md#fluxos-engenharia-reversa-bpmn)). |
 
-> Sincronizar com as seções 5 e 6 do [Escopo do Produto](../../../Projeto/EscopoProduto.md) para não haver sobreposição entre subequipes.
 
 ## 3. Índice do Relatório
 
 | Foco | Página | Status |
 | -- | -- | -- |
-| FOCO_01 | [Artefato Generalista](1.ArtefatoGeneralista.md) | ⬜ |
-| FOCO_01 | [SIG · NFR Framework](2.NFRFramework.md) | ⬜ |
-| FOCO_02 | [Engenharia Reversa](3.EngenhariaReversa.md) | ⬜ |
-| FOCO_02 | [Modelagem BPMN](4.BPMN.md) | ⬜ |
-| FOCO_03 | [IA Generativa](5.IAGenerativa.md) | ⬜ |
-| — | [Referências](6.Referencias.md) | ⬜ |
+| FOCO_01 | [Artefato Generalista](1.ArtefatoGeneralista.md) | 🟢 Concluído |
+| FOCO_01 | [SIG · NFR Framework](2.NFRFramework.md) | 🟢 Concluído |
+| FOCO_02 | [Engenharia Reversa](3.EngenhariaReversa.md) | 🟢 Concluído |
+| FOCO_02 | [Modelagem BPMN](4.BPMN.md) | 🟢 Concluído |
+| FOCO_03 | [IA Generativa](5.IAGenerativa.md) | 🟢 Concluído |
+| — | [Referências](6.Referencias.md) | 🟢 Concluído |
 
 ## 4. Metodologia da Subequipe
 
-<!--
-PREENCHER. Como o trabalho da subequipe ocorreu: divisão de tarefas, reuniões, ferramentas,
-critérios de revisão interna. Vídeos e atas ajudam aqui (diretriz).
-A metodologia específica de cada foco fica na página do respectivo foco.
--->
-_A preencher._ Processo geral do grupo em [Metodologia & Processo](../../../Projeto/Metodologia.md).
+O trabalho da SubEquipe_02 foi pautado na colaboração e alinhamento contínuo. Inicialmente, cada membro assumiu um artefato base para agilizar o andamento do projeto ([Ata S2_01](../../../Projeto/Atas/Atas_Sg2/ata-S2-01-2026-08-23.md)), seguido de sessões de revisão cruzada síncronas e contribuições assíncronas via WhatsApp e Git. 
+
+A exploração e validação de dados técnicos foram guiadas pelo processo de Engenharia Reversa, mapeando as chamadas de rede da aplicação de referência e relacionando-as formalmente com os diagramas de BPMN, NFR e Rich Picture.
+
+Processo geral do grupo em [Metodologia & Processo](../../../Projeto/Metodologia.md).
 
 ## 5. Rastreabilidade & Elos com Outros Artefatos (visão consolidada)
 
 | Artefato desta subequipe | Origem / insumo | Elo com | Observação |
 | -- | -- | -- | -- |
-| Artefato generalista | | | |
-| SIG (NFR) | | | |
-| Modelo BPMN | | | |
+| **Artefato generalista** | Engenharia Reversa (§4.2 e §4.3 ER) | [Modelo BPMN](4.BPMN.md) e [NFR SIG](2.NFRFramework.md) | Identifica atores, canais de comunicação, pontos de falha e de monetização. |
+| **SIG (NFR)** | Quedas simuladas e concorrência no chat | [Engenharia Reversa](3.EngenhariaReversa.md) e [BPMN](4.BPMN.md) | Propõe as operacionalizações técnicas para garantir robustez e tolerância a falhas. |
+| **Modelo BPMN** | Atividades e regras da ER (§6.2 e §6.3 ER) | [Artefato Generalista](1.ArtefatoGeneralista.md) | Modela sequencialmente a validação de autenticação, transação de Bits e publicação de chat. |
 
 ## 6. Senso Crítico (visão consolidada)
 
-<!--
-PREENCHER. O que funcionou, o que não funcionou, quais decisões foram revistas, quais
-limitações permanecem. Senso crítico é item explicitamente cobrado na diretriz.
--->
-_A preencher._
+O senso crítico detalhado de cada foco está registrado nas páginas dos respectivos artefatos ([Rich Picture](1.ArtefatoGeneralista.md#6-senso-crítico) · [SIG](2.NFRFramework.md#7-senso-crítico) · [Engenharia Reversa](3.EngenhariaReversa.md#8-senso-crítico) · [BPMN](4.BPMN.md#7-senso-crítico) · [IA Generativa](5.IAGenerativa.md#3-pontos-de-vista-individuais)). Consolidando a vivência da SubEquipe_02 ao longo da Entrega 1:
+
+- **O uso da IA como suporte versus o risco de acomodação intelectual**: Embora a IA generativa tenha acelerado pesquisas terminológicas e a formatação de rascunhos, o grupo percebeu que ela não resolve os desafios de engenharia por si só e carrega armadilhas perigosas quando usada sem rigor. Como pontuado expressamente por Pedro Henrique em seu relato individual ([5.IAGenerativa.md](5.IAGenerativa.md#pedro-henrique-freire-rodrigues)), o uso generalizado de IA induz a uma certa atrofia da própria linha de raciocínio crítico e lógico, gerando uma dependência nociva ao desenvolvimento intelectual de quem está se formando na área. Essa limitação ficou evidente nas alucinações enfrentadas pelos membros: diagramas desconexos no Miro/Cloudairy relatados por Davi e Pedro, conclusões incorretas sobre tráfego de rede corrigidas por Mateus na prática de DevTools, e modelagens superficiais de NFR descartadas por Daniel. O grupo constatou que a IA atua apenas em nível raso; sem validação empírica e raciocínio humano ativo, o resultado é inconsistente.
+- **Planejamento temporal, sobrecarga e dinâmica da subequipe**: O maior ponto de atenção no processo foi o gerenciamento do cronograma. O início efetivo das atividades da subequipe ocorreu a cerca de uma semana do prazo final, quando a disciplina disponibilizou uma janela total de três semanas. Essa largada tardia gerou uma sobrecarga concentrada de trabalho. Além disso, a dinâmica colaborativa sofreu atritos devido a indisponibilidades pontuais e divergências de rotina dos integrantes em determinados dias, o que chegou a travar o andamento em cerca de um dia e exigiu reuniões síncronas de emergência para alinhar os artefatos a tempo.
+- **Limites da análise por caixa-preta**: Modelar Confiabilidade e Disponibilidade (como Pub/Sub no chat sob picos de acesso e tolerância a falhas na transmissão) a partir da perspectiva de cliente esbarrou no fato de que o backend da plataforma é uma caixa-preta. A subequipe precisou ter cautela para não transformar inferências em certezas, recorrendo a documentações de padrões e normas abertas (como HLS RFC 8216) para sustentar as hipóteses sem inventar fluxos não observados.
+- **Participação integral e amadurecimento prático**: Apesar da sobrecarga e do grande desafio em assimilar ferramentas e conceitos até então desconhecidos (inspeção com DevTools, simulação de falhas no OBS, modelagem BPMN 2.0 e NFR Framework), o saldo da entrega foi muito positivo. Todos os integrantes participaram ativamente de todas as etapas e focos, colaborando tanto na elaboração quanto na revisão cruzada, resultando em um ganho expressivo de experiência prática e técnica para a equipe.
 
 ## 7. Versionamentos & Participações
 
@@ -60,10 +62,16 @@ _A preencher._
 
 | Membro | Contribuição | Data | Comprobatório (commit/PR) |
 | -- | -- | -- | -- |
-| _(preencher)_ | | DD/MM/AAAA | |
+| Davi Severiano Freitas | **Liderança & Atas**: Condução e redação das atas S2_01, S2_02 e S2_03.<br>**FOCO_01 (Rich Picture & NFR)**: Rascunho inicial do Rich Picture no Figma, participação na consolidação colaborativa no Miro e estruturação da documentação; Elaboração de Disponibilidade e Confiabilidade de 'Sistemas de doações' no SIG (NFR Framework).<br>**FOCO_02 (ER & BPMN)**: Coautoria na fundamentação teórica da Engenharia Reversa, referências acadêmicas, captura de tela do checkout (Fig. 25) e participação ativa na elaboração do BPMN, especialmente em Compra e Chat ao vivo.<br>**FOCO_03 (IA)**: Ponto de vista individual e consolidação dos relatórios de IA da subequipe. | 22/08/2026 a 28/08/2026 | Atas: [`7fb3c90`](https://github.com/UnBArqDsw2026-2-Turma01/2026.2-T01-_G7_ProjetoStreamingVideo_Entrega_01/commit/7fb3c908eb2fe1dad578f8f39a170dd2a60eab09), [`77faba6`](https://github.com/UnBArqDsw2026-2-Turma01/2026.2-T01-_G7_ProjetoStreamingVideo_Entrega_01/commit/77faba6a4263a548382a1c29993b621ce2e9047b), [`9011ec5`](https://github.com/UnBArqDsw2026-2-Turma01/2026.2-T01-_G7_ProjetoStreamingVideo_Entrega_01/commit/9011ec5d3f0589f45c4bd8fa319f4b0e1c61fc6f), [`2e2cbb9`](https://github.com/UnBArqDsw2026-2-Turma01/2026.2-T01-_G7_ProjetoStreamingVideo_Entrega_01/commit/2e2cbb9ad16ed780b49f8199abae3ab07ba01f5a)<br>ER/Geral: [`ed3e468`](https://github.com/UnBArqDsw2026-2-Turma01/2026.2-T01-_G7_ProjetoStreamingVideo_Entrega_01/commit/ed3e4681dbdef456f276f095a704ebdd4a6f5ffa), [`25ca8c6`](https://github.com/UnBArqDsw2026-2-Turma01/2026.2-T01-_G7_ProjetoStreamingVideo_Entrega_01/commit/25ca8c64eb2712d7e73a38f5203f56b05d8143cf), [`9bec4a8`](https://github.com/UnBArqDsw2026-2-Turma01/2026.2-T01-_G7_ProjetoStreamingVideo_Entrega_01/commit/9bec4a8bfcc99ae680a2b2ffec481d13b0fb3b04), [`9fbaa27`](https://github.com/UnBArqDsw2026-2-Turma01/2026.2-T01-_G7_ProjetoStreamingVideo_Entrega_01/commit/9fbaa27a863ce33d4ad921bbb270cde48bad0e55), [`7018fd5`](https://github.com/UnBArqDsw2026-2-Turma01/2026.2-T01-_G7_ProjetoStreamingVideo_Entrega_01/commit/7018fd5dda7cc475d6847b24198db5d120c2b431)<br>IA: [`0051dcd`](https://github.com/UnBArqDsw2026-2-Turma01/2026.2-T01-_G7_ProjetoStreamingVideo_Entrega_01/commit/0051dcd4327bcde75ca8f341ea22b39e6a982947) · [NFR §8](2.NFRFramework.md#8-participantes--comprobatórios) · [BPMN §8](4.BPMN.md#8-participantes--comprobatórios) |
+| Daniel de Oliveira Lira | **FOCO_01 (Rich Picture & NFR)**: Elaboração e estruturação do SIG de Confiabilidade e Disponibilidade, trade-offs e operacionalizações; Participação na elaboração final do Rich picture no miro.<br>**FOCO_02 (ER & BPMN)**: Redação da fundamentação teórica de Engenharia Reversa (com Davi), pesquisa bibliográfica e revisão cruzada da notação e consistência dos fluxos de chat e Bits no BPMN.<br>**FOCO_03 (IA)**: Ponto de vista individual e senso crítico sobre uso de IA no SIG. | 22/08/2026 a 28/08/2026 | NFR: [`19d23df`](https://github.com/UnBArqDsw2026-2-Turma01/2026.2-T01-_G7_ProjetoStreamingVideo_Entrega_01/commit/19d23dfe3ebcac4cadef118199bd045209896524)<br>Fundamentação ER: [`25ca8c6`](https://github.com/UnBArqDsw2026-2-Turma01/2026.2-T01-_G7_ProjetoStreamingVideo_Entrega_01/commit/25ca8c64eb2712d7e73a38f5203f56b05d8143cf), [`9bec4a8`](https://github.com/UnBArqDsw2026-2-Turma01/2026.2-T01-_G7_ProjetoStreamingVideo_Entrega_01/commit/9bec4a8bfcc99ae680a2b2ffec481d13b0fb3b04)<br>IA: [`2099911`](https://github.com/UnBArqDsw2026-2-Turma01/2026.2-T01-_G7_ProjetoStreamingVideo_Entrega_01/commit/2099911e3b5beba253f7c32bf172778e348ea111) · [Rich Picture §7](1.ArtefatoGeneralista.md#7-participantes--comprobatórios) · [BPMN §8](4.BPMN.md#8-participantes--comprobatórios) |
+| Pedro Henrique Freire Rodrigues | **FOCO_01 (Rich Picture & NFR)**: Publicação e participação da eleboração do Rich Picture v1.0 com rastreabilidade, assets e fluxos de chat/monetização; Participação da elaboração do SIG.<br>**FOCO_02 (ER & BPMN)**: Coleta e documentação da Engenharia Reversa de chat e Bits, contrato GraphQL (`sendChatMessage`), evidências 01 a 15 e 20 a 24; e auxílio na elaboração do BPMN.<br>**FOCO_03 (IA)**: Expansão da matriz de uso por artefato, relato individual e reflexão sobre riscos de dependência. | 22/08/2026 a 28/08/2026 | Rich Picture: [`6b17e21`](https://github.com/UnBArqDsw2026-2-Turma01/2026.2-T01-_G7_ProjetoStreamingVideo_Entrega_01/commit/6b17e21ee2577ce71bb5d2bf61ea8b21c4b4a11f)<br>ER: [`7be6f06`](https://github.com/UnBArqDsw2026-2-Turma01/2026.2-T01-_G7_ProjetoStreamingVideo_Entrega_01/commit/7be6f063e5e40e69ca385b2e53fa6be3a1e4a66a), [`54c07b5`](https://github.com/UnBArqDsw2026-2-Turma01/2026.2-T01-_G7_ProjetoStreamingVideo_Entrega_01/commit/54c07b57b98d1a108b3bc1c5040caee55ce995e8), [`4a68433`](https://github.com/UnBArqDsw2026-2-Turma01/2026.2-T01-_G7_ProjetoStreamingVideo_Entrega_01/commit/4a6843320f781dc35bf9828d578ebc646fa1bb4b), [`ce127c7`](https://github.com/UnBArqDsw2026-2-Turma01/2026.2-T01-_G7_ProjetoStreamingVideo_Entrega_01/commit/ce127c77c68832a82989b533d778d91c78438ae6), [`e6f5149`](https://github.com/UnBArqDsw2026-2-Turma01/2026.2-T01-_G7_ProjetoStreamingVideo_Entrega_01/commit/e6f51491cfcbe678f9f237fb31a31d996ea01201), [`4b2a937`](https://github.com/UnBArqDsw2026-2-Turma01/2026.2-T01-_G7_ProjetoStreamingVideo_Entrega_01/commit/4b2a9371a3903abc5d161763baec32d09cb897da), [`08c7ec9`](https://github.com/UnBArqDsw2026-2-Turma01/2026.2-T01-_G7_ProjetoStreamingVideo_Entrega_01/commit/08c7ec95a04ba4e0f498c8c772cbdf5781a7bbfa), [`2c3c5f0`](https://github.com/UnBArqDsw2026-2-Turma01/2026.2-T01-_G7_ProjetoStreamingVideo_Entrega_01/commit/2c3c5f07a7593c6f494f108f972b2a6435c24e77)<br>BPMN: [`1a8a49b`](https://github.com/UnBArqDsw2026-2-Turma01/2026.2-T01-_G7_ProjetoStreamingVideo_Entrega_01/commit/1a8a49b427823898bf3c6649176e157da6466cd6)<br>IA: [`2a9ba62`](https://github.com/UnBArqDsw2026-2-Turma01/2026.2-T01-_G7_ProjetoStreamingVideo_Entrega_01/commit/2a9ba627aa0f0ba9676e1273934371fa4f5fc5ea) · [NFR §8](2.NFRFramework.md#8-participantes--comprobatórios) |
+| Mateus Rodrigues Barreto | **FOCO_01 (Rich Picture & NFR)**: Modelagem do fluxo de mídia, encoder, falhas e consolidação no Miro (Rich Picture); Participação da elaboração do SIG.<br>**FOCO_02 (ER & BPMN)**: Simulação de falha de rede do cliente e interrupção na origem via OBS (etapas 5 e 6, Figs. 16 a 19), validação de playlists HLS (`.m3u8`); alinhamento dos pontos de falha e recuperação com os eventos e gateways dos diagramas BPMN.<br>**FOCO_03 (IA)**: Estruturação do relatório de IA generativa, metodologia do foco, levantamento das alucinações técnicas de tráfego de rede e relato individual. | 22/08/2026 a 28/08/2026 | ER: [`2d9ebb1`](https://github.com/UnBArqDsw2026-2-Turma01/2026.2-T01-_G7_ProjetoStreamingVideo_Entrega_01/commit/2d9ebb1fdec8f163609a09689dd29be64f888308), [`bd8eca8`](https://github.com/UnBArqDsw2026-2-Turma01/2026.2-T01-_G7_ProjetoStreamingVideo_Entrega_01/commit/bd8eca871c792743069f83f6e66c3b0b36567756)<br>IA: [`0ad1bd8`](https://github.com/UnBArqDsw2026-2-Turma01/2026.2-T01-_G7_ProjetoStreamingVideo_Entrega_01/commit/0ad1bd8fbe7bc7836371cb14b0df141d0ae05d7b)<br>Rich Picture, NFR & BPMN: [1.ArtefatoGeneralista.md §7](1.ArtefatoGeneralista.md#7-participantes--comprobatórios), [2.NFRFramework.md §8](2.NFRFramework.md#8-participantes--comprobatórios) e [4.BPMN.md](4.BPMN.md) |
 
 ## Histórico de Versões
 
 | Versão | Data | Descrição | Autor(es) | Revisor(es) |
 | -- | -- | -- | -- | -- |
 | 1.0 | 21/08/2026 | Criação do relatório da SubEquipe_02 | Lucas Andrade Zanetti | Heitor Macedo Ricardo |
+| 1.1 | 27/08/2026 | Atualização da equipe, escopo trabalhado, metodologia, rastreabilidade, senso crítico e participações da SubEquipe_02 | Davi Severiano Freitas | Daniel de Oliveira Lira |
+| 1.2 | 28/08/2026 | Refinamento das justificativas de escopo, redação consolidada do senso crítico e preenchimento detalhado dos comprobatórios e histórico de participações da subequipe | Davi Severiano Freitas | SubEquipe_02 |
+| 1.3 | 28/08/2026 | Atualização do status de Modelagem BPMN e Referências para concluído | Mateus Rodrigues Barreto | Davi Severiano Freitas |
