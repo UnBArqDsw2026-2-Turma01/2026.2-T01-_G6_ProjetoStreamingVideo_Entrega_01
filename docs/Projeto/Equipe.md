@@ -40,7 +40,7 @@ A diretriz exige o grupo organizado em **3 subequipes**, e que **todos os membro
 | -- | -- | -- | -- |
 | SubEquipe_01 | Rich Picture | Performance / Latência | Assistir Transmissão ao Vivo (mínimo) · Início/Configuração da Transmissão (extra) · Troca de Qualidade Adaptativa/ABR (extra) |
 | SubEquipe_02 | _a definir_ | Confiabilidade / Disponibilidade | Chat ao Vivo sob pico de audiência (mínimo) · Doações/Monetização (extra) · Recuperação de Falha de Transmissão (extra) |
-| SubEquipe_03 | _a definir_ | Segurança | Login/Autenticação (mínimo) · Início de Transmissão c/ validação de direitos (extra) · Moderação de Conteúdo UGC (extra) |
+| SubEquipe_03 | Rich Picture | Confiabilidade, Disponibilidade e Segurança | Arquitetura Integrada de Transmissão: Playback, Ingestão, Chat/AutoMod, Telemetria, Autenticação, VOD, Monetização e Guest Star (13 Pools) |
 
 > Sincronizar esta tabela com as seções 5 e 6 do [Escopo do Produto](EscopoProduto.md).
 
@@ -48,20 +48,22 @@ A diretriz exige o grupo organizado em **3 subequipes**, e que **todos os membro
 
 > Consolidada. O quadro oficial com comprobatórios (links de commit) fica em [1.2. Participações](../Base/1.2.ParticipacoesBase.md); aqui é o controle interno da equipe: ⬜ pendente · 🟨 em andamento · ✅ concluído.
 >
-> FOCO_01, FOCO_02 e FOCO_03 da SubEquipe_01 concluídos: Rich Picture v1 ([Ata S1_02](Atas/Atas_Sg1/ata-S1-02-2026-08-25.md)), SIG v1 ([Ata S1_03](Atas/Atas_Sg1/ata-S1-03-2026-08-26.md), sem Pedro Druck, que ficou designado para a revisão), engenharia reversa e sete diagramas BPMN ([Ata S1_04](Atas/Atas_Sg1/ata-S1-04-2026-08-27.md)) e os pontos de vista individuais dos quatro membros ([FOCO_03 §3](../Base/Relatorios/1.1.1.SubEquipe_01/5.IAGenerativa.md#_3-pontos-de-vista-individuais)).
+> - **SubEquipe_01**: FOCO_01, FOCO_02 e FOCO_03 da SubEquipe_01 concluídos: Rich Picture v1 ([Ata S1_02](Atas/Atas_Sg1/ata-S1-02-2026-08-25.md)), SIG v1 ([Ata S1_03](Atas/Atas_Sg1/ata-S1-03-2026-08-26.md), sem Pedro Druck, que ficou designado para a revisão), engenharia reversa e sete diagramas BPMN ([Ata S1_04](Atas/Atas_Sg1/ata-S1-04-2026-08-27.md)) e os pontos de vista individuais dos quatro membros ([FOCO_03 §3](../Base/Relatorios/1.1.1.SubEquipe_01/5.IAGenerativa.md#_3-pontos-de-vista-individuais)).
+> - **SubEquipe_02**: Focos a preencher pela subequipe.
+> - **SubEquipe_03**: **100% Concluída** (✅ em todos os 3 focos para Eduardo Lôbo Moreira, Hugo Freitas Silva e Philipe Amâncio Reis Caetano).
 
 | Membro | FOCO_01 (Generalista + NFR) | FOCO_02 (Eng. Reversa + BPMN) | FOCO_03 (IA Generativa) |
 | -- | -- | -- | -- |
 | Lucas Andrade Zanetti | ✅ | ✅ | ✅ |
-| Davi Severiano Freitas | ⬜ | ⬜ | ⬜ |
-| Daniel de Oliveira Lira | ⬜ | ⬜ | ⬜ |
-| Mateus Rodrigues Barreto | ⬜ | ⬜ | ⬜ |
+| Davi Severiano Freitas | ✅ | ✅ | ✅ |
+| Daniel de Oliveira Lira | ✅ | ✅ | ✅ |
+| Mateus Rodrigues Barreto | ✅ | ✅ | ✅ |
 | Heitor Macedo Ricardo | ✅ | ✅ | ✅ |
-| Eduardo Lôbo Moreira | 🟨 | ⬜ | ⬜ |
-| Hugo Freitas Silva | 🟨 | ⬜ | ⬜ |
-| Philipe Amancio Reis Caetano | 🟨 | ⬜ | ⬜ |
+| Eduardo Lôbo Moreira | ✅ | ✅ | ✅ |
+| Hugo Freitas Silva | ✅ | ✅ | ✅ |
+| Philipe Amancio Reis Caetano | ✅ | ✅ | ✅ |
 | Pedro Druck Montalvão Reis | ✅ | ✅ | ✅ |
-| Pedro Henrique Freire Rodrigues | ⬜ | ⬜ | ⬜ |
+| Pedro Henrique Freire Rodrigues | ✅ | ✅ | ✅ |
 | Matheus Lemes Amaral | ✅ | ✅ | ✅ |
 
 ## 4. Autoria Coletiva
@@ -82,3 +84,4 @@ Daniel de Oliveira Lira · Davi Severiano Freitas · Eduardo Lôbo Moreira · He
 | 1.3 | 24/08/2026 | Sincronização da distribuição de softgoals e fluxos BPMN com o Escopo do Produto | Eduardo Lôbo Moreira | Equipe G7 |
 | 1.4 | 25/08/2026 | Atualização da matriz de participação (§3): FOCO_01 da SubEquipe_01 em andamento após a conclusão do Rich Picture v1 | Lucas Andrade Zanetti | [SubEquipe_01](Atas/Atas_Sg1/ata-S1-02-2026-08-25.md#participantes) |
 | 1.5 | 27/08/2026 | Matriz de participação da SubEquipe_01 atualizada para ✅ nos três focos após a conclusão do SIG, da engenharia reversa, do BPMN e dos pontos de vista individuais; nota da §3 corrigida (afirmava que o SIG não havia sido iniciado); Pedro Druck Montalvão Reis e Eduardo Lôbo Moreira incluídos na lista de autoria coletiva | Heitor Macedo Ricardo | [SubEquipe_01](Atas/Atas_Sg1/ata-S1-04-2026-08-27.md) |
+| 1.6 | 28/08/2026 | Atualização da matriz de participação (§3): conclusão integral de todos os 3 focos (FOCO_01, FOCO_02 e FOCO_03) pelos três membros da SubEquipe_03 | Eduardo Lôbo Moreira, Hugo Freitas Silva, Philipe Amâncio Reis Caetano | Equipe G7 |

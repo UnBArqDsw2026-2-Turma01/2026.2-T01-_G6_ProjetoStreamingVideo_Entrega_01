@@ -26,16 +26,25 @@ Registro das reuniões do grupo e das subequipes. Atas bem elaboradas e gravaç�
 
 ## SubEquipe 03
 
-*Nenhuma reunião registrada até o momento.*
+| ID | Data | Pauta | Ata | Gravação / Registro |
+| -- | -- | -- | -- | -- |
+| S3_01 | 25/08/2026 | Alinhamento de escopo, modelagem do Rich Picture (7 núcleos), expansão do NFR Framework (5 dimensões e trade-offs), planejamento da Engenharia Reversa (13 pools BPMN) e governança de IA | [Ata S3 01](Atas_Sg3/ata-S3-01-2026-08-25.md) | **Presencial (FGA/UnB)** — Anotações em quadro e registros consolidados |
 
 ## Estrutura de pastas
 
-Atas gerais ficam direto em `Atas/`; cada subequipe tem sua própria subpasta (`Atas_Sg1/`, `Atas_Sg2/`, `Atas_Sg3/` quando houver).
+Atas gerais ficam direto em `Atas/`; cada subequipe tem sua própria subpasta (`Atas_Sg1/`, `Atas_Sg2/`, `Atas_Sg3/`).
 
 ## Como registrar uma ata nova
 
 1. Copiar [`ata-modelo.md`](ata-modelo.md) para `Atas_SgN/ata-SN_NN-AAAA-MM-DD.md` (reunião de subequipe) ou para `ata-GNN-AAAA-MM-DD.md` na raiz de `Atas/` (reunião geral);
 2. Preencher pauta, participantes, decisões e encaminhamentos;
    - registrar presença real (inclusive ausências e entradas tardias) — o quadro de participação depende disso;
-3. Adicionar a linha correspondente na tabela da sua respectiva equipe acima, seguindo o padrão de ID (`G01`, `S1_01`, `S2_01`, etc.);
+3. Adicionar a linha correspondente na tabela da sua respectiva equipe acima, seguindo o padrão de ID (`G01`, `S1_01`, `S2_01`, `S3_01`, etc.);
 4. Adicionar o link no `_sidebar.md` se a ata for relevante para a apresentação.
+
+## Histórico de Versões
+
+| Versão | Data | Descrição | Autor(es) | Revisor(es) |
+| :--: | :--: | -- | -- | -- |
+| 1.0 | 21/08/2026 | Criação da página de índice de atas | Lucas Andrade Zanetti | Heitor Macedo Ricardo |
+| 1.1 | 28/08/2026 | Inclusão da Ata S3_01 (Reunião Presencial da SubEquipe_03) | Eduardo Lôbo Moreira, Hugo Freitas Silva, Philipe Amâncio Reis Caetano | Equipe G6 |

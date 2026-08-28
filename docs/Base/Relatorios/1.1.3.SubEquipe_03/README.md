@@ -26,9 +26,9 @@
 | -- | -- | :--: |
 | FOCO_01 | [Artefato Generalista](Base/Relatorios/1.1.3.SubEquipe_03/1.ArtefatoGeneralista.md) | 🟢 |
 | FOCO_01 | [SIG · NFR Framework](Base/Relatorios/1.1.3.SubEquipe_03/2.NFRFramework.md) | 🟢 |
-| FOCO_02 | [Engenharia Reversa](Base/Relatorios/1.1.3.SubEquipe_03/3.EngenhariaReversa.md) | ⬜ |
-| FOCO_02 | [Modelagem BPMN](Base/Relatorios/1.1.3.SubEquipe_03/4.BPMN.md) | ⬜ |
-| FOCO_03 | [IA Generativa](Base/Relatorios/1.1.3.SubEquipe_03/5.IAGenerativa.md) | ⬜ |
+| FOCO_02 | [Engenharia Reversa](Base/Relatorios/1.1.3.SubEquipe_03/3.EngenhariaReversa.md) | 🟢 |
+| FOCO_02 | [Modelagem BPMN](Base/Relatorios/1.1.3.SubEquipe_03/4.BPMN.md) | 🟢 |
+| FOCO_03 | [IA Generativa](Base/Relatorios/1.1.3.SubEquipe_03/5.IAGenerativa.md) | 🟢 |
 | — | [Referências](Base/Relatorios/1.1.3.SubEquipe_03/6.Referencias.md) | 🟢 |
 
 ## 4. Metodologia da Subequipe
@@ -39,9 +39,10 @@ A SubEquipe_03 trabalhou em estreita colaboração síncrona e assíncrona, comb
 
 | Artefato desta subequipe | Origem / Insumo | Elo com | Observação |
 | -- | -- | -- | -- |
-| **Artefato Generalista (Rich Picture)** | Domínio de streaming ao vivo, UGC e plataformas de referência (Twitch/YouTube/Kick) | [SIG (NFR)](Base/Relatorios/1.1.3.SubEquipe_03/2.NFRFramework.md), [BPMN](Base/Relatorios/1.1.3.SubEquipe_03/4.BPMN.md) e [Escopo do Produto](Projeto/EscopoProduto.md) | Fornece os atores, dores/preocupações e fluxos sociotécnicos que originam os softgoals e os processos modelados. |
+| **Artefato Generalista (Rich Picture)** | Domínio de streaming ao vivo, UGC e plataformas de referência | [SIG (NFR)](Base/Relatorios/1.1.3.SubEquipe_03/2.NFRFramework.md), [BPMN](Base/Relatorios/1.1.3.SubEquipe_03/4.BPMN.md) e [Escopo do Produto](Projeto/EscopoProduto.md) | Fornece os atores, dores/preocupações e fluxos sociotécnicos que originam os softgoals e os processos modelados. |
 | **SIG (NFR Framework)** | Rich Picture e pesquisa de arquiteturas resilientes | [Engenharia Reversa](Base/Relatorios/1.1.3.SubEquipe_03/3.EngenhariaReversa.md) e [BPMN](Base/Relatorios/1.1.3.SubEquipe_03/4.BPMN.md) | Decompõe os atributos de qualidade e trade-offs a serem verificados no sistema real. |
-| **Modelo BPMN** | Atores do Rich Picture e fluxo de chat/moderação sob concorrência | [Engenharia Reversa](Base/Relatorios/1.1.3.SubEquipe_03/3.EngenhariaReversa.md) | Detalha a sequência temporal e pools/lanes de interação síncrona. |
+| **Modelo BPMN** | Atores do Rich Picture e fluxo de chat/moderação sob concorrência | [Engenharia Reversa](Base/Relatorios/1.1.3.SubEquipe_03/3.EngenhariaReversa.md) | Detalha a sequência temporal e pools/lanes de interação síncrona (13 pools integradas). |
+| **IA Generativa (FOCO_03)** | Pesquisa terminológica, levantamento de padrões e debate de trade-offs | [Rich Picture](Base/Relatorios/1.1.3.SubEquipe_03/1.ArtefatoGeneralista.md), [SIG (NFR)](Base/Relatorios/1.1.3.SubEquipe_03/2.NFRFramework.md) e [BPMN](Base/Relatorios/1.1.3.SubEquipe_03/4.BPMN.md) | Apoio na estruturação conceitual sob estrita filtragem contra alucinações e governança metodológica. |
 
 ## 6. Senso Crítico (visão consolidada)
 
@@ -49,13 +50,13 @@ A combinação do Rich Picture (visão sistêmica qualitativa e holística) com 
 
 ## 7. Versionamentos & Participações
 
-> Quadro oficial consolidado em [1.2. Participações](Base/1.2.ParticipacoesBase.md). Aqui fica o registro detalhado da subequipe, com data e link de comprobatório.
+> Quadro oficial consolidado em [1.2. Participações](Base/1.2.ParticipacoesBase.md); aqui fica o registro detalhado da subequipe, com data e link de comprobatório.
 
 | Membro | Foco / Atividade | Data | Comprobatório |
 | -- | -- | :--: | -- |
-| Eduardo Lôbo Moreira | Pesquisa de arquiteturas de referência, elaboração do Rich Picture (infra/CDN/viewer), fundamentação teórica em SSM e NFR, modelagem de operacionalizações e trade-offs | 26/08/2026 | [Histórico de Versões do Rich Picture](Base/Relatorios/1.1.3.SubEquipe_03/1.ArtefatoGeneralista.md#histórico-de-versões) · [Histórico do NFR](Base/Relatorios/1.1.3.SubEquipe_03/2.NFRFramework.md#histórico-de-versões) |
-| Hugo Freitas Silva | Pesquisa de streaming ao vivo, modelagem do Rich Picture (streamer/governança/DMCA), definição dos requisitos de Confiabilidade/Disponibilidade e análise de senso crítico | 26/08/2026 | [Histórico de Versões do Rich Picture](Base/Relatorios/1.1.3.SubEquipe_03/1.ArtefatoGeneralista.md#histórico-de-versões) · [Histórico do NFR](Base/Relatorios/1.1.3.SubEquipe_03/2.NFRFramework.md#histórico-de-versões) |
-| Philipe Amâncio Reis Caetano | Pesquisa de moderação e chat em tempo real, modelagem do Rich Picture (chat/marketing/devs), estruturação do grafo no dsm3-goals e mapeamento de rastreabilidade | 26/08/2026 | [Histórico de Versões do Rich Picture](Base/Relatorios/1.1.3.SubEquipe_03/1.ArtefatoGeneralista.md#histórico-de-versões) · [Histórico do NFR](Base/Relatorios/1.1.3.SubEquipe_03/2.NFRFramework.md#histórico-de-versões) |
+| Eduardo Lôbo Moreira | **FOCO_01**: Rich Picture (infra/CDN/viewer), SSM e NFR (operacionalizações e trade-offs).<br>**FOCO_02**: Engenharia Reversa (tráfego de mídia HLS, CDNs) e revisão do BPMN.<br>**FOCO_03**: Lições aprendidas, senso crítico de normas IETF (RFC 9106, 6455, 8216bis) e governança de IA. | 28/08/2026 | [Histórico Rich Picture](Base/Relatorios/1.1.3.SubEquipe_03/1.ArtefatoGeneralista.md#histórico-de-versões) · [Histórico NFR](Base/Relatorios/1.1.3.SubEquipe_03/2.NFRFramework.md#histórico-de-versões) · [Histórico BPMN](Base/Relatorios/1.1.3.SubEquipe_03/4.BPMN.md#histórico-de-versões) · [Ponto de Vista IA](Base/Relatorios/1.1.3.SubEquipe_03/5.IAGenerativa.md#eduardo-lôbo-moreira) |
+| Hugo Freitas Silva | **FOCO_01**: Rich Picture (streamer/governança/DMCA), requisitos NFR e análise de senso crítico.<br>**FOCO_02**: Modelagem BPMN completa (13 pools, diagramas de sequência), visualizador interativo bpmn-js e fundamentação teórica.<br>**FOCO_03**: Lições aprendidas, senso crítico de hipóteses vs fatos e revisão visual. | 28/08/2026 | [Histórico Rich Picture](Base/Relatorios/1.1.3.SubEquipe_03/1.ArtefatoGeneralista.md#histórico-de-versões) · [Histórico NFR](Base/Relatorios/1.1.3.SubEquipe_03/2.NFRFramework.md#histórico-de-versões) · [Histórico BPMN](Base/Relatorios/1.1.3.SubEquipe_03/4.BPMN.md#histórico-de-versões) · [Ponto de Vista IA](Base/Relatorios/1.1.3.SubEquipe_03/5.IAGenerativa.md#hugo-freitas-silva) |
+| Philipe Amâncio Reis Caetano | **FOCO_01**: Rich Picture (chat/marketing/devs), grafo dsm3-goals e rastreabilidade.<br>**FOCO_02**: Engenharia Reversa (GraphQL Persisted Queries, WebSockets PubSub, Ad Targeting CSAI) e modelagem lógica de dados.<br>**FOCO_03**: Lições aprendidas, senso crítico de APIs de tempo real vs polling e decodificação assistida. | 28/08/2026 | [Histórico Rich Picture](Base/Relatorios/1.1.3.SubEquipe_03/1.ArtefatoGeneralista.md#histórico-de-versões) · [Histórico NFR](Base/Relatorios/1.1.3.SubEquipe_03/2.NFRFramework.md#histórico-de-versões) · [Histórico BPMN](Base/Relatorios/1.1.3.SubEquipe_03/4.BPMN.md#histórico-de-versões) · [Ponto de Vista IA](Base/Relatorios/1.1.3.SubEquipe_03/5.IAGenerativa.md#philipe-amâncio-reis-caetano) |
 
 ## Histórico de Versões
 
@@ -65,5 +66,7 @@ A combinação do Rich Picture (visão sistêmica qualitativa e holística) com 
 | 1.1 | 24/08/2026 | Definição do fluxo BPMN e registro das participações no FOCO_01 (NFR Framework) | Eduardo Lôbo Moreira | Equipe G6 |
 | 1.2 | 26/08/2026 | Atualização do status do Artefato Generalista (Rich Picture), consolidação de rastreabilidade, referências e participações de todos os membros | Eduardo Lôbo Moreira, Hugo Freitas Silva, Philipe Amâncio Reis Caetano | Equipe G6 |
 | 1.3 | 27/08/2026 | Correção das rotas e links internos para total compatibilidade com Docsify | Eduardo Lôbo Moreira, Hugo Freitas Silva, Philipe Amâncio Reis Caetano | Equipe G6 |
+| 1.4 | 27/08/2026 | Atualização do status do FOCO_03 (IA Generativa) e integração de rastreabilidade | Eduardo Lôbo Moreira, Hugo Freitas Silva, Philipe Amâncio Reis Caetano | Equipe G6 |
+| 1.5 | 28/08/2026 | Conclusão integral de todos os entregáveis da SubEquipe_03 (FOCO_01, FOCO_02 e FOCO_03), atualização de status no índice para 🟢 e consolidação de participações | Eduardo Lôbo Moreira, Hugo Freitas Silva, Philipe Amâncio Reis Caetano | Equipe G6 |
 
 

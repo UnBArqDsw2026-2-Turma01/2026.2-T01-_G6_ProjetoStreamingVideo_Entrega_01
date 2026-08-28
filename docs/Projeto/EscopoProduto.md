@@ -63,9 +63,9 @@ Esta página é a **fonte única de verdade do escopo**. Todos os artefatos das 
 | SubEquipe_02 | Mínimo | Chat ao Vivo em Tempo Real sob pico de audiência | Disponibilidade sob carga é o teste de estresse mais direto do "ao vivo" | ⬜ |
 | SubEquipe_02 | Extra | Doações/Monetização durante a live (pagamento, confirmação, notificação) | Confiabilidade transacional — falha aqui tem custo direto ao usuário | ⬜ |
 | SubEquipe_02 | Extra | Recuperação de Falha de Transmissão (reconexão do streamer, failover de ingestão) | Cenário clássico de resiliência/disponibilidade | ⬜ |
-| SubEquipe_03 | Mínimo | Login/Cadastro & Autenticação (incl. 2FA/OAuth) | Segurança de acesso é a porta de entrada de todo o sistema | ⬜ |
-| SubEquipe_03 | Extra | Início de Transmissão com validação de direitos do streamer (proteção de conteúdo) | Segurança de conteúdo, não só de acesso | ⬜ |
-| SubEquipe_03 | Extra | Moderação de Conteúdo UGC (denúncia, banimento, filtragem) | Liga Segurança à ênfase obrigatória de UGC do tema | ⬜ |
+| SubEquipe_03 | Mínimo | Login/Cadastro & Autenticação (incl. 2FA/OAuth) | Segurança de acesso é a porta de entrada de todo o sistema | ✅ modelado (Pool 7 · Identidade e Sessões) |
+| SubEquipe_03 | Extra | Início de Transmissão com validação de direitos do streamer (proteção de conteúdo) | Segurança de conteúdo, não só de acesso | ✅ modelado (Pool 4 · Fábrica de Vídeo e Ingestão & Pool 13 · Moderação de Vídeo) |
+| SubEquipe_03 | Extra | Moderação de Conteúdo UGC (denúncia, banimento, filtragem) | Liga Segurança à ênfase obrigatória de UGC do tema | ✅ modelado (Pool 5 · Chat e AutoMod & Pool 13 · Moderação de Vídeo) |
 
 ## 6. Requisitos Não Funcionais Candidatos (insumo para os SIGs)
 
@@ -75,7 +75,7 @@ Esta página é a **fonte única de verdade do escopo**. Todos os artefatos das 
 | -- | -- | -- | -- |
 | SubEquipe_01 | Performance / Latência | Streaming ao vivo tolera pouco atraso; é a ênfase "Transmissões ao Vivo" do tema traduzida em NFR | 🟨 SIG v1 · O04 (LL-HLS) a corrigir após a engenharia reversa |
 | SubEquipe_02 | Confiabilidade / Disponibilidade | Picos de audiência e transações (doações) exigem robustez a falha e uptime | ⬜ |
-| SubEquipe_03 | Segurança | Autenticação, proteção de conteúdo e moderação de UGC — cobre acesso e a ênfase "Conteúdo UGC" | ⬜ |
+| SubEquipe_03 | Confiabilidade, Disponibilidade e Segurança | Autenticação, proteção de conteúdo e moderação de UGC — cobre acesso e a ênfase "Conteúdo UGC" expandida em 5 dimensões e trade-offs | ✅ concluído (SIG v1.0) |
 
 ## 7. Fora de Escopo
 
@@ -107,3 +107,4 @@ Consolidadas em [Referências do Projeto](Referencias.md). Sustentam este escopo
 | 1.0 | 21/08/2026 | Criação do documento de escopo | Lucas Andrade Zanetti | Heitor Macedo Ricardo |
 | 1.1 | 22/08/2026 | Definição da aplicação de referência, ênfases, público-alvo, levantamento preliminar de funcionalidades e não-escopo (Reunião Geral 01) | [Equipe G7](Equipe.md) | Lucas Andrade Zanetti |
 | 1.2 | 23/08/2026 | Correção da divisão de softgoals e fluxos entre SubEquipe_02 e SubEquipe_03 (§5 e §6) e atualização do rótulo do projeto para G7_ProjetoStreamingVideo | Lucas Andrade Zanetti | Heitor Macedo Ricardo |
+| 1.3 | 28/08/2026 | Atualização do status dos fluxos BPMN (13 pools integradas) e softgoals da SubEquipe_03 para concluído (✅) | Eduardo Lôbo Moreira, Hugo Freitas Silva, Philipe Amâncio Reis Caetano | Equipe G7 |
