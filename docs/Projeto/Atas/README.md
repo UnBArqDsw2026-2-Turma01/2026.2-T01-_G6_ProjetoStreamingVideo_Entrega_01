@@ -15,6 +15,7 @@ Registro das reuniões do grupo e das subequipes. Atas bem elaboradas e gravaç�
 | S1_01 | 23/08/2026 | Softgoal e fluxos candidatos ao BPMN, escolha do artefato generalista (Rich Picture), dúvida sobre o NFR Framework, cadência de reuniões | [Ata S1 01](Atas_Sg1/ata-S1-01-2026-08-23.md) | [Vídeo](https://www.youtube.com/watch?v=iyWpaxbuiow) |
 | S1_02 | 25/08/2026 | Construção do Rich Picture v1: entidades, pipeline de mídia, camadas de interação e monetização, convenções visuais e registro do uso de IA | [Ata S1 02](Atas_Sg1/ata-S1-02-2026-08-25.md) | [Vídeo](https://www.youtube.com/watch?v=7sRz8l8YtqU) |
 | S1_03 | 26/08/2026 | Construção do SIG v1 (NFR Framework): ramos Desempenho, Segurança, Confiabilidade e Usabilidade, calibração de contribuições, trade-offs e ausência de Pedro Druck | [Ata S1 03](Atas_Sg1/ata-S1-03-2026-08-26.md) | [Vídeo](https://www.youtube.com/watch?v=n36T4kpz-Bk) |
+| S1_04 | 27/08/2026 | Execução da Engenharia Reversa e da Modelagem BPMN de Performance/Latência: protocolo de coleta, evidências anonimizadas, verificação das hipóteses do FOCO_01 e sete diagramas encadeados | [Ata S1 04](Atas_Sg1/ata-S1-04-2026-08-27.md) | _sem gravação_ |
 
 ## SubEquipe 02
 

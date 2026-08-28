@@ -50,7 +50,7 @@ Esta página é a **fonte única de verdade do escopo**. Todos os artefatos das 
 | F09 | Moderação de chat e de conteúdo | UGC | | |
 | F10 | Monetização (inscrições, moeda virtual, publicidade) | UGC | | |
 
-## 5. Fluxos Selecionados para Engenharia Reversa & BPMN
+## 5. Fluxos Selecionados para Engenharia Reversa & BPMN :id=fluxos-engenharia-reversa-bpmn
 
 > A diretriz exige **pelo menos um** fluxo distinto por subequipe. Para não ficar só na Menção Mínima, cada subequipe modela **3 fluxos**, todos ligados ao seu softgoal (seção 6): o primeiro é a entrega mínima, os outros dois são iniciativa extra e entram também em [1.3. Iniciativas Extras](../Base/1.3.IniciativasExtras.md). Evitar sobreposição entre subequipes — registrar a divisão aqui **antes** de começar a modelar.
 

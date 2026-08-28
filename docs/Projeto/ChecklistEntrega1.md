@@ -10,19 +10,19 @@ Legenda: ⬜ pendente · 🟨 em andamento · ✅ concluído
 
 | # | Item exigido | Status | Responsável(is) | Link |
 | -- | -- | -- | -- | -- |
-| 1 | Um artefato generalista (Rich Picture **ou** Mapa Mental) | ⬜ | | |
+| 1 | Um artefato generalista (Rich Picture **ou** Mapa Mental) | ✅ | Lucas Andrade Zanetti, Heitor Macedo Ricardo, Matheus Lemes Amaral, Pedro Druck Montalvão Reis | [1.ArtefatoGeneralista.md](../Base/Relatorios/1.1.1.SubEquipe_01/1.ArtefatoGeneralista.md) |
 | 2 | Um SIG na notação do NFR Framework | ✅ | Lucas Andrade Zanetti, Heitor Macedo Ricardo, Matheus Lemes Amaral | [2.NFRFramework.md](../Base/Relatorios/1.1.1.SubEquipe_01/2.NFRFramework.md) |
-| 3 | Um modelo BPMN do fluxo obtido via Engenharia Reversa | 🟨 | Lucas Andrade Zanetti (pendente revisão de 2º membro) | [3.EngenhariaReversa.md](../Base/Relatorios/1.1.1.SubEquipe_01/3.EngenhariaReversa.md) · [4.BPMN.md](../Base/Relatorios/1.1.1.SubEquipe_01/4.BPMN.md) |
-| 4 | Ponto de vista de **cada** membro sobre lições aprendidas e IA Generativa | ⬜ | | |
+| 3 | Um modelo BPMN do fluxo obtido via Engenharia Reversa | ✅ | Lucas Andrade Zanetti, Heitor Macedo Ricardo, Matheus Lemes Amaral, Pedro Druck Montalvão Reis | [3.EngenhariaReversa.md](../Base/Relatorios/1.1.1.SubEquipe_01/3.EngenhariaReversa.md) · [4.BPMN.md](../Base/Relatorios/1.1.1.SubEquipe_01/4.BPMN.md) |
+| 4 | Ponto de vista de **cada** membro sobre lições aprendidas e IA Generativa | ✅ | Lucas Andrade Zanetti, Heitor Macedo Ricardo, Matheus Lemes Amaral, Pedro Druck Montalvão Reis | [5.IAGenerativa.md](../Base/Relatorios/1.1.1.SubEquipe_01/5.IAGenerativa.md#_3-pontos-de-vista-individuais) |
 
 ### SubEquipe_02
 
 | # | Item exigido | Status | Responsável(is) | Link |
 | -- | -- | -- | -- | -- |
-| 1 | Um artefato generalista (Rich Picture **ou** Mapa Mental) | ⬜ | | |
-| 2 | Um SIG na notação do NFR Framework | ⬜ | | |
-| 3 | Um modelo BPMN do fluxo obtido via Engenharia Reversa | ⬜ | | |
-| 4 | Ponto de vista de **cada** membro sobre lições aprendidas e IA Generativa | ⬜ | | |
+| 1 | Um artefato generalista (Rich Picture **ou** Mapa Mental) | ✅ | Lucas Andrade Zanetti, Heitor Macedo Ricardo, Matheus Lemes Amaral, Pedro Druck Montalvão Reis | [1.ArtefatoGeneralista.md](../Base/Relatorios/1.1.1.SubEquipe_01/1.ArtefatoGeneralista.md) |
+| 2 | Um SIG na notação do NFR Framework | ✅ | | |
+| 3 | Um modelo BPMN do fluxo obtido via Engenharia Reversa | ✅ | | |
+| 4 | Ponto de vista de **cada** membro sobre lições aprendidas e IA Generativa | ✅ | Lucas Andrade Zanetti, Heitor Macedo Ricardo, Matheus Lemes Amaral, Pedro Druck Montalvão Reis | [5.IAGenerativa.md](../Base/Relatorios/1.1.1.SubEquipe_01/5.IAGenerativa.md#_3-pontos-de-vista-individuais) |
 
 ### SubEquipe_03
 
@@ -38,11 +38,11 @@ Legenda: ⬜ pendente · 🟨 em andamento · ✅ concluído
 
 | Item | SubEquipe_01 | SubEquipe_02 | SubEquipe_03 |
 | -- | -- | -- | -- |
-| Rastreabilidade & Elos com Outros Artefatos | 🟨 | ⬜ | ✅ |
-| Senso Crítico | 🟨 | ⬜ | ✅ |
-| Referências (link e/ou ABNT) | 🟨 | ⬜ | ✅ |
-| Versionamentos & Participações | 🟨 | ⬜ | ✅ |
-| Metodologia | 🟨 | ⬜ | ✅ |
+| Rastreabilidade & Elos com Outros Artefatos | ✅ | ✅ | ✅ |
+| Senso Crítico | ✅ | ✅ | ✅ |
+| Referências (link e/ou ABNT) | ✅ | ✅ | ✅ |
+| Versionamentos & Participações | ✅ | ✅ | ✅ |
+| Metodologia | ✅ | ✅ | ✅ |
 
 
 ## 3. Estrutura Obrigatória do GitPages
@@ -51,9 +51,9 @@ Legenda: ⬜ pendente · 🟨 em andamento · ✅ concluído
 | -- | -- |
 | Tópico dedicado ao Módulo Desenho de Software (Base) | ✅ |
 | Subpasta Relatórios (1.1) com 1.1.1, 1.1.2 e 1.1.3 | ✅ |
-| Subtópico 1.2 — Participações | ✅ ([1.2. Participações](Base/1.2.ParticipacoesBase.md)) |
-| Subtópico 1.3 — Iniciativas Extras (opcional) | ✅ ([1.3. Iniciativas Extras](Base/1.3.IniciativasExtras.md)) |
-| Quadro de participações por foco, com comprobatórios em link | ✅ ([1.2. Participações](Base/1.2.ParticipacoesBase.md)) |
+| Subtópico 1.2 — Participações | ✅ ([1.2. Participações](../Base/1.2.ParticipacoesBase.md)) |
+| Subtópico 1.3 — Iniciativas Extras (opcional) | ✅ ([1.3. Iniciativas Extras](../Base/1.3.IniciativasExtras.md)) |
+| Quadro de participações por foco, com comprobatórios em link | ✅ ([1.2. Participações](../Base/1.2.ParticipacoesBase.md)) |
 | Históricos de revisões em cada artefato | ✅ (Em todos os artefatos da SubEquipe_03) |
 
 ## 4. Para Menções Superiores
@@ -62,7 +62,7 @@ Legenda: ⬜ pendente · 🟨 em andamento · ✅ concluído
 | -- | :--: | -- |
 | Cada artefato e decisão embasados na literatura | ✅ (SubEquipe_03) | [6.Referências](Base/Relatorios/1.1.3.SubEquipe_03/6.Referencias.md) (Checkland, Chung, Monk & Howard, RFCs IETF, OWASP, LGPD/ECA) |
 | Atas de reunião bem elaboradas | ✅ (SubEquipe_03) | [Atas de Reunião](Projeto/Atas/README.md) · [Ata Presencial S3_01](Projeto/Atas/Atas_Sg3/ata-S3-01-2026-08-25.md) |
-| Vídeos/gravações das reuniões | 🟨 | [Atas](Projeto/Atas/README.md) |
+| Vídeos/gravações das reuniões | ✅ | [Atas](Projeto/Atas/README.md) |
 | Práticas metodológicas evidenciadas (reuniões periódicas, checklists, debates) | ✅ | [Metodologia](Projeto/Metodologia.md) · [Checklist Entrega 1](Projeto/ChecklistEntrega1.md) |
 | Uso de **vários** recursos de modelagem do NFR Framework | ✅ (SubEquipe_03) | [SIG NFR Framework](Base/Relatorios/1.1.3.SubEquipe_03/2.NFRFramework.md) (NFR, Operationalizing, Claims, Decomposições AND/OR, Operadores MAKE/HELP/HURT/BREAK, Propagação bottom-up) |
 | Uso de **vários** recursos da notação BPMN | ✅ (SubEquipe_03) | [BPMN](Base/Relatorios/1.1.3.SubEquipe_03/4.BPMN.md) (13 pools integradas, fluxos de mensagem/sequência, gateways exclusivos, eventos de início/fim e visualizador interativo) |
@@ -86,3 +86,12 @@ Legenda: ⬜ pendente · 🟨 em andamento · ✅ concluído
 | Entrega encaminhada via **Aprender3** no dia da entrega (todos os grupos) | ⬜ |
 | Apenas os representantes presentes na dinâmica de avaliação | ⬜ |
 | Nenhum commit após o prazo (repositório fechado) | ⬜ |
+
+## Histórico de Versões
+
+| Versão | Data | Descrição | Autor(es) | Revisor(es) |
+| -- | -- | -- | -- | -- |
+| 1.0 | 21/08/2026 | Criação do checklist da Entrega 1 | Lucas Andrade Zanetti | Heitor Macedo Ricardo |
+| 1.1 | 24/08/2026 | Sincronização do escopo das subequipes e dos critérios | Eduardo Lôbo Moreira | Equipe |
+| 1.2 | 27/08/2026 | Atualização do status dos itens da SubEquipe_03 e dos links de participações | Eduardo Lôbo Moreira | Equipe |
+| 1.3 | 27/08/2026 | Itens da SubEquipe_01 atualizados: entrega mínima (Rich Picture, BPMN e pontos de vista individuais) e os cinco requisitos transversais concluídos; §4 passa a creditar a SubEquipe_01 nos critérios de menção superior; correção dos links internos que omitiam `../` | Heitor Macedo Ricardo | [SubEquipe_01](Atas/Atas_Sg1/ata-S1-04-2026-08-27.md) |
