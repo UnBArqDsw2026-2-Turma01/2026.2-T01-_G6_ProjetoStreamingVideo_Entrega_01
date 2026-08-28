@@ -9,9 +9,9 @@
 | Item | Definição |
 | -- | -- |
 | Abordagem/metodologia | **Processo ágil incremental, com *timebox* externo e execução paralela em subequipes**, sincronizada em marcos. Inspirado no Scrum quanto aos rituais e ao papel de liderança distribuída, sem adotar o framework completo. |
-| Justificativa (com referência) | Ver [§1.1](#11-por-que-esta-abordagem) abaixo. Fontes: [R06, R07, R08 e R09](Referencias.md#2-fontes-metodológicas) |
-| Cadência de reuniões | Reunião **geral** na abertura e no fechamento de cada entrega; cada subequipe define sua própria cadência interna (decisão D10 da [Ata 01](Atas/ata-01-2026-08-22.md)) |
-| Canal de comunicação | Teams e WhatsApp — comunidade no WhatsApp com grupo geral e um grupo por subequipe (decisão D09 da [Ata 01](Atas/ata-01-2026-08-22.md)) |
+| Justificativa (com referência) | Ver [§1.1](#_11-por-que-esta-abordagem) abaixo. Fontes: [R06, R07, R08 e R09](Referencias.md#_2-fontes-metodológicas) |
+| Cadência de reuniões | Reunião **geral** na abertura e no fechamento de cada entrega; cada subequipe define sua própria cadência interna (decisão D10 da [Ata 01](Atas/ata-G01-2026-08-22.md)) |
+| Canal de comunicação | Teams e WhatsApp — comunidade no WhatsApp com grupo geral e um grupo por subequipe (decisão D09 da [Ata 01](Atas/ata-G01-2026-08-22.md)) |
 | Ferramenta de gestão de tarefas | Teams, com o [Checklist da Entrega 1](ChecklistEntrega1.md) versionado no GitPages como quadro de acompanhamento visível a todos |
 
 ### 1.1. Por que esta abordagem
@@ -30,7 +30,7 @@
 
 A equipe tem 11 membros. Coordenar todos em um único fluxo de decisão faria o custo de comunicação crescer de forma quadrática em relação ao número de pessoas — o argumento clássico de Brooks (R08) sobre por que adicionar pessoas a um trabalho atrasado o atrasa ainda mais. A divisão em três subequipes com liderança própria e autonomia de cadência reduz esse custo: a coordenação global acontece só nos marcos, e a coordenação fina fica dentro de grupos de 3 a 4 pessoas.
 
-Isso também é o que sustenta a decisão de **não centralizar a liderança** ([Ata 01, D05](Atas/ata-01-2026-08-22.md)): o representante geral é ponto de contato formal exigido pelas diretrizes, não gargalo de decisão.
+Isso também é o que sustenta a decisão de **não centralizar a liderança** ([Ata 01, D05](Atas/ata-G01-2026-08-22.md)): o representante geral é ponto de contato formal exigido pelas diretrizes, não gargalo de decisão.
 
 **Por que Scrum como inspiração, e não como framework**
 
@@ -55,12 +55,11 @@ As diretrizes sugerem o *Design Sprint* (R09) como opção para esta primeira et
 
 ## 3. Fluxo de Versionamento
 
-<!-- PREENCHER conforme o que a equipe combinar. Sugestão abaixo — ajustar. -->
-
 - **Branches**: `main` protegida; trabalho em `docs/<assunto>` ou `feat/<assunto>`.
 - **Commits**: Conventional Commits (`docs:`, `feat:`, `fix:`), assunto no imperativo.
-- **Pull Requests**: obrigatório para entrar em `main`, com pelo menos 1 revisor da mesma ou outraa subequipe.
+- **Pull Requests**: obrigatório para entrar em `main`, com pelo menos 1 revisor da mesma ou de outra subequipe.
 - **Rastro para a entrega**: o link do commit/PR é o **comprobatório** exigido no quadro de participações.
+
 
 > ⚠️ **Diretriz OBS GERAL_01**: não serão aceitas postagens (commits e melhorias na wiki) **fora do prazo** da entrega. O repositório é fechado para modificações após o prazo.
 
@@ -70,7 +69,7 @@ As diretrizes sugerem o *Design Sprint* (R09) como opção para esta primeira et
 | -- | -- | -- |
 | Reunião geral do grupo | Início e Fim de cada Entrega | [Atas](Atas/README.md) |
 | Reunião por subequipe | Semanal | [Atas](Atas/README.md) |
-| Revisão cruzada de artefatos | Há cada 2 Semanas | PRs no GitHub |
+| Revisão cruzada de artefatos | A cada 2 semanas | PRs no GitHub |
 
 ## 5. Definition of Done da Entrega 1
 
@@ -87,7 +86,7 @@ Um artefato só é considerado pronto quando:
 
 ## 6. Referências da Metodologia
 
-Consolidadas em [Referências do Projeto §2](Referencias.md#2-fontes-metodológicas): Manifesto Ágil (R06), Guia do Scrum (R07), Brooks (R08) e Knapp *et al.* (R09).
+Consolidadas em [Referências do Projeto §2](Referencias.md#_2-fontes-metodológicas): Manifesto Ágil (R06), Guia do Scrum (R07), Brooks (R08) e Knapp *et al.* (R09).
 
 > **Pendência honesta**: as quatro fontes acima embasam conceitualmente o processo descrito nesta página, mas ainda constam como 🔜 *previstas* — precisam ser efetivamente lidas pelos responsáveis antes da entrega, para que a citação corresponda a consulta real.
 
@@ -98,3 +97,4 @@ Consolidadas em [Referências do Projeto §2](Referencias.md#2-fontes-metodológ
 | 1.0 | 21/08/2026 | Criação do documento de metodologia | Lucas Andrade Zanetti | Heitor Macedo Ricardo |
 | 1.1 | 22/08/2026 | Definição da abordagem metodológica, justificativa fundamentada e registro das decisões de processo da Reunião Geral 01 | Equipe G7 | Lucas Andrade Zanetti |
 | 1.2 | 23/08/2026 | Atualização do rótulo do projeto para G7_ProjetoStreamingVideo | Lucas Andrade Zanetti | Heitor Macedo Ricardo |
+| 1.3 | 24/08/2026 | Correção ortográfica e remoção de comentários residuais | Eduardo Lôbo Moreira | Equipe G7 |

@@ -1,0 +1,39 @@
+Medições de latência ao vivo — SubEquipe_01 / FOCO_02
+Coleta: 27/08/2026, ~14:07 UTC. Variante medida: 720p60. Intervalo entre voltas: 2 s.
+
+"atraso" = relógio do cliente MENOS o instante de fim do segmento mais novo anunciado
+no manifesto. Cobre empacotamento + publicação + distribuição; NÃO inclui captura,
+codificação e ingestão (não observáveis de fora), nem o buffer do player.
+
+volta | rtt_ms | segmentos_na_janela | ultimo_inicio            | atraso_s | anuncio
+    0 |    289 |                  16 | 2026-08-27T14:07:22.456Z |     1,46 | nao
+    1 |    353 |                  16 | 2026-08-27T14:07:24.456Z |     1,83 | nao   (novos: 1)
+    2 |    120 |                  16 | 2026-08-27T14:07:26.456Z |     1,95 | nao   (novos: 1)
+    3 |    139 |                  16 | 2026-08-27T14:07:28.456Z |     2,09 | nao   (novos: 1)
+    4 |    141 |                  16 | 2026-08-27T14:07:30.456Z |     2,23 | nao   (novos: 1)
+    5 |    138 |                  16 | 2026-08-27T14:07:32.456Z |     2,37 | nao   (novos: 1)
+
+Leitura:
+- Janela fixa de 16 segmentos x 2,000 s = 32 s de conteúdo disponível para trás.
+- Exatamente 1 segmento novo por volta de 2 s: o período de atualização do manifesto é
+  a duração do segmento.
+- Atraso na borda entre 1,46 s e 2,37 s. A tendência de crescimento dentro da série é
+  esperada: o relógio avança continuamente e o manifesto avança em degraus de 2 s.
+
+--- entrega do último segmento da janela (mesma sessão) ---
+bytes: 859.724
+tempo: 0,266 s  (25,86 Mbit/s efetivos, contra 3,42 Mbit/s declarados para a faixa)
+X-Cache: Hit from <cdn-terceira>
+Age: 2   (numa releitura posterior do mesmo objeto: Age: 26)
+X-Amz-Cf-Pop: GIG52-P2
+
+--- estado do player observado no navegador (mesma sessão, canal A) ---
+resolução em reprodução: 1280x720
+buffer à frente do ponto exibido: 4,11 s  (segunda leitura: 5,02 s)
+quadros descartados: 0 de 16.792
+elemento de vídeo com fonte "blob:" -> reprodução por Media Source Extensions
+
+--- segunda sessão, canal B, mesma janela de exibição (700x394 CSS) ---
+resolução em reprodução: 1920x1080 (variante fonte)
+Conclusão: a variante escolhida NÃO é função apenas do tamanho de exibição.
+A regra interna do algoritmo permanece caixa-preta (não-escopo FE03).

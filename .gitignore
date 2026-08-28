@@ -1,3 +1,9 @@
 node_modules/
 package-lock.json
 
+
+# ferramentas do FOCO_02 (SubEquipe_01)
+tools/bpmn/.render/
+tools/engenharia-reversa/alvo.env
+docs/assets/engenharia-reversa/*/bruto/
+__pycache__/

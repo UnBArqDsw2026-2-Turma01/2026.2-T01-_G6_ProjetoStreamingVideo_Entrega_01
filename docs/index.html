@@ -19,12 +19,31 @@
   <script>
     window.$docsify = {
       name: 'G7 · Streaming de Vídeo',
-      repo: 'https://github.com/UnBArqDsw2026-2-Turma01/G7_LiveVideoStreaming',
+      repo: 'https://github.com/UnBArqDsw2026-2-Turma01/2026.2-T01-_G7_ProjetoStreamingVideo_Entrega_01',
       loadSidebar: true,
+      markdown: {
+        renderer: {
+          code(code, lang) {
+            if (lang === 'mermaid') {
+              return '<div class="mermaid">' + code + '</div>';
+            }
+            return this.origin.code.apply(this, arguments);
+          }
+        }
+      },
+      plugins: [
+        function (hook) {
+          hook.doneEach(function () {
+            if (window.mermaid) {
+              mermaid.run({ querySelector: '.mermaid' });
+            }
+          });
+        }
+      ],
       subMaxLevel: 3,
       sidebarDisplayLevel: 1,
       auto2top: true,
-      relativePath: false,
+      relativePath: true,
       search: {
         placeholder: 'Buscar na documentação...',
         noData: 'Nenhum resultado encontrado.',
@@ -32,6 +51,8 @@
       }
     }
   </script>
+  <script src="//cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>mermaid.initialize({ startOnLoad: false, theme: 'neutral' });</script>
   <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify@4/lib/plugins/zoom-image.min.js"></script>

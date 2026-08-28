@@ -1,0 +1,26 @@
+Medições de rede — SubEquipe_01 / FOCO_02
+Coleta: 27/08/2026, ~14:05 UTC, a partir de Brasília (DF), conexão doméstica.
+Ferramenta: curl 8.x, uma amostra por salto, sem sessão autenticada.
+Formato: versão HTTP | DNS | conexão TCP | handshake TLS (acumulado) | TTFB | total | bytes
+
+--- serviço de API (consulta persistida "PlaybackAccessToken") ---
+HTTP/2  dns=0,009 s  tcp=0,016 s  tls=0,031 s  ttfb=0,253 s  total=0,253 s  1.335 B
+
+--- balanceador de manifesto (manifesto mestre) ---
+HTTP/2  dns=0,003 s  tcp=0,031 s  tls=0,072 s  ttfb=0,250 s  total=0,251 s  9.691 B
+
+--- serviço de manifesto de mídia (janela deslizante da qualidade 720p60) ---
+HTTP/2  dns=0,003 s  tcp=0,031 s  tls=0,069 s  ttfb=0,135 s  total=0,135 s  15.027 B
+
+--- PoP de borda da CDN (segmento de vídeo de 2 s, 720p60) ---
+HTTP/1.1  dns=0,004 s  tcp=0,032 s  tls=0,070 s  ttfb=0,112 s  total=0,266 s  859.724 B
+
+--- documento HTML da página do canal ---
+HTTP/2  dns=0,013 s  tcp=0,019 s  tls=0,039 s  ttfb=0,046 s  total=0,134 s  210.480 B
+
+Leitura:
+- Os dois saltos de decisão (autorização e balanceamento de manifesto) custam ~250 ms de
+  TTFB cada: são cálculo no servidor, não cache.
+- O manifesto de mídia custa ~135 ms e é repetido a cada ~2 s enquanto durar a sessão.
+- O segmento tem o menor TTFB de todos (112 ms) apesar de ser 57x maior que o manifesto:
+  é o único objeto servido de cache de borda.
