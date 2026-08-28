@@ -19,7 +19,6 @@
 | Softgoal do SIG (NFR Framework) | Confiabilidade / Disponibilidade | Transmissões ao vivo não toleram quedas frequentes de stream nem travamentos no chat em picos de público; além disso, falhas em transações de Bits e doações causam prejuízo financeiro imediato e quebram a confiança do usuário ([Escopo do Produto §6](../../../Projeto/EscopoProduto.md#_6-requisitos-não-funcionais-candidatos-insumo-para-os-sigs)). |
 | Fluxo modelado em BPMN | (1) Envio de mensagem no chat;<br>(2) Compra de Bits;<br>(3) Recuperação de falha de transmissão. | Cobrem os cenários mais sensíveis da subequipe: a concorrência massiva de mensagens no chat sob pico de carga (mínimo obrigatório), a segurança transacional na compra de Bits e a resiliência com reconexão automática em caso de queda de rede ([Escopo do Produto §5](../../../Projeto/EscopoProduto.md#fluxos-engenharia-reversa-bpmn)). |
 
-> Sincronizar com as seções 5 e 6 do [Escopo do Produto](../../../Projeto/EscopoProduto.md) para não haver sobreposição entre subequipes.
 
 ## 3. Índice do Relatório
 
@@ -28,9 +27,9 @@
 | FOCO_01 | [Artefato Generalista](1.ArtefatoGeneralista.md) | 🟢 Concluído |
 | FOCO_01 | [SIG · NFR Framework](2.NFRFramework.md) | 🟢 Concluído |
 | FOCO_02 | [Engenharia Reversa](3.EngenhariaReversa.md) | 🟢 Concluído |
-| FOCO_02 | [Modelagem BPMN](4.BPMN.md) | 🟨 em progresso |
+| FOCO_02 | [Modelagem BPMN](4.BPMN.md) | 🟢 Concluído |
 | FOCO_03 | [IA Generativa](5.IAGenerativa.md) | 🟢 Concluído |
-| — | [Referências](6.Referencias.md) | 🟨 em progresso |
+| — | [Referências](6.Referencias.md) | 🟢 Concluído |
 
 ## 4. Metodologia da Subequipe
 
@@ -75,3 +74,4 @@ O senso crítico detalhado de cada foco está registrado nas páginas dos respec
 | 1.0 | 21/08/2026 | Criação do relatório da SubEquipe_02 | Lucas Andrade Zanetti | Heitor Macedo Ricardo |
 | 1.1 | 27/08/2026 | Atualização da equipe, escopo trabalhado, metodologia, rastreabilidade, senso crítico e participações da SubEquipe_02 | Davi Severiano Freitas | Daniel de Oliveira Lira |
 | 1.2 | 28/08/2026 | Refinamento das justificativas de escopo, redação consolidada do senso crítico e preenchimento detalhado dos comprobatórios e histórico de participações da subequipe | Davi Severiano Freitas | SubEquipe_02 |
+| 1.3 | 28/08/2026 | Atualização do status de Modelagem BPMN e Referências para concluído | Mateus Rodrigues Barreto | Davi Severiano Freitas |
