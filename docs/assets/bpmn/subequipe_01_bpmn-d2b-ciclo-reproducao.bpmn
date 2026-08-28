@@ -1,0 +1,763 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_D2b" targetNamespace="http://unb.fga/G7_ProjetoStreamingVideo" exporter="Camunda Modeler" exporterVersion="5.50.1">
+  <bpmn:message id="message_0" name="Fim de transmissão anunciado" />
+  <bpmn:message id="message_1" name="Pedido de manifesto de mídia" />
+  <bpmn:message id="message_2" name="Manifesto de mídia" />
+  <bpmn:message id="message_3" name="Pedido de segmento" />
+  <bpmn:message id="message_4" name="Segmento" />
+  <bpmn:error id="error_0" name="Falha ao baixar segmento" errorCode="Falha ao baixar segmento" />
+  <bpmn:escalation id="escalation_0" name="Reprodução não recuperada" escalationCode="Reprodução não recuperada" />
+  <bpmn:dataStore id="d2b_ds_cache_store" name="Cache do PoP de borda" />
+  <bpmn:collaboration id="Collab_D2b">
+    <bpmn:participant id="d2b_p_player" name="Player de vídeo (expansão do subprocesso de D2)" processRef="d2b_proc_player" />
+    <bpmn:participant id="d2b_p_man" name="Plataforma — serviço de manifesto de mídia" processRef="d2b_proc_man" />
+    <bpmn:participant id="d2b_p_cdn" name="Rede de distribuição (CDN)" processRef="d2b_proc_cdn" />
+    <bpmn:messageFlow id="mf_0" name="pedido de manifesto" sourceRef="d2b_pl" targetRef="d2b_m_start" />
+    <bpmn:messageFlow id="mf_1" name="janela de segmentos" sourceRef="d2b_m_end" targetRef="d2b_pl" />
+    <bpmn:messageFlow id="mf_2" name="pedido de segmento" sourceRef="d2b_seg" targetRef="d2b_c_start" />
+    <bpmn:messageFlow id="mf_3" name="bytes do segmento" sourceRef="d2b_c_end" targetRef="d2b_seg" />
+    <bpmn:textAnnotation id="d2b_n1">
+      <bpmn:text>Medição por amostragem a cada 2 s (EV-05): a cada volta entra exatamente 1 segmento novo, e a janela tem 16 segmentos . O atraso entre o fim do segmento mais novo e o relógio do cliente ficou entre 1,46 s e 2,37 s.</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="d2b_n2">
+      <bpmn:text>Medição (EV-04): 859.724 B em 0,266 s, ~26 Mbit/s contra 3,42 Mbit/s declarados para a faixa. Baixar leva ~13% da duração do segmento — a folga que sustenta o buffer.</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="d2b_n6">
+      <bpmn:text>Descer a qualidade é ação preventiva; reencher o buffer já é a falha percebida. Todo o ramo superior existe para que este ramo inferior não seja alcançado.</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="d2b_n4">
+      <bpmn:text>O manifesto de mídia veio com cabeçalho de não-cache e marcado como privado (EV-03): ele é montado por sessão porque carrega as marcações de anúncio. Trade-off central: personalizar o manifesto impede cacheá-lo, e cada player volta à plataforma a cada ~2 s.</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="as_d2b_n2" associationDirection="None" sourceRef="d2b_seg" targetRef="d2b_n2" />
+    <bpmn:association id="as_d2b_n1" associationDirection="None" sourceRef="d2b_pl" targetRef="d2b_n1" />
+    <bpmn:association id="as_d2b_n4" associationDirection="None" sourceRef="d2b_m_build" targetRef="d2b_n4" />
+  </bpmn:collaboration>
+  <bpmn:process id="d2b_proc_player" isExecutable="false">
+    <bpmn:laneSet id="ls_d2b_p_player">
+      <bpmn:lane id="d2b_l_tel" name="Telemetria">
+        <bpmn:flowNodeRef>d2b_tel</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d2b_tel_end</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="d2b_l_ctrl" name="Controle do ciclo">
+        <bpmn:flowNodeRef>d2b_d_seg</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d2b_c_seg</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d2b_append</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d2b_c_down</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d2b_endoff</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d2b_gwe</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d2b_seg</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d2b_rec</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d2b_c_to</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d2b_pl</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d2b_start</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d2b_gwbuf</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d2b_abr</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d2b_wait</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d2b_refill</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d2b_renew</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d2b_gwtok</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d2b_gwrec</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d2b_endfail</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d2b_b_slow</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d2b_b_err</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:intermediateCatchEvent id="d2b_c_seg" name="Manifesto traz segmento novo">
+      <bpmn:incoming>fl_2</bpmn:incoming>
+      <bpmn:outgoing>fl_5</bpmn:outgoing>
+      <bpmn:conditionalEventDefinition id="d2b_c_seg_def" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:serviceTask id="d2b_append" name="Anexar ao buffer de mídia do navegador">
+      <bpmn:incoming>fl_6</bpmn:incoming>
+      <bpmn:outgoing>fl_7</bpmn:outgoing>
+      <bpmn:property id="Property_1dhnu2k" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="dia_d2b_append_0">
+        <bpmn:sourceRef>d2b_d_seg</bpmn:sourceRef>
+        <bpmn:targetRef>Property_1dhnu2k</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+    </bpmn:serviceTask>
+    <bpmn:intermediateCatchEvent id="d2b_c_down" name="Fim de transmissão anunciado">
+      <bpmn:incoming>fl_4</bpmn:incoming>
+      <bpmn:outgoing>fl_21</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="d2b_c_down_def" messageRef="message_0" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:endEvent id="d2b_endoff" name="Encerrar o ciclo: canal fora do ar">
+      <bpmn:incoming>fl_21</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:eventBasedGateway id="d2b_gwe" name="O que ocorrer primeiro ?">
+      <bpmn:incoming>fl_1</bpmn:incoming>
+      <bpmn:outgoing>fl_2</bpmn:outgoing>
+      <bpmn:outgoing>fl_3</bpmn:outgoing>
+      <bpmn:outgoing>fl_4</bpmn:outgoing>
+    </bpmn:eventBasedGateway>
+    <bpmn:serviceTask id="d2b_seg" name="Baixar o próximo segmento de ~2 s">
+      <bpmn:incoming>fl_5</bpmn:incoming>
+      <bpmn:outgoing>fl_6</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:callActivity id="d2b_rec" name="Recuperar reprodução (ver D4)" calledElement="d4_proc_player">
+      <bpmn:incoming>fl_16</bpmn:incoming>
+      <bpmn:incoming>fl_17</bpmn:incoming>
+      <bpmn:outgoing>fl_18</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:intermediateCatchEvent id="d2b_c_to" name="Sem segmento novo por 3× a duração-alvo">
+      <bpmn:incoming>fl_3</bpmn:incoming>
+      <bpmn:outgoing>fl_16</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="d2b_c_to_def">
+        <bpmn:timeCycle xsi:type="bpmn:tFormalExpression">PT6S</bpmn:timeCycle>
+      </bpmn:timerEventDefinition>
+    </bpmn:intermediateCatchEvent>
+    <bpmn:dataObjectReference id="d2b_d_seg" name="Segmento de ~2 s" dataObjectRef="d2b_d_seg_obj" />
+    <bpmn:dataObject id="d2b_d_seg_obj" />
+    <bpmn:serviceTask id="d2b_pl" name="Baixar o manifesto de mídia da qualidade corrente">
+      <bpmn:incoming>fl_0</bpmn:incoming>
+      <bpmn:incoming>fl_13</bpmn:incoming>
+      <bpmn:incoming>fl_15</bpmn:incoming>
+      <bpmn:incoming>fl_19</bpmn:incoming>
+      <bpmn:outgoing>fl_1</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:startEvent id="d2b_start" name="Ciclo iniciado com a qualidade escolhida">
+      <bpmn:outgoing>fl_0</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:boundaryEvent id="d2b_b_slow" name="Download passa de 2 s" cancelActivity="false" attachedToRef="d2b_seg">
+      <bpmn:outgoing>fl_22</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="doa_d2b_seg_0">
+        <bpmn:targetRef>d2b_d_seg</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+      <bpmn:timerEventDefinition id="d2b_b_slow_def">
+        <bpmn:timeCycle xsi:type="bpmn:tFormalExpression">PT2S</bpmn:timeCycle>
+      </bpmn:timerEventDefinition>
+    </bpmn:boundaryEvent>
+    <bpmn:boundaryEvent id="d2b_b_err" name="Erro ao baixar o segmento" attachedToRef="d2b_seg">
+      <bpmn:outgoing>fl_17</bpmn:outgoing>
+      <bpmn:errorEventDefinition id="d2b_b_err_def" errorRef="error_0" />
+    </bpmn:boundaryEvent>
+    <bpmn:sequenceFlow id="fl_22" sourceRef="d2b_b_slow" targetRef="d2b_tel" />
+    <bpmn:sequenceFlow id="fl_23" sourceRef="d2b_tel" targetRef="d2b_tel_end" />
+    <bpmn:sequenceFlow id="fl_2" sourceRef="d2b_gwe" targetRef="d2b_c_seg" />
+    <bpmn:sequenceFlow id="fl_5" sourceRef="d2b_c_seg" targetRef="d2b_seg" />
+    <bpmn:sequenceFlow id="fl_6" sourceRef="d2b_seg" targetRef="d2b_append" />
+    <bpmn:sequenceFlow id="fl_7" sourceRef="d2b_append" targetRef="d2b_gwbuf" />
+    <bpmn:sequenceFlow id="fl_4" sourceRef="d2b_gwe" targetRef="d2b_c_down" />
+    <bpmn:sequenceFlow id="fl_21" sourceRef="d2b_c_down" targetRef="d2b_endoff" />
+    <bpmn:sequenceFlow id="fl_1" sourceRef="d2b_pl" targetRef="d2b_gwe" />
+    <bpmn:sequenceFlow id="fl_3" sourceRef="d2b_gwe" targetRef="d2b_c_to" />
+    <bpmn:sequenceFlow id="fl_16" sourceRef="d2b_c_to" targetRef="d2b_rec" />
+    <bpmn:sequenceFlow id="fl_17" sourceRef="d2b_b_err" targetRef="d2b_rec" />
+    <bpmn:sequenceFlow id="fl_18" sourceRef="d2b_rec" targetRef="d2b_gwrec" />
+    <bpmn:sequenceFlow id="fl_19" name="sim" sourceRef="d2b_gwrec" targetRef="d2b_pl">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">sim</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="fl_20" name="não" sourceRef="d2b_gwrec" targetRef="d2b_endfail">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">não</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="fl_0" sourceRef="d2b_start" targetRef="d2b_pl" />
+    <bpmn:sequenceFlow id="fl_13" name="sim — próxima volta" sourceRef="d2b_gwtok" targetRef="d2b_pl">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">sim — próxima volta</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="fl_15" name="retomar o ciclo" sourceRef="d2b_renew" targetRef="d2b_pl" />
+    <bpmn:sequenceFlow id="fl_8" name="sim" sourceRef="d2b_gwbuf" targetRef="d2b_abr">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">sim</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="fl_9" name="não" sourceRef="d2b_gwbuf" targetRef="d2b_refill">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">não</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="fl_14" name="não" sourceRef="d2b_gwtok" targetRef="d2b_renew">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">não</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="fl_12" sourceRef="d2b_wait" targetRef="d2b_gwtok" />
+    <bpmn:sequenceFlow id="fl_11" sourceRef="d2b_abr" targetRef="d2b_wait" />
+    <bpmn:sequenceFlow id="fl_10" sourceRef="d2b_refill" targetRef="d2b_wait" />
+    <bpmn:exclusiveGateway id="d2b_gwbuf" name="Buffer acima do alvo?">
+      <bpmn:incoming>fl_7</bpmn:incoming>
+      <bpmn:outgoing>fl_8</bpmn:outgoing>
+      <bpmn:outgoing>fl_9</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:callActivity id="d2b_abr" name="Avaliar troca de qualidade (ver D3)" calledElement="d3_proc_abr">
+      <bpmn:incoming>fl_8</bpmn:incoming>
+      <bpmn:outgoing>fl_11</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:intermediateCatchEvent id="d2b_wait" name="Aguardar ~1 duração de segmento">
+      <bpmn:incoming>fl_10</bpmn:incoming>
+      <bpmn:incoming>fl_11</bpmn:incoming>
+      <bpmn:outgoing>fl_12</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="d2b_wait_def">
+        <bpmn:timeCycle xsi:type="bpmn:tFormalExpression">PT2S</bpmn:timeCycle>
+      </bpmn:timerEventDefinition>
+    </bpmn:intermediateCatchEvent>
+    <bpmn:task id="d2b_refill" name="Pausar e reencher o buffer (travamento visível)">
+      <bpmn:incoming>fl_9</bpmn:incoming>
+      <bpmn:outgoing>fl_10</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:serviceTask id="d2b_renew" name="Renovar o token de reprodução">
+      <bpmn:incoming>fl_14</bpmn:incoming>
+      <bpmn:outgoing>fl_15</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="d2b_gwtok" name="Token ainda válido?">
+      <bpmn:incoming>fl_12</bpmn:incoming>
+      <bpmn:outgoing>fl_13</bpmn:outgoing>
+      <bpmn:outgoing>fl_14</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="d2b_tel" name="Registrar risco de esgotamento do buffer">
+      <bpmn:incoming>fl_22</bpmn:incoming>
+      <bpmn:outgoing>fl_23</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="d2b_tel_end" name="Telemetria enviada">
+      <bpmn:incoming>fl_23</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:exclusiveGateway id="d2b_gwrec" name="Reprodução retomada?">
+      <bpmn:incoming>fl_18</bpmn:incoming>
+      <bpmn:outgoing>fl_19</bpmn:outgoing>
+      <bpmn:outgoing>fl_20</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:endEvent id="d2b_endfail" name="Encerrar com falha">
+      <bpmn:incoming>fl_20</bpmn:incoming>
+      <bpmn:escalationEventDefinition id="d2b_endfail_def" escalationRef="escalation_0" />
+    </bpmn:endEvent>
+    <bpmn:association id="as_d2b_n6" associationDirection="None" sourceRef="d2b_refill" targetRef="d2b_n6" />
+  </bpmn:process>
+  <bpmn:process id="d2b_proc_man" isExecutable="false">
+    <bpmn:sequenceFlow id="fl_24" sourceRef="d2b_m_start" targetRef="d2b_m_build" />
+    <bpmn:sequenceFlow id="fl_25" sourceRef="d2b_m_build" targetRef="d2b_m_end" />
+    <bpmn:serviceTask id="d2b_m_build" name="Montar a janela deslizante e as marcações da sessão">
+      <bpmn:incoming>fl_24</bpmn:incoming>
+      <bpmn:outgoing>fl_25</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:startEvent id="d2b_m_start" name="Pedido de manifesto de mídia">
+      <bpmn:outgoing>fl_24</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="d2b_m_start_def" messageRef="message_1" />
+    </bpmn:startEvent>
+    <bpmn:endEvent id="d2b_m_end" name="Manifesto de mídia devolvido">
+      <bpmn:incoming>fl_25</bpmn:incoming>
+      <bpmn:messageEventDefinition id="d2b_m_end_def" messageRef="message_2" />
+    </bpmn:endEvent>
+  </bpmn:process>
+  <bpmn:process id="d2b_proc_cdn" isExecutable="false">
+    <bpmn:laneSet id="ls_d2b_p_cdn">
+      <bpmn:lane id="d2b_l_orig" name="Origem / origin shield">
+        <bpmn:flowNodeRef>d2b_o_fetch</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="d2b_l_edge" name="PoP de borda">
+        <bpmn:flowNodeRef>d2b_ds_cache</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d2b_c_start</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d2b_c_gw</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d2b_c_hit</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d2b_c_end</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d2b_c_join</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d2b_c_store</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>d2b_c_miss</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="d2b_c_start" name="Pedido de segmento">
+      <bpmn:outgoing>fl_26</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="d2b_c_start_def" messageRef="message_3" />
+    </bpmn:startEvent>
+    <bpmn:exclusiveGateway id="d2b_c_gw" name="Segmento já está na borda?">
+      <bpmn:incoming>fl_26</bpmn:incoming>
+      <bpmn:outgoing>fl_27</bpmn:outgoing>
+      <bpmn:outgoing>fl_28</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="d2b_c_hit" name="Servir do cache da borda">
+      <bpmn:incoming>fl_27</bpmn:incoming>
+      <bpmn:outgoing>fl_32</bpmn:outgoing>
+      <bpmn:property id="Property_0uyw8yg" name="__targetRef_placeholder" />
+      <bpmn:dataInputAssociation id="dia_d2b_c_hit_0">
+        <bpmn:sourceRef>d2b_ds_cache</bpmn:sourceRef>
+        <bpmn:targetRef>Property_0uyw8yg</bpmn:targetRef>
+      </bpmn:dataInputAssociation>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="d2b_c_end" name="Segmento entregue ao player">
+      <bpmn:incoming>fl_33</bpmn:incoming>
+      <bpmn:messageEventDefinition id="d2b_c_end_def" messageRef="message_4" />
+    </bpmn:endEvent>
+    <bpmn:exclusiveGateway id="d2b_c_join" name="Entregar">
+      <bpmn:incoming>fl_31</bpmn:incoming>
+      <bpmn:incoming>fl_32</bpmn:incoming>
+      <bpmn:outgoing>fl_33</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="d2b_c_store" name="Guardar o segmento na borda">
+      <bpmn:incoming>fl_30</bpmn:incoming>
+      <bpmn:outgoing>fl_31</bpmn:outgoing>
+      <bpmn:dataOutputAssociation id="DataOutputAssociation_1mngts6">
+        <bpmn:targetRef>d2b_ds_cache</bpmn:targetRef>
+      </bpmn:dataOutputAssociation>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="d2b_c_miss" name="Buscar o segmento na camada de origem">
+      <bpmn:incoming>fl_28</bpmn:incoming>
+      <bpmn:outgoing>fl_29</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="d2b_o_fetch" name="Ler o segmento da origem protegida">
+      <bpmn:incoming>fl_29</bpmn:incoming>
+      <bpmn:outgoing>fl_30</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:dataStoreReference id="d2b_ds_cache" name="Cache do PoP de borda" dataStoreRef="d2b_ds_cache_store" />
+    <bpmn:sequenceFlow id="fl_26" sourceRef="d2b_c_start" targetRef="d2b_c_gw" />
+    <bpmn:sequenceFlow id="fl_27" name="sim" sourceRef="d2b_c_gw" targetRef="d2b_c_hit">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">sim</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="fl_28" name="não" sourceRef="d2b_c_gw" targetRef="d2b_c_miss">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">não</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="fl_32" sourceRef="d2b_c_hit" targetRef="d2b_c_join" />
+    <bpmn:sequenceFlow id="fl_33" sourceRef="d2b_c_join" targetRef="d2b_c_end" />
+    <bpmn:sequenceFlow id="fl_31" sourceRef="d2b_c_store" targetRef="d2b_c_join" />
+    <bpmn:sequenceFlow id="fl_30" sourceRef="d2b_o_fetch" targetRef="d2b_c_store" />
+    <bpmn:sequenceFlow id="fl_29" sourceRef="d2b_c_miss" targetRef="d2b_o_fetch" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diagram_1">
+    <bpmndi:BPMNPlane id="Plane_1" bpmnElement="Collab_D2b">
+      <bpmndi:BPMNShape id="d2b_p_player_di" bpmnElement="d2b_p_player" isHorizontal="true">
+        <dc:Bounds x="160" y="110" width="1720" height="700" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d2b_l_tel_di" bpmnElement="d2b_l_tel" isHorizontal="true">
+        <dc:Bounds x="190" y="700" width="1690" height="110" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d2b_l_ctrl_di" bpmnElement="d2b_l_ctrl" isHorizontal="true">
+        <dc:Bounds x="190" y="110" width="1690" height="590" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d2b_c_seg_di" bpmnElement="d2b_c_seg">
+        <dc:Bounds x="752" y="332" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="732" y="295" width="76" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d2b_append_di" bpmnElement="d2b_append">
+        <dc:Bounds x="1150" y="310" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d2b_c_down_di" bpmnElement="d2b_c_down">
+        <dc:Bounds x="632" y="472" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="620" y="514" width="60" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d2b_endoff_di" bpmnElement="d2b_endoff">
+        <dc:Bounds x="752" y="472" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="716" y="514" width="109" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d2b_gwe_di" bpmnElement="d2b_gwe">
+        <dc:Bounds x="625" y="305" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="571" y="345.5" width="68" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d2b_seg_di" bpmnElement="d2b_seg">
+        <dc:Bounds x="930" y="430" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d2b_rec_di" bpmnElement="d2b_rec">
+        <dc:Bounds x="912" y="215" width="175" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d2b_c_to_di" bpmnElement="d2b_c_to">
+        <dc:Bounds x="812" y="232" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="776" y="194.5" width="108" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d2b_d_seg_di" bpmnElement="d2b_d_seg">
+        <dc:Bounds x="1222" y="485" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1195" y="461" width="90" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d2b_pl_di" bpmnElement="d2b_pl">
+        <dc:Bounds x="370" y="200" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d2b_start_di" bpmnElement="d2b_start">
+        <dc:Bounds x="252" y="222" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="226" y="264" width="89" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d2b_gwbuf_di" bpmnElement="d2b_gwbuf" isMarkerVisible="true">
+        <dc:Bounds x="1325" y="325" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1376" y="333" width="107" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d2b_abr_di" bpmnElement="d2b_abr">
+        <dc:Bounds x="1402" y="195" width="175" height="90" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d2b_wait_di" bpmnElement="d2b_wait">
+        <dc:Bounds x="1612" y="222" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1578" y="184.5" width="104" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d2b_refill_di" bpmnElement="d2b_refill">
+        <dc:Bounds x="1560" y="380" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d2b_renew_di" bpmnElement="d2b_renew">
+        <dc:Bounds x="1720" y="480" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d2b_gwtok_di" bpmnElement="d2b_gwtok" isMarkerVisible="true">
+        <dc:Bounds x="1765" y="215" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1681" y="260" width="98" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d2b_tel_di" bpmnElement="d2b_tel">
+        <dc:Bounds x="1220" y="710" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d2b_tel_end_di" bpmnElement="d2b_tel_end">
+        <dc:Bounds x="1432" y="732" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1404" y="774" width="93" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d2b_gwrec_di" bpmnElement="d2b_gwrec" isMarkerVisible="true">
+        <dc:Bounds x="1125" y="145" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1170" y="191.5" width="60" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d2b_endfail_di" bpmnElement="d2b_endfail">
+        <dc:Bounds x="1302" y="152" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1274" y="194" width="93" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="as_d2b_n6_di" bpmnElement="as_d2b_n6">
+        <di:waypoint x="1630" y="460" />
+        <di:waypoint x="1515" y="520" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="d2b_b_slow_di" bpmnElement="d2b_b_slow">
+        <dc:Bounds x="1034" y="492" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1058" y="534" width="82" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d2b_b_err_di" bpmnElement="d2b_b_err">
+        <dc:Bounds x="982" y="412" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="920" y="386" width="79" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="fl_22_di" bpmnElement="fl_22">
+        <di:waypoint x="1052" y="528" />
+        <di:waypoint x="1052" y="750" />
+        <di:waypoint x="1220" y="750" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_23_di" bpmnElement="fl_23">
+        <di:waypoint x="1360" y="750" />
+        <di:waypoint x="1432" y="750" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_2_di" bpmnElement="fl_2">
+        <di:waypoint x="675" y="330" />
+        <di:waypoint x="714" y="330" />
+        <di:waypoint x="714" y="350" />
+        <di:waypoint x="752" y="350" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_5_di" bpmnElement="fl_5">
+        <di:waypoint x="788" y="350" />
+        <di:waypoint x="859" y="350" />
+        <di:waypoint x="859" y="470" />
+        <di:waypoint x="930" y="470" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_6_di" bpmnElement="fl_6">
+        <di:waypoint x="1070" y="460" />
+        <di:waypoint x="1110" y="460" />
+        <di:waypoint x="1110" y="350" />
+        <di:waypoint x="1150" y="350" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_7_di" bpmnElement="fl_7">
+        <di:waypoint x="1290" y="350" />
+        <di:waypoint x="1325" y="350" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_4_di" bpmnElement="fl_4">
+        <di:waypoint x="650" y="355" />
+        <di:waypoint x="650" y="472" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_21_di" bpmnElement="fl_21">
+        <di:waypoint x="668" y="490" />
+        <di:waypoint x="752" y="490" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_1_di" bpmnElement="fl_1">
+        <di:waypoint x="510" y="240" />
+        <di:waypoint x="580" y="240" />
+        <di:waypoint x="580" y="330" />
+        <di:waypoint x="625" y="330" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_3_di" bpmnElement="fl_3">
+        <di:waypoint x="650" y="305" />
+        <di:waypoint x="650" y="250" />
+        <di:waypoint x="810" y="250" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_16_di" bpmnElement="fl_16">
+        <di:waypoint x="848" y="250" />
+        <di:waypoint x="912" y="250" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_17_di" bpmnElement="fl_17">
+        <di:waypoint x="1000" y="412" />
+        <di:waypoint x="1000" y="305" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_18_di" bpmnElement="fl_18">
+        <di:waypoint x="1087" y="260" />
+        <di:waypoint x="1150" y="260" />
+        <di:waypoint x="1150" y="195" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_19_di" bpmnElement="fl_19">
+        <di:waypoint x="1125" y="170" />
+        <di:waypoint x="490" y="170" />
+        <di:waypoint x="490" y="200" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="907" y="173" width="18" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_20_di" bpmnElement="fl_20">
+        <di:waypoint x="1175" y="170" />
+        <di:waypoint x="1302" y="170" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1250" y="156" width="19" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_0_di" bpmnElement="fl_0">
+        <di:waypoint x="288" y="240" />
+        <di:waypoint x="370" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_13_di" bpmnElement="fl_13">
+        <di:waypoint x="1790" y="215" />
+        <di:waypoint x="1790" y="130" />
+        <di:waypoint x="440" y="130" />
+        <di:waypoint x="440" y="200" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1707" y="159" width="74" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_15_di" bpmnElement="fl_15">
+        <di:waypoint x="1790" y="560" />
+        <di:waypoint x="1790" y="690" />
+        <di:waypoint x="490" y="690" />
+        <di:waypoint x="490" y="280" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1706" y="663" width="73" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_8_di" bpmnElement="fl_8">
+        <di:waypoint x="1350" y="325" />
+        <di:waypoint x="1350" y="240" />
+        <di:waypoint x="1400" y="240" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1352" y="260" width="18" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_9_di" bpmnElement="fl_9">
+        <di:waypoint x="1350" y="375" />
+        <di:waypoint x="1350" y="420" />
+        <di:waypoint x="1560" y="420" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1360" y="372" width="19" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_14_di" bpmnElement="fl_14">
+        <di:waypoint x="1790" y="265" />
+        <di:waypoint x="1790" y="480" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1770" y="454" width="19" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_12_di" bpmnElement="fl_12">
+        <di:waypoint x="1648" y="240" />
+        <di:waypoint x="1765" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_11_di" bpmnElement="fl_11">
+        <di:waypoint x="1577" y="240" />
+        <di:waypoint x="1612" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_10_di" bpmnElement="fl_10">
+        <di:waypoint x="1630" y="380" />
+        <di:waypoint x="1630" y="258" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="d2b_p_man_di" bpmnElement="d2b_p_man" isHorizontal="true">
+        <dc:Bounds x="160" y="820" width="1720" height="240" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d2b_m_build_di" bpmnElement="d2b_m_build">
+        <dc:Bounds x="620" y="830" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d2b_m_start_di" bpmnElement="d2b_m_start">
+        <dc:Bounds x="422" y="852" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="390" y="894" width="101" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d2b_m_end_di" bpmnElement="d2b_m_end">
+        <dc:Bounds x="872" y="852" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="844" y="894" width="93" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="fl_24_di" bpmnElement="fl_24">
+        <di:waypoint x="458" y="870" />
+        <di:waypoint x="620" y="870" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_25_di" bpmnElement="fl_25">
+        <di:waypoint x="760" y="870" />
+        <di:waypoint x="872" y="870" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="d2b_p_cdn_di" bpmnElement="d2b_p_cdn" isHorizontal="true">
+        <dc:Bounds x="160" y="1070" width="1720" height="349" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d2b_l_orig_di" bpmnElement="d2b_l_orig" isHorizontal="true">
+        <dc:Bounds x="190" y="1309" width="1690" height="110" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d2b_l_edge_di" bpmnElement="d2b_l_edge" isHorizontal="true">
+        <dc:Bounds x="190" y="1070" width="1690" height="239" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d2b_c_start_di" bpmnElement="d2b_c_start">
+        <dc:Bounds x="962" y="1124" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="930" y="1166" width="101" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d2b_c_gw_di" bpmnElement="d2b_c_gw" isMarkerVisible="true">
+        <dc:Bounds x="1085" y="1117" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1060" y="1081" width="101" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d2b_c_hit_di" bpmnElement="d2b_c_hit">
+        <dc:Bounds x="1275" y="1102" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d2b_c_end_di" bpmnElement="d2b_c_end">
+        <dc:Bounds x="1772" y="1124" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1742" y="1166" width="97" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d2b_c_join_di" bpmnElement="d2b_c_join" isMarkerVisible="true">
+        <dc:Bounds x="1665" y="1117" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1669" y="1095" width="43" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d2b_c_store_di" bpmnElement="d2b_c_store">
+        <dc:Bounds x="1470" y="1219" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d2b_c_miss_di" bpmnElement="d2b_c_miss">
+        <dc:Bounds x="1040" y="1219" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d2b_o_fetch_di" bpmnElement="d2b_o_fetch">
+        <dc:Bounds x="1260" y="1319" width="140" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d2b_ds_cache_di" bpmnElement="d2b_ds_cache">
+        <dc:Bounds x="1302" y="1229" width="36" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1336" y="1215.5" width="87" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="fl_26_di" bpmnElement="fl_26">
+        <di:waypoint x="998" y="1142" />
+        <di:waypoint x="1085" y="1142" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_27_di" bpmnElement="fl_27">
+        <di:waypoint x="1135" y="1142" />
+        <di:waypoint x="1275" y="1142" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1203" y="1118" width="18" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_28_di" bpmnElement="fl_28">
+        <di:waypoint x="1110" y="1167" />
+        <di:waypoint x="1110" y="1219" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1135" y="1158.9999999999989" width="19" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_32_di" bpmnElement="fl_32">
+        <di:waypoint x="1415" y="1142" />
+        <di:waypoint x="1665" y="1142" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_33_di" bpmnElement="fl_33">
+        <di:waypoint x="1715" y="1142" />
+        <di:waypoint x="1772" y="1142" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_31_di" bpmnElement="fl_31">
+        <di:waypoint x="1610" y="1259" />
+        <di:waypoint x="1690" y="1259" />
+        <di:waypoint x="1690" y="1167" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_30_di" bpmnElement="fl_30">
+        <di:waypoint x="1400" y="1359" />
+        <di:waypoint x="1540" y="1359" />
+        <di:waypoint x="1540" y="1299" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="fl_29_di" bpmnElement="fl_29">
+        <di:waypoint x="1110" y="1299" />
+        <di:waypoint x="1110" y="1359" />
+        <di:waypoint x="1260" y="1359" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="as_d2b_n2_di" bpmnElement="as_d2b_n2">
+        <di:waypoint x="959" y="510" />
+        <di:waypoint x="870" y="570" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="as_d2b_n1_di" bpmnElement="as_d2b_n1">
+        <di:waypoint x="390" y="280" />
+        <di:waypoint x="382" y="320" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="as_d2b_n4_di" bpmnElement="as_d2b_n4">
+        <di:waypoint x="667" y="910" />
+        <di:waypoint x="662" y="920" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="d2b_n2_di" bpmnElement="d2b_n2">
+        <dc:Bounds x="700" y="570" width="230" height="102" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d2b_n6_di" bpmnElement="d2b_n6">
+        <dc:Bounds x="1400" y="520" width="230" height="88" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="dia_d2b_append_0_di" bpmnElement="dia_d2b_append_0">
+        <di:waypoint x="1238" y="485" />
+        <di:waypoint x="1223" y="390" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="mf_3_di" bpmnElement="mf_3">
+        <di:waypoint x="1790" y="1124" />
+        <di:waypoint x="1790" y="1040" />
+        <di:waypoint x="1020" y="1040" />
+        <di:waypoint x="1020" y="510" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1815" y="1097" width="49" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="mf_2_di" bpmnElement="mf_2">
+        <di:waypoint x="980" y="510" />
+        <di:waypoint x="980" y="1124" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1055" y="581" width="49" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="doa_d2b_seg_0_di" bpmnElement="doa_d2b_seg_0">
+        <di:waypoint x="1070" y="480" />
+        <di:waypoint x="1222" y="522" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="mf_1_di" bpmnElement="mf_1">
+        <di:waypoint x="890" y="852" />
+        <di:waypoint x="890" y="780" />
+        <di:waypoint x="470" y="780" />
+        <di:waypoint x="470" y="280" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1023" y="894" width="54" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="mf_0_di" bpmnElement="mf_0">
+        <di:waypoint x="440" y="280" />
+        <di:waypoint x="440" y="852" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="525" y="283" width="49" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="d2b_n1_di" bpmnElement="d2b_n1">
+        <dc:Bounds x="250" y="320" width="180" height="129" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="d2b_n4_di" bpmnElement="d2b_n4">
+        <dc:Bounds x="510" y="920" width="230" height="130" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="dia_d2b_c_hit_0_di" bpmnElement="dia_d2b_c_hit_0">
+        <di:waypoint x="1320" y="1229" />
+        <di:waypoint x="1320" y="1182" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="DataOutputAssociation_1mngts6_di" bpmnElement="DataOutputAssociation_1mngts6">
+        <di:waypoint x="1470" y="1259" />
+        <di:waypoint x="1338" y="1259" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

@@ -9,7 +9,7 @@
 | Item | Definição |
 | -- | -- |
 | Abordagem/metodologia | **Processo ágil incremental, com *timebox* externo e execução paralela em subequipes**, sincronizada em marcos. Inspirado no Scrum quanto aos rituais e ao papel de liderança distribuída, sem adotar o framework completo. |
-| Justificativa (com referência) | Ver [§1.1](#11-por-que-esta-abordagem) abaixo. Fontes: [R06, R07, R08 e R09](Referencias.md#2-fontes-metodológicas) |
+| Justificativa (com referência) | Ver [§1.1](#_11-por-que-esta-abordagem) abaixo. Fontes: [R06, R07, R08 e R09](Referencias.md#_2-fontes-metodológicas) |
 | Cadência de reuniões | Reunião **geral** na abertura e no fechamento de cada entrega; cada subequipe define sua própria cadência interna (decisão D10 da [Ata 01](Atas/ata-G01-2026-08-22.md)) |
 | Canal de comunicação | Teams e WhatsApp — comunidade no WhatsApp com grupo geral e um grupo por subequipe (decisão D09 da [Ata 01](Atas/ata-G01-2026-08-22.md)) |
 | Ferramenta de gestão de tarefas | Teams, com o [Checklist da Entrega 1](ChecklistEntrega1.md) versionado no GitPages como quadro de acompanhamento visível a todos |
@@ -86,7 +86,7 @@ Um artefato só é considerado pronto quando:
 
 ## 6. Referências da Metodologia
 
-Consolidadas em [Referências do Projeto §2](Referencias.md#2-fontes-metodológicas): Manifesto Ágil (R06), Guia do Scrum (R07), Brooks (R08) e Knapp *et al.* (R09).
+Consolidadas em [Referências do Projeto §2](Referencias.md#_2-fontes-metodológicas): Manifesto Ágil (R06), Guia do Scrum (R07), Brooks (R08) e Knapp *et al.* (R09).
 
 > **Pendência honesta**: as quatro fontes acima embasam conceitualmente o processo descrito nesta página, mas ainda constam como 🔜 *previstas* — precisam ser efetivamente lidas pelos responsáveis antes da entrega, para que a citação corresponda a consulta real.
 
