@@ -1,26 +1,26 @@
-# G7_ProjetoStreamingVideo
+# G6_ProjetoStreamingVideo
 
 **Código da Disciplina**: FGA0208<br>
 **Número do Grupo**: 06<br>
 **Entrega**: 01 — Desenho de Software (Base)<br>
 **Período**: 2026.2 — Turma T01<br>
 
-> ℹ️ **Nomenclatura do projeto**: a lista oficial de projetos (Diretrizes 2026.2 - T01) vincula o tema *Streaming de Vídeo* ao rótulo `G7_ProjetoStreamingVideo`. O repositório foi atualizado para esse rótulo. O **Número do Grupo** (06) é a numeração de matrícula da turma e não muda — ver [Escopo do Produto](Projeto/EscopoProduto.md).
+> ℹ️ **Nomenclatura do projeto**: a lista oficial de projetos (Diretrizes 2026.2 - T01) vincula o tema *Streaming de Vídeo* ao rótulo `G6_ProjetoStreamingVideo`. O repositório foi atualizado para esse rótulo. O **Número do Grupo** (06) é a numeração de matrícula da turma e não muda — ver [Escopo do Produto](Projeto/EscopoProduto.md).
 
 ## Equipe do Projeto
 
-Os integrantes, matrículas, papéis e divisão nas 3 subequipes estão detalhados em [Equipe & Subequipes](Projeto/Equipe.md). A apresentação visual de todos os membros do grupo também pode ser consultada no [README principal do repositório](https://github.com/UnBArqDsw2026-2-Turma01/2026.2-T01-_G7_ProjetoStreamingVideo_Entrega_01/blob/main/README.md#equipe).
+Os integrantes, matrículas, papéis e divisão nas 3 subequipes estão detalhados em [Equipe & Subequipes](Projeto/Equipe.md). A apresentação visual de todos os membros do grupo também pode ser consultada no [README principal do repositório](https://github.com/UnBArqDsw2026-2-Turma01/2026.2-T01-_G6_ProjetoStreamingVideo_Entrega_01/blob/main/README.md#equipe).
 
 
 ## Sobre
 
-O **G7_ProjetoStreamingVideo** aborda o domínio das **plataformas de streaming de vídeo**, sob as duas ênfases determinadas pela disciplina: **Transmissões ao Vivo** e **Conteúdo UGC** (*User-Generated Content*).
+O **G6_ProjetoStreamingVideo** aborda o domínio das **plataformas de streaming de vídeo**, sob as duas ênfases determinadas pela disciplina: **Transmissões ao Vivo** e **Conteúdo UGC** (*User-Generated Content*).
 
 Como fonte de inspiração, a equipe elegeu uma plataforma consolidada de transmissões ao vivo organizada em **canais** — originada na comunidade de jogos eletrônicos e hoje ampliada para música, bate-papo, arte e eventos. Nela, qualquer usuário pode se tornar criador: transmite em tempo real, a audiência interage por um **chat público síncrono**, e o conteúdo transmitido é depois recortado, revisto e redistribuído pela própria comunidade.
 
 A escolha se sustenta no fato de as duas ênfases coexistirem **no mesmo fluxo**: o conteúdo é ao vivo *e* é gerado pelo usuário, ao mesmo tempo. Isso concentra num único domínio tensões arquiteturais que rendem modelagem — latência contra qualidade de vídeo, audiência que varia em ordens de grandeza sem aviso, e moderação que precisa acontecer **enquanto** o conteúdo é produzido, sem o intervalo de revisão que plataformas sob demanda possuem.
 
-> ⚠️ **Conforme as diretrizes da disciplina, o nome real da plataforma de inspiração não é citado em nenhum artefato deste repositório.** A referência é sempre feita por suas características, e o projeto é identificado apenas como `G7_ProjetoStreamingVideo`.
+> ⚠️ **Conforme as diretrizes da disciplina, o nome real da plataforma de inspiração não é citado em nenhum artefato deste repositório.** A referência é sempre feita por suas características, e o projeto é identificado apenas como `G6_ProjetoStreamingVideo`.
 
 Escopo detalhado — aplicação de referência, público-alvo, funcionalidades e não-escopo — em [Escopo do Produto](Projeto/EscopoProduto.md).
 
@@ -62,7 +62,7 @@ A Entrega 1 (Base) é **documental**: os entregáveis são artefatos de modelage
 
 ### Executando a Documentação Localmente
 
-Para instruções de instalação de dependências e execução do Docsify localmente via `npm run docs` ou `npx`, consulte a seção de **Tecnologia & Documentação** no [README principal do repositório](https://github.com/UnBArqDsw2026-2-Turma01/2026.2-T01-_G7_ProjetoStreamingVideo_Entrega_01/blob/main/README.md#tecnologia--documenta%C3%A7%C3%A3o).
+Para instruções de instalação de dependências e execução do Docsify localmente via `npm run docs` ou `npx`, consulte a seção de **Tecnologia & Documentação** no [README principal do repositório](https://github.com/UnBArqDsw2026-2-Turma01/2026.2-T01-_G6_ProjetoStreamingVideo_Entrega_01/blob/main/README.md#tecnologia--documenta%C3%A7%C3%A3o).
 
 
 ## Informações Complementares
@@ -78,7 +78,7 @@ Para instruções de instalação de dependências e execução do Docsify local
 | -- | -- | -- | -- | -- |
 | 1.0 | 21/08/2026 | Estruturação inicial do GitPages para a Entrega 1 | Lucas Andrade Zanetti | Heitor Macedo Ricardo |
 | 1.1 | 22/08/2026 | Contextualização do projeto, divisão das subequipes e escopo de execução | [Equipe G6](Projeto/Equipe.md) | Lucas Andrade Zanetti |
-| 1.2 | 23/08/2026 | Resolução da pendência de nomenclatura: rótulo do projeto atualizado para G7_ProjetoStreamingVideo, conforme lista oficial de projetos | Lucas Andrade Zanetti | Heitor Macedo Ricardo |
+| 1.2 | 23/08/2026 | Resolução da pendência de nomenclatura: rótulo do projeto atualizado para G6_ProjetoStreamingVideo, conforme lista oficial de projetos | Lucas Andrade Zanetti | Heitor Macedo Ricardo |
 | 1.3 | 24/08/2026 | Centralização e referenciamento da equipe e instruções de execução local | Eduardo Lôbo Moreira | Equipe G6 |
 | 1.4 | 27/08/2026 | Preenchimento da seção de screenshots da Primeira Entrega com o Rich Picture e dois diagramas BPMN da SubEquipe_01, e correção dos links que apontavam para o repositório com o rótulo G6 | Heitor Macedo Ricardo | [SubEquipe_01](Projeto/Atas/Atas_Sg1/ata-S1-04-2026-08-27.md) |
 | 1.5 | 28/08/2026 | Consolidação dos relatórios, rich pictures e participações das subequipes para a Entrega 1 | Davi Severiano Freitas | Equipe G6 |
