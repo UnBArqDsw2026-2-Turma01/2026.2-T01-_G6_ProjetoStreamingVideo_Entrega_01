@@ -33,7 +33,7 @@ Esta página é a **fonte única de verdade do escopo**. Todos os artefatos das 
 | **Moderador de canal** | Espectador de confiança a quem o criador delega poderes sobre o chat do seu canal. Não é funcionário da plataforma. | Agir sobre mensagens e usuários em tempo real; aplicar as regras definidas pelo criador; ter ferramentas que funcionem sob alto volume de mensagens | Levantamento inicial da equipe — **a validar e detalhar na Engenharia Reversa** |
 | **Equipe de confiança da plataforma** | Perfil interno responsável pelas políticas de conteúdo, atuando acima dos canais individuais. | Aplicar políticas de forma consistente; responder a denúncias; suspender contas e conteúdo; auditar decisões | Levantamento inicial da equipe — **a validar e detalhar na Engenharia Reversa** |
 
-## 4. Fluxos Selecionados para Engenharia Reversa & BPMN :id=fluxos-engenharia-reversa-bpmn
+## 4. Fluxos Selecionados para Engenharia Reversa & BPMN
 
 > A diretriz exige **pelo menos um** fluxo distinto por subequipe. Para não ficar só na Menção Mínima, cada subequipe modela **3 fluxos**, todos ligados ao seu softgoal (seção 6): o primeiro é a entrega mínima, os outros dois são iniciativa extra e entram também em [1.3. Iniciativas Extras](../Base/1.3.IniciativasExtras.md). Evitar sobreposição entre subequipes — registrar a divisão aqui **antes** de começar a modelar.
 

@@ -72,7 +72,7 @@ Parte dos documentos deste GitPages foi definida **em conjunto, em reunião gera
 
 Daniel de Oliveira Lira · Davi Severiano Freitas · Eduardo Lôbo Moreira · Heitor Macedo Ricardo · Hugo Freitas Silva · Lucas Andrade Zanetti · Mateus Rodrigues Barreto · Matheus Lemes Amaral · Pedro Druck Montalvão Reis · Pedro Henrique Freire Rodrigues · Philipe Amancio Reis Caetano
 
-**Comprobatório**: [Ata 01 — Primeira Reunião Geral](Atas/ata-G01-2026-08-22.md), com gravação da reunião.
+**Comprobatório**: [Ata 01 — Primeira Reunião Geral](Atas/ata-G01-2026-08-22.md) e [Ata 02 — Segunda Reunião Geral](Atas/ata-G02-2026-08-28.md), com gravações das reuniões.
 
 ## Histórico de Versões
 
@@ -86,3 +86,4 @@ Daniel de Oliveira Lira · Davi Severiano Freitas · Eduardo Lôbo Moreira · He
 | 1.5 | 27/08/2026 | Matriz de participação da SubEquipe_01 atualizada para ✅ nos três focos após a conclusão do SIG, da engenharia reversa, do BPMN e dos pontos de vista individuais; nota da §3 corrigida (afirmava que o SIG não havia sido iniciado); Pedro Druck Montalvão Reis e Eduardo Lôbo Moreira incluídos na lista de autoria coletiva | Heitor Macedo Ricardo | [SubEquipe_01](Atas/Atas_Sg1/ata-S1-04-2026-08-27.md) | Validação dos status concluídos da SubEquipe 01 e inclusão de autoria coletiva. |
 | 1.6 | 28/08/2026 | Atualização da matriz de participação (§3): conclusão integral de todos os 3 focos (FOCO_01, FOCO_02 e FOCO_03) pelos três membros da SubEquipe_03 | Eduardo Lôbo Moreira, Hugo Freitas Silva, Philipe Amâncio Reis Caetano | Equipe G6 | Conferência da conclusão integral dos 3 focos pelos membros da SubEquipe 03. |
 | 1.7 | 28/08/2026 | Nota da §3 corrigida para refletir a conclusão da revisão do SIG por Pedro Druck Montalvão Reis (antes registrada apenas como pendente) | Pedro Druck Montalvão Reis | Pendente | Revisão da nota da matriz de participação sobre o encerramento da revisão de Pedro Druck. |
+| 1.8 | 28/08/2026 | Inclusão do comprobatório da Ata 02 (Segunda Reunião Geral de Fechamento) na seção de autoria coletiva | Eduardo Lôbo Moreira | Equipe G6 | Validação do registro da Reunião Geral 02 como comprobatório de autoria coletiva. |
