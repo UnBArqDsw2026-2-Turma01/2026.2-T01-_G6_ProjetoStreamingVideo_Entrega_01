@@ -105,6 +105,6 @@ Consolidadas em [Referências do Projeto](Referencias.md). Sustentam este escopo
 | Versão | Data | Descrição | Autor(es) | Revisor(es) |
 | -- | -- | -- | -- | -- |
 | 1.0 | 21/08/2026 | Criação do documento de escopo | Lucas Andrade Zanetti | Heitor Macedo Ricardo |
-| 1.1 | 22/08/2026 | Definição da aplicação de referência, ênfases, público-alvo, levantamento preliminar de funcionalidades e não-escopo (Reunião Geral 01) | [Equipe G7](Equipe.md) | Lucas Andrade Zanetti |
+| 1.1 | 22/08/2026 | Definição da aplicação de referência, ênfases, público-alvo, levantamento preliminar de funcionalidades e não-escopo (Reunião Geral 01) | [Equipe G6](Equipe.md) | Lucas Andrade Zanetti |
 | 1.2 | 23/08/2026 | Correção da divisão de softgoals e fluxos entre SubEquipe_02 e SubEquipe_03 (§5 e §6) e atualização do rótulo do projeto para G7_ProjetoStreamingVideo | Lucas Andrade Zanetti | Heitor Macedo Ricardo |
-| 1.3 | 28/08/2026 | Atualização do status dos fluxos BPMN (13 pools integradas) e softgoals da SubEquipe_03 para concluído (✅) | Eduardo Lôbo Moreira, Hugo Freitas Silva, Philipe Amâncio Reis Caetano | Equipe G7 |
+| 1.3 | 28/08/2026 | Atualização do status dos fluxos BPMN (13 pools integradas) e softgoals da SubEquipe_03 para concluído (✅) | Eduardo Lôbo Moreira, Hugo Freitas Silva, Philipe Amâncio Reis Caetano | Equipe G6 |
