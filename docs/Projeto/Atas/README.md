@@ -7,6 +7,7 @@ Registro das reuniões do grupo e das subequipes. Atas bem elaboradas e gravaç�
 | ID | Data | Pauta | Ata | Gravação |
 | -- | -- | -- | -- | -- |
 | G01 | 22/08/2026 | Diretrizes da Entrega 1, escolha da aplicação de referência, divisão das subequipes e lideranças, organização do trabalho | [Ata Geral 01](ata-G01-2026-08-22.md) | [Vídeo](https://www.youtube.com/watch?v=AjzOi8J-G50) |
+| G02 | 28/08/2026 | Revisão geral dos artefatos da Entrega 1, auditoria de conformidade, validação da matriz de participações e planejamento da apresentação | [Ata Geral 02](ata-G02-2026-08-28.md) | [Vídeo](https://unbbr.sharepoint.com/sites/ProjetoStreamingVideoArquiteturaeDesenhodeSoftware/_layouts/15/stream.aspx?id=%2Fsites%2FProjetoStreamingVideoArquiteturaeDesenhodeSoftware%2FDocumentos%20Compartilhados%2FGeneral%2FRecordings%2FReunião%20Geral%2D20260828%5F211452%2DGravação%20de%20Reunião%2Emp4&referrer=StreamWebApp%2EWeb&referrerScenario=AddressBarCopied%2Eview%2E99f2b801%2Dff0d%2D446f%2Da951%2D8bcc2518a23e) |
 
 ## SubEquipe 01
 
@@ -45,7 +46,8 @@ Atas gerais ficam direto em `Atas/`; cada subequipe tem sua própria subpasta (`
 
 ## Histórico de Versões
 
-| Versão | Data | Descrição | Autor(es) | Revisor(es) |
-| :--: | :--: | -- | -- | -- |
-| 1.0 | 21/08/2026 | Criação da página de índice de atas | Lucas Andrade Zanetti | Heitor Macedo Ricardo |
-| 1.1 | 28/08/2026 | Inclusão da Ata S3_01 (Reunião Presencial da SubEquipe_03) | Eduardo Lôbo Moreira, Hugo Freitas Silva, Philipe Amâncio Reis Caetano | Equipe G6 |
+| Versão | Data | Descrição | Autor(es) | Revisor(es) | Descrição da revisão |
+| :--: | :--: | -- | -- | -- | -- |
+| 1.0 | 21/08/2026 | Criação da página de índice de atas | Lucas Andrade Zanetti | Heitor Macedo Ricardo | Revisão da estrutura da página de índice de atas. |
+| 1.1 | 28/08/2026 | Inclusão da Ata S3_01 (Reunião Presencial da SubEquipe_03) | Eduardo Lôbo Moreira, Hugo Freitas Silva, Philipe Amâncio Reis Caetano | Equipe G6 | Validação da indexação e links da Ata S3_01 da SubEquipe 03. |
+| 1.2 | 28/08/2026 | Inclusão da Ata G02 (Segunda Reunião Geral de Revisão e Fechamento) | Eduardo Lôbo Moreira | Equipe G6 | Validação da indexação e links da Ata Geral 02. |

@@ -148,11 +148,11 @@ A documentação do projeto é gerada e publicada utilizando o [Docsify](https:/
 
 ## Histórico de Versões
 
-| Versão | Data | Descrição | Autor(es) | Revisor(es) |
-| :--: | :--: | -- | -- | -- |
-| 1.0 | 21/08/2026 | Criação inicial do repositório e estrutura básica do README | Lucas Andrade Zanetti | Heitor Macedo Ricardo |
-| 1.1 | 22/08/2026 | Apresentação da equipe, tema e introdução do projeto | Lucas Andrade Zanetti | Equipe G6 |
-| 1.2 | 23/08/2026 | Atualização do rótulo para G6_ProjetoStreamingVideo e padronização das informações de entrega | Lucas Andrade Zanetti | Heitor Macedo Ricardo |
-| 1.3 | 24/08/2026 | Centralização e detalhamento das instruções de execução local do Docsify | Eduardo Lôbo Moreira | Equipe G6 |
-| 1.4 | 28/08/2026 | Adição e consolidação do histórico de versões do documento | Davi Severiano Freitas | Equipe G6 |
+| Versão | Data | Descrição | Autor(es) | Revisor(es) | Descrição da revisão |
+| :--: | :--: | -- | -- | -- | -- |
+| 1.0 | 21/08/2026 | Criação inicial do repositório e estrutura básica do README | Lucas Andrade Zanetti | Heitor Macedo Ricardo | Revisão da estrutura inicial do repositório e cabeçalhos informativos. |
+| 1.1 | 22/08/2026 | Apresentação da equipe, tema e introdução do projeto | Lucas Andrade Zanetti | Equipe G6 | Validação das fotos, nomes, matrículas e apresentação visual dos integrantes. |
+| 1.2 | 23/08/2026 | Atualização do rótulo para G6_ProjetoStreamingVideo e padronização das informações de entrega | Lucas Andrade Zanetti | Heitor Macedo Ricardo | Conferência da nomenclatura oficial do projeto e links atualizados. |
+| 1.3 | 24/08/2026 | Centralização e detalhamento das instruções de execução local do Docsify | Eduardo Lôbo Moreira | Equipe G6 | Verificação das instruções de instalação do npm e execução local do Docsify. |
+| 1.4 | 28/08/2026 | Adição e consolidação do histórico de versões do documento | Davi Severiano Freitas | Equipe G6 | Validação da consistência do histórico de versões e formatação geral. |
 

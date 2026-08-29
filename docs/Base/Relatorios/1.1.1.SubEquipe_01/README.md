@@ -103,11 +103,11 @@ O senso crítico de cada foco está na página dele ([Rich Picture](1.ArtefatoGe
 
 ## Histórico de Versões
 
-| Versão | Data | Descrição | Autor(es) | Revisor(es) |
-| -- | -- | -- | -- | -- |
-| 1.0 | 21/08/2026 | Criação do relatório da SubEquipe_01 | Lucas Andrade Zanetti | Heitor Macedo Ricardo |
-| 1.1 | 23/08/2026 | Composição da subequipe, escopo trabalhado (Rich Picture, softgoal e fluxos) e metodologia da subequipe, a partir da Ata S1_01 | [SubEquipe_01](../../../Projeto/Atas/Atas_Sg1/ata-S1-01-2026-08-23.md) | Lucas Andrade Zanetti |
-| 1.2 | 25/08/2026 | Registro das sessões de trabalho, ferramenta de modelagem, rastreabilidade consolidada e participações do FOCO_01 após a conclusão do Rich Picture v1 | [SubEquipe_01](../../../Projeto/Atas/Atas_Sg1/ata-S1-02-2026-08-25.md#participantes) | Lucas Andrade Zanetti |
-| 1.3 | 26/08/2026 | Registro da terceira sessão de trabalho (SIG v1), rastreabilidade e participações do FOCO_01 após a conclusão do SIG; Pedro Druck ausente nesta sessão | [SubEquipe_01](../../../Projeto/Atas/Atas_Sg1/ata-S1-03-2026-08-26.md#participantes) | Lucas Andrade Zanetti |
-| 1.4 | 27/08/2026 | Registro da quarta sessão de trabalho: engenharia reversa v1 com 6 evidências, 7 diagramas BPMN encadeados, rastreabilidade atualizada, senso crítico consolidado e participação de toda a subequipe | Lucas Andrade Zanetti | SubEquipe_01 |
-| 1.5 | 27/08/2026 | Índice de status atualizado para ✅ nos cinco focos, reconstrução da tabela de participações com as linhas de FOCO_02 e FOCO_03 dos quatro membros, e reordenação do histórico | [SubEquipe_01](../../../Projeto/Atas/Atas_Sg1/ata-S1-04-2026-08-27.md) | Heitor Macedo Ricardo |
+| Versão | Data | Descrição | Autor(es) | Revisor(es) | Descrição da revisão |
+| -- | -- | -- | -- | -- | -- |
+| 1.0 | 21/08/2026 | Criação do relatório da SubEquipe_01 | Lucas Andrade Zanetti | Heitor Macedo Ricardo | Revisão da estrutura inicial do template do relatório. |
+| 1.1 | 23/08/2026 | Composição da subequipe, escopo trabalhado (Rich Picture, softgoal e fluxos) e metodologia da subequipe, a partir da Ata S1_01 | [SubEquipe_01](../../../Projeto/Atas/Atas_Sg1/ata-S1-01-2026-08-23.md) | Lucas Andrade Zanetti | Verificação da atribuição de papéis e escopo delimitado da subequipe. |
+| 1.2 | 25/08/2026 | Registro das sessões de trabalho, ferramenta de modelagem, rastreabilidade consolidada e participações do FOCO_01 após a conclusão do Rich Picture v1 | [SubEquipe_01](../../../Projeto/Atas/Atas_Sg1/ata-S1-02-2026-08-25.md#participantes) | Lucas Andrade Zanetti | Validação dos links internos, consolidação dos status e coerência com os entregáveis. |
+| 1.3 | 26/08/2026 | Registro da terceira sessão de trabalho (SIG v1), rastreabilidade e participações do FOCO_01 após a conclusão do SIG; Pedro Druck ausente nesta sessão | [SubEquipe_01](../../../Projeto/Atas/Atas_Sg1/ata-S1-03-2026-08-26.md#participantes) | Lucas Andrade Zanetti | Validação do encerramento dos tópicos, conferência dos comprobatórios e consistência global. |
+| 1.4 | 27/08/2026 | Registro da quarta sessão de trabalho: engenharia reversa v1 com 6 evidências, 7 diagramas BPMN encadeados, rastreabilidade atualizada, senso crítico consolidado e participação de toda a subequipe | Lucas Andrade Zanetti | SubEquipe_01 | Revisão técnica de conteúdo, clareza textual e aderência às diretrizes do projeto. |
+| 1.5 | 27/08/2026 | Índice de status atualizado para ✅ nos cinco focos, reconstrução da tabela de participações com as linhas de FOCO_02 e FOCO_03 dos quatro membros, e reordenação do histórico | [SubEquipe_01](../../../Projeto/Atas/Atas_Sg1/ata-S1-04-2026-08-27.md) | Heitor Macedo Ricardo | Revisão técnica de conteúdo, clareza textual e aderência às diretrizes do projeto. |

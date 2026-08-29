@@ -69,9 +69,9 @@ O senso crítico detalhado de cada foco está registrado nas páginas dos respec
 
 ## Histórico de Versões
 
-| Versão | Data | Descrição | Autor(es) | Revisor(es) |
-| -- | -- | -- | -- | -- |
-| 1.0 | 21/08/2026 | Criação do relatório da SubEquipe_02 | Lucas Andrade Zanetti | Heitor Macedo Ricardo |
-| 1.1 | 27/08/2026 | Atualização da equipe, escopo trabalhado, metodologia, rastreabilidade, senso crítico e participações da SubEquipe_02 | Davi Severiano Freitas | Daniel de Oliveira Lira |
-| 1.2 | 28/08/2026 | Refinamento das justificativas de escopo, redação consolidada do senso crítico e preenchimento detalhado dos comprobatórios e histórico de participações da subequipe | Davi Severiano Freitas | SubEquipe_02 |
-| 1.3 | 28/08/2026 | Atualização do status de Modelagem BPMN e Referências para concluído | Mateus Rodrigues Barreto | Davi Severiano Freitas |
+| Versão | Data | Descrição | Autor(es) | Revisor(es) | Descrição da revisão |
+| -- | -- | -- | -- | -- | -- |
+| 1.0 | 21/08/2026 | Criação do relatório da SubEquipe_02 | Lucas Andrade Zanetti | Heitor Macedo Ricardo | Revisão da estrutura inicial do relatório. |
+| 1.1 | 27/08/2026 | Atualização da equipe, escopo trabalhado, metodologia, rastreabilidade, senso crítico e participações da SubEquipe_02 | Davi Severiano Freitas | Daniel de Oliveira Lira | Verificação da composição da equipe, escopo trabalhado e elos de rastreabilidade. |
+| 1.2 | 28/08/2026 | Refinamento das justificativas de escopo, redação consolidada do senso crítico e preenchimento detalhado dos comprobatórios e histórico de participações da subequipe | Davi Severiano Freitas | SubEquipe_02 | Validação do fechamento do relatório da SubEquipe 02 e sincronização de status. |
+| 1.3 | 28/08/2026 | Atualização do status de Modelagem BPMN e Referências para concluído | Mateus Rodrigues Barreto | Davi Severiano Freitas | Conferência do conteúdo adicionado, rastreabilidade e alinhamento com as diretrizes da disciplina. |

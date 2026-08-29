@@ -92,9 +92,9 @@ Consolidadas em [Referências do Projeto §2](Referencias.md#_2-fontes-metodoló
 
 ## Histórico de Versões
 
-| Versão | Data | Descrição | Autor(es) | Revisor(es) |
-| -- | -- | -- | -- | -- |
-| 1.0 | 21/08/2026 | Criação do documento de metodologia | Lucas Andrade Zanetti | Heitor Macedo Ricardo |
-| 1.1 | 22/08/2026 | Definição da abordagem metodológica, justificativa fundamentada e registro das decisões de processo da Reunião Geral 01 | Equipe G6 | Lucas Andrade Zanetti |
-| 1.2 | 23/08/2026 | Atualização do rótulo do projeto para G6_ProjetoStreamingVideo | Lucas Andrade Zanetti | Heitor Macedo Ricardo |
-| 1.3 | 24/08/2026 | Correção ortográfica e remoção de comentários residuais | Eduardo Lôbo Moreira | Equipe G6 |
+| Versão | Data | Descrição | Autor(es) | Revisor(es) | Descrição da revisão |
+| -- | -- | -- | -- | -- | -- |
+| 1.0 | 21/08/2026 | Criação do documento de metodologia | Lucas Andrade Zanetti | Heitor Macedo Ricardo | Revisão da estrutura inicial do documento de metodologia. |
+| 1.1 | 22/08/2026 | Definição da abordagem metodológica, justificativa fundamentada e registro das decisões de processo da Reunião Geral 01 | Equipe G6 | Lucas Andrade Zanetti | Validação da justificativa da abordagem metodológica e decisões da Reunião Geral 01. |
+| 1.2 | 23/08/2026 | Atualização do rótulo do projeto para G6_ProjetoStreamingVideo | Lucas Andrade Zanetti | Heitor Macedo Ricardo | Conferência da atualização do rótulo G6_ProjetoStreamingVideo. |
+| 1.3 | 24/08/2026 | Correção ortográfica e remoção de comentários residuais | Eduardo Lôbo Moreira | Equipe G6 | Revisão gramatical e remoção de comentários residuais. |

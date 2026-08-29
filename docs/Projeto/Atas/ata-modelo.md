@@ -37,6 +37,6 @@ _A preencher._
 
 ## Histórico de Versões
 
-| Versão | Data | Descrição | Autor(es) | Revisor(es) |
-| -- | -- | -- | -- | -- |
-| 1.0 | 21/08/2026 | Criação do modelo de ata | Lucas Andrade Zanetti | Heitor Macedo Ricardo |
+| Versão | Data | Descrição | Autor(es) | Revisor(es) | Descrição da revisão |
+| -- | -- | -- | -- | -- | -- |
+| 1.0 | 21/08/2026 | Criação do modelo de ata | Lucas Andrade Zanetti | Heitor Macedo Ricardo | Revisão do template padrão de atas, campos de presenças, pauta, decisões e encaminhamentos. |

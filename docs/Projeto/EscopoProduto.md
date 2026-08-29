@@ -33,8 +33,7 @@ Esta página é a **fonte única de verdade do escopo**. Todos os artefatos das 
 | **Moderador de canal** | Espectador de confiança a quem o criador delega poderes sobre o chat do seu canal. Não é funcionário da plataforma. | Agir sobre mensagens e usuários em tempo real; aplicar as regras definidas pelo criador; ter ferramentas que funcionem sob alto volume de mensagens | Levantamento inicial da equipe — **a validar e detalhar na Engenharia Reversa** |
 | **Equipe de confiança da plataforma** | Perfil interno responsável pelas políticas de conteúdo, atuando acima dos canais individuais. | Aplicar políticas de forma consistente; responder a denúncias; suspender contas e conteúdo; auditar decisões | Levantamento inicial da equipe — **a validar e detalhar na Engenharia Reversa** |
 
-
-## 4. Fluxos Selecionados para Engenharia Reversa & BPMN :id=fluxos-engenharia-reversa-bpmn
+## 4. Fluxos Selecionados para Engenharia Reversa & BPMN
 
 > A diretriz exige **pelo menos um** fluxo distinto por subequipe. Para não ficar só na Menção Mínima, cada subequipe modela **3 fluxos**, todos ligados ao seu softgoal (seção 6): o primeiro é a entrega mínima, os outros dois são iniciativa extra e entram também em [1.3. Iniciativas Extras](../Base/1.3.IniciativasExtras.md). Evitar sobreposição entre subequipes — registrar a divisão aqui **antes** de começar a modelar.
 
@@ -86,11 +85,10 @@ Consolidadas em [Referências do Projeto](Referencias.md). Sustentam este escopo
 
 ## Histórico de Versões
 
-| Versão | Data | Descrição | Autor(es) | Revisor(es) |
-| -- | -- | -- | -- | -- |
-| 1.0 | 21/08/2026 | Criação do documento de escopo | Lucas Andrade Zanetti | Heitor Macedo Ricardo |
-| 1.1 | 22/08/2026 | Definição da aplicação de referência, ênfases, público-alvo, levantamento preliminar de funcionalidades e não-escopo (Reunião Geral 01) | [Equipe G6](Equipe.md) | Lucas Andrade Zanetti |
-| 1.2 | 23/08/2026 | Correção da divisão de softgoals e fluxos entre SubEquipe_02 e SubEquipe_03 (§5 e §6) e atualização do rótulo do projeto para G6_ProjetoStreamingVideo | Lucas Andrade Zanetti | Heitor Macedo Ricardo |
-| 1.3 | 28/08/2026 | Atualização do status dos fluxos BPMN (13 pools integradas) e softgoals da SubEquipe_03 para concluído (✅) | Eduardo Lôbo Moreira, Hugo Freitas Silva, Philipe Amâncio Reis Caetano | Equipe G6 |
-| 1.4 | 28/08/2026 | Atualização dos fluxos BPMN e softgoals das SubEquipes 01 e 02 para concluído (✅) e consolidação da numeração de seções | Davi Severiano Freitas | Equipe G6 |
-
+| Versão | Data | Descrição | Autor(es) | Revisor(es) | Descrição da revisão |
+| -- | -- | -- | -- | -- | -- |
+| 1.0 | 21/08/2026 | Criação do documento de escopo | Lucas Andrade Zanetti | Heitor Macedo Ricardo | Revisão da estrutura do documento de escopo. |
+| 1.1 | 22/08/2026 | Definição da aplicação de referência, ênfases, público-alvo, levantamento preliminar de funcionalidades e não-escopo (Reunião Geral 01) | [Equipe G6](Equipe.md) | Lucas Andrade Zanetti | Validação da aplicação de referência, requisitos, funcionalidades e não-escopo. |
+| 1.2 | 23/08/2026 | Correção da divisão de softgoals e fluxos entre SubEquipe_02 e SubEquipe_03 (§5 e §6) e atualização do rótulo do projeto para G6_ProjetoStreamingVideo | Lucas Andrade Zanetti | Heitor Macedo Ricardo | Conferência da divisão de softgoals e fluxos entre as subequipes e rótulo do projeto. |
+| 1.3 | 28/08/2026 | Atualização do status dos fluxos BPMN (13 pools integradas) e softgoals da SubEquipe_03 para concluído (✅) | Eduardo Lôbo Moreira, Hugo Freitas Silva, Philipe Amâncio Reis Caetano | Equipe G6 | Verificação do status concluído dos fluxos BPMN (13 pools) e softgoals da SubEquipe 03. |
+| 1.4 | 28/08/2026 | Atualização dos fluxos BPMN e softgoals das SubEquipes 01 e 02 para concluído (✅) e consolidação da numeração de seções | Davi Severiano Freitas | Equipe G6 | Validação da conclusão dos fluxos e softgoals das SubEquipes 01 e 02 e numeração de seções. |

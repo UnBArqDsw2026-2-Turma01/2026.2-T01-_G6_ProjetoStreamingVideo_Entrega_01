@@ -10,28 +10,28 @@ Legenda: ⬜ pendente · 🟨 em andamento · ✅ concluído
 
 | # | Item exigido | Status | Responsável(is) | Link |
 | -- | -- | -- | -- | -- |
-| 1 | Um artefato generalista (Rich Picture **ou** Mapa Mental) | ✅ | Lucas Andrade Zanetti, Heitor Macedo Ricardo, Matheus Lemes Amaral, Pedro Druck Montalvão Reis | [1.ArtefatoGeneralista.md](../Base/Relatorios/1.1.1.SubEquipe_01/1.ArtefatoGeneralista) |
-| 2 | Um SIG na notação do NFR Framework | ✅ | Lucas Andrade Zanetti, Heitor Macedo Ricardo, Matheus Lemes Amaral | [2.NFRFramework.md](../Base/Relatorios/1.1.1.SubEquipe_01/2.NFRFramework) |
-| 3 | Um modelo BPMN do fluxo obtido via Engenharia Reversa | ✅ | Lucas Andrade Zanetti, Heitor Macedo Ricardo, Matheus Lemes Amaral, Pedro Druck Montalvão Reis | [3.EngenhariaReversa.md](../Base/Relatorios/1.1.1.SubEquipe_01/3.EngenhariaReversa) · [4.BPMN.md](../Base/Relatorios/1.1.1.SubEquipe_01/4.BPMN) |
-| 4 | Ponto de vista de **cada** membro sobre lições aprendidas e IA Generativa | ✅ | Lucas Andrade Zanetti, Heitor Macedo Ricardo, Matheus Lemes Amaral, Pedro Druck Montalvão Reis | [5.IAGenerativa.md](../Base/Relatorios/1.1.1.SubEquipe_01/5.IAGenerativa#_3-pontos-de-vista-individuais) |
+| 1 | Um artefato generalista (Rich Picture **ou** Mapa Mental) | ✅ | Lucas Andrade Zanetti, Heitor Macedo Ricardo, Matheus Lemes Amaral, Pedro Druck Montalvão Reis | [1.ArtefatoGeneralista.md](../Base/Relatorios/1.1.1.SubEquipe_01/1.ArtefatoGeneralista.md) |
+| 2 | Um SIG na notação do NFR Framework | ✅ | Lucas Andrade Zanetti, Heitor Macedo Ricardo, Matheus Lemes Amaral | [2.NFRFramework.md](../Base/Relatorios/1.1.1.SubEquipe_01/2.NFRFramework.md) |
+| 3 | Um modelo BPMN do fluxo obtido via Engenharia Reversa | ✅ | Lucas Andrade Zanetti, Heitor Macedo Ricardo, Matheus Lemes Amaral, Pedro Druck Montalvão Reis | [3.EngenhariaReversa.md](../Base/Relatorios/1.1.1.SubEquipe_01/3.EngenhariaReversa.md) · [4.BPMN.md](../Base/Relatorios/1.1.1.SubEquipe_01/4.BPMN.md) |
+| 4 | Ponto de vista de **cada** membro sobre lições aprendidas e IA Generativa | ✅ | Lucas Andrade Zanetti, Heitor Macedo Ricardo, Matheus Lemes Amaral, Pedro Druck Montalvão Reis | [5.IAGenerativa.md](../Base/Relatorios/1.1.1.SubEquipe_01/5.IAGenerativa.md#_3-pontos-de-vista-individuais) |
 
 ### SubEquipe_02
 
 | # | Item exigido | Status | Responsável(is) | Link |
 | -- | -- | -- | -- | -- |
-| 1 | Um artefato generalista (Rich Picture **ou** Mapa Mental) | ✅ | Davi Severiano Freitas, Daniel de Oliveira Lira, Mateus Rodrigues Barreto, Pedro Henrique Freire Rodrigues | [1.ArtefatoGeneralista.md](../Base/Relatorios/1.1.2.SubEquipe_02/1.ArtefatoGeneralista) |
-| 2 | Um SIG na notação do NFR Framework | ✅ | Davi Severiano Freitas, Daniel de Oliveira Lira, Mateus Rodrigues Barreto, Pedro Henrique Freire Rodrigues | [2.NFRFramework.md](../Base/Relatorios/1.1.2.SubEquipe_02/2.NFRFramework) |
-| 3 | Um modelo BPMN do fluxo obtido via Engenharia Reversa | ✅ | Davi Severiano Freitas, Daniel de Oliveira Lira, Mateus Rodrigues Barreto, Pedro Henrique Freire Rodrigues | [3.EngenhariaReversa.md](../Base/Relatorios/1.1.2.SubEquipe_02/3.EngenhariaReversa) · [4.BPMN.md](../Base/Relatorios/1.1.2.SubEquipe_02/4.BPMN) |
+| 1 | Um artefato generalista (Rich Picture **ou** Mapa Mental) | ✅ | Davi Severiano Freitas, Daniel de Oliveira Lira, Mateus Rodrigues Barreto, Pedro Henrique Freire Rodrigues | [1.ArtefatoGeneralista.md](../Base/Relatorios/1.1.2.SubEquipe_02/1.ArtefatoGeneralista.md) |
+| 2 | Um SIG na notação do NFR Framework | ✅ | Davi Severiano Freitas, Daniel de Oliveira Lira, Mateus Rodrigues Barreto, Pedro Henrique Freire Rodrigues | [2.NFRFramework.md](../Base/Relatorios/1.1.2.SubEquipe_02/2.NFRFramework.md) |
+| 3 | Um modelo BPMN do fluxo obtido via Engenharia Reversa | ✅ | Davi Severiano Freitas, Daniel de Oliveira Lira, Mateus Rodrigues Barreto, Pedro Henrique Freire Rodrigues | [3.EngenhariaReversa.md](../Base/Relatorios/1.1.2.SubEquipe_02/3.EngenhariaReversa.md) · [4.BPMN.md](../Base/Relatorios/1.1.2.SubEquipe_02/4.BPMN.md) |
 | 4 | Ponto de vista de **cada** membro sobre lições aprendidas e IA Generativa | ✅ | Davi Severiano Freitas, Daniel de Oliveira Lira, Mateus Rodrigues Barreto, Pedro Henrique Freire Rodrigues | [5.IAGenerativa.md](../Base/Relatorios/1.1.2.SubEquipe_02/5.IAGenerativa.md#_3-pontos-de-vista-individuais) |
 
 ### SubEquipe_03
 
 | # | Item exigido | Status | Responsável(is) | Link |
 | -- | -- | :--: | -- | -- |
-| 1 | Um artefato generalista (Rich Picture **ou** Mapa Mental) | ✅ | Eduardo Lôbo Moreira, Hugo Freitas Silva, Philipe Amâncio Reis Caetano | [1.ArtefatoGeneralista.md](Base/Relatorios/1.1.3.SubEquipe_03/1.ArtefatoGeneralista) |
-| 2 | Um SIG na notação do NFR Framework | ✅ | Eduardo Lôbo Moreira, Hugo Freitas Silva, Philipe Amâncio Reis Caetano | [2.NFRFramework.md](Base/Relatorios/1.1.3.SubEquipe_03/2.NFRFramework) |
-| 3 | Um modelo BPMN do fluxo obtido via Engenharia Reversa | ✅ | Eduardo Lôbo Moreira, Hugo Freitas Silva, Philipe Amâncio Reis Caetano | [3.EngenhariaReversa.md](Base/Relatorios/1.1.3.SubEquipe_03/3.EngenhariaReversa) · [4.BPMN.md](Base/Relatorios/1.1.3.SubEquipe_03/4.BPMN) |
-| 4 | Ponto de vista de **cada** membro sobre lições aprendidas e IA Generativa | ✅ | Eduardo Lôbo Moreira, Hugo Freitas Silva, Philipe Amâncio Reis Caetano | [5.IAGenerativa.md](Base/Relatorios/1.1.3.SubEquipe_03/5.IAGenerativa) |
+| 1 | Um artefato generalista (Rich Picture **ou** Mapa Mental) | ✅ | Eduardo Lôbo Moreira, Hugo Freitas Silva, Philipe Amâncio Reis Caetano | [1.ArtefatoGeneralista.md](../Base/Relatorios/1.1.3.SubEquipe_03/1.ArtefatoGeneralista.md) |
+| 2 | Um SIG na notação do NFR Framework | ✅ | Eduardo Lôbo Moreira, Hugo Freitas Silva, Philipe Amâncio Reis Caetano | [2.NFRFramework.md](../Base/Relatorios/1.1.3.SubEquipe_03/2.NFRFramework.md) |
+| 3 | Um modelo BPMN do fluxo obtido via Engenharia Reversa | ✅ | Eduardo Lôbo Moreira, Hugo Freitas Silva, Philipe Amâncio Reis Caetano | [3.EngenhariaReversa.md](../Base/Relatorios/1.1.3.SubEquipe_03/3.EngenhariaReversa.md) · [4.BPMN.md](../Base/Relatorios/1.1.3.SubEquipe_03/4.BPMN.md) |
+| 4 | Ponto de vista de **cada** membro sobre lições aprendidas e IA Generativa | ✅ | Eduardo Lôbo Moreira, Hugo Freitas Silva, Philipe Amâncio Reis Caetano | [5.IAGenerativa.md](../Base/Relatorios/1.1.3.SubEquipe_03/5.IAGenerativa.md#3-pontos-de-vista-individuais) |
 
 
 ## 2. Exigências Transversais (cada subequipe deve revelar)
@@ -51,9 +51,9 @@ Legenda: ⬜ pendente · 🟨 em andamento · ✅ concluído
 | -- | -- |
 | Tópico dedicado ao Módulo Desenho de Software (Base) | ✅ |
 | Subpasta Relatórios (1.1) com 1.1.1, 1.1.2 e 1.1.3 | ✅ |
-| Subtópico 1.2 — Participações | ✅ ([1.2. Participações](../Base/1.2.ParticipacoesBase)) |
-| Subtópico 1.3 — Iniciativas Extras (opcional) | ✅ ([1.3. Iniciativas Extras](../Base/1.3.IniciativasExtras)) |
-| Quadro de participações por foco, com comprobatórios em link | ✅ ([1.2. Participações](../Base/1.2.ParticipacoesBase)) |
+| Subtópico 1.2 — Participações | ✅ ([1.2. Participações](../Base/1.2.ParticipacoesBase.md)) |
+| Subtópico 1.3 — Iniciativas Extras (opcional) | ✅ ([1.3. Iniciativas Extras](../Base/1.3.IniciativasExtras.md)) |
+| Quadro de participações por foco, com comprobatórios em link | ✅ ([1.2. Participações](../Base/1.2.ParticipacoesBase.md)) |
 | Históricos de revisões em cada artefato | ✅ (Em todos os artefatos da SubEquipe_03) |
 
 ## 4. Para Menções Superiores
