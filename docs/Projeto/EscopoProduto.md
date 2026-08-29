@@ -33,51 +33,35 @@ Esta página é a **fonte única de verdade do escopo**. Todos os artefatos das 
 | **Moderador de canal** | Espectador de confiança a quem o criador delega poderes sobre o chat do seu canal. Não é funcionário da plataforma. | Agir sobre mensagens e usuários em tempo real; aplicar as regras definidas pelo criador; ter ferramentas que funcionem sob alto volume de mensagens | Levantamento inicial da equipe — **a validar e detalhar na Engenharia Reversa** |
 | **Equipe de confiança da plataforma** | Perfil interno responsável pelas políticas de conteúdo, atuando acima dos canais individuais. | Aplicar políticas de forma consistente; responder a denúncias; suspender contas e conteúdo; auditar decisões | Levantamento inicial da equipe — **a validar e detalhar na Engenharia Reversa** |
 
-## 4. Principais Funcionalidades Levantadas
 
-> **Levantamento preliminar**, feito por observação superficial da aplicação de referência, apenas para dar ponto de partida às subequipes e evitar sobreposição na divisão dos fluxos. **Não substitui a Engenharia Reversa**: cada funcionalidade só entra como achado depois de investigada e evidenciada na página do foco correspondente. As colunas *Subequipe responsável* e *Artefato(s)* são preenchidas quando a divisão de §5 for fechada.
-
-| # | Funcionalidade | Ênfase relacionada | Subequipe responsável | Artefato(s) |
-| -- | -- | -- | -- | -- |
-| F01 | Autenticação e gestão de conta | Ambas | | |
-| F02 | Configuração e transmissão ao vivo de um canal | Transmissões ao Vivo | | |
-| F03 | Consumo de transmissão ao vivo pelo espectador | Transmissões ao Vivo | | |
-| F04 | Chat público síncrono do canal | Ambas | | |
-| F05 | Descoberta de conteúdo (busca, categorias, canais ao vivo) | UGC | | |
-| F06 | Relação com o canal (seguir e inscrever-se) | UGC | | |
-| F07 | Notificação de canal ao vivo | Transmissões ao Vivo | | |
-| F08 | Recorte de trechos e revisão sob demanda após a transmissão | UGC | | |
-| F09 | Moderação de chat e de conteúdo | UGC | | |
-| F10 | Monetização (inscrições, moeda virtual, publicidade) | UGC | | |
-
-## 5. Fluxos Selecionados para Engenharia Reversa & BPMN :id=fluxos-engenharia-reversa-bpmn
+## 4. Fluxos Selecionados para Engenharia Reversa & BPMN :id=fluxos-engenharia-reversa-bpmn
 
 > A diretriz exige **pelo menos um** fluxo distinto por subequipe. Para não ficar só na Menção Mínima, cada subequipe modela **3 fluxos**, todos ligados ao seu softgoal (seção 6): o primeiro é a entrega mínima, os outros dois são iniciativa extra e entram também em [1.3. Iniciativas Extras](../Base/1.3.IniciativasExtras.md). Evitar sobreposição entre subequipes — registrar a divisão aqui **antes** de começar a modelar.
 
 | Subequipe | Papel | Fluxo escolhido | Justificativa da escolha | Status |
 | -- | -- | -- | -- | -- |
-| SubEquipe_01 | Mínimo | Assistir Transmissão ao Vivo (player + ingestão + sincronização do chat) | Ponto onde a latência/buffering do "ao vivo" é mais sensível ao usuário | 🟨 modelado (D2) |
-| SubEquipe_01 | Extra | Início e Configuração da Transmissão (setup de bitrate/qualidade, handshake com servidor de ingestão) | Desempenho da ingestão é pré-condição para o fluxo de assistir | 🟨 modelado (D1) |
-| SubEquipe_01 | Extra | Troca de Qualidade Adaptativa (ABR) durante a exibição | Evidencia desempenho sob variação de rede, critério central de Performance/Latência | 🟨 modelado (D3) |
-| SubEquipe_01 | Extra | Ciclo de Reprodução por Segmento, Recuperação de Falha e Sincronização de Tempo Real | Surgiram da própria engenharia reversa: concentram o custo de latência e o tratamento de falha do fluxo mínimo | 🟨 modelados (D2b, D4, D5) |
-| SubEquipe_02 | Mínimo | Chat ao Vivo em Tempo Real sob pico de audiência | Disponibilidade sob carga é o teste de estresse mais direto do "ao vivo" | ⬜ |
-| SubEquipe_02 | Extra | Doações/Monetização durante a live (pagamento, confirmação, notificação) | Confiabilidade transacional — falha aqui tem custo direto ao usuário | ⬜ |
-| SubEquipe_02 | Extra | Recuperação de Falha de Transmissão (reconexão do streamer, failover de ingestão) | Cenário clássico de resiliência/disponibilidade | ⬜ |
+| SubEquipe_01 | Mínimo | Assistir Transmissão ao Vivo (player + ingestão + sincronização do chat) | Ponto onde a latência/buffering do "ao vivo" é mais sensível ao usuário | ✅ modelado (D2) |
+| SubEquipe_01 | Extra | Início e Configuração da Transmissão (setup de bitrate/qualidade, handshake com servidor de ingestão) | Desempenho da ingestão é pré-condição para o fluxo de assistir | ✅ modelado (D1) |
+| SubEquipe_01 | Extra | Troca de Qualidade Adaptativa (ABR) durante a exibição | Evidencia desempenho sob variação de rede, critério central de Performance/Latência | ✅ modelado (D3) |
+| SubEquipe_01 | Extra | Ciclo de Reprodução por Segmento, Recuperação de Falha e Sincronização de Tempo Real | Surgiram da própria engenharia reversa: concentram o custo de latência e o tratamento de falha do fluxo mínimo | ✅ modelados (D2b, D4, D5) |
+| SubEquipe_02 | Mínimo | Chat ao Vivo em Tempo Real sob pico de audiência | Disponibilidade sob carga é o teste de estresse mais direto do "ao vivo" | ✅ |
+| SubEquipe_02 | Extra | Doações/Monetização durante a live (pagamento, confirmação, notificação) | Confiabilidade transacional — falha aqui tem custo direto ao usuário | ✅ |
+| SubEquipe_02 | Extra | Recuperação de Falha de Transmissão (reconexão do streamer, failover de ingestão) | Cenário clássico de resiliência/disponibilidade | ✅ |
 | SubEquipe_03 | Mínimo | Login/Cadastro & Autenticação (incl. 2FA/OAuth) | Segurança de acesso é a porta de entrada de todo o sistema | ✅ modelado (Pool 7 · Identidade e Sessões) |
 | SubEquipe_03 | Extra | Início de Transmissão com validação de direitos do streamer (proteção de conteúdo) | Segurança de conteúdo, não só de acesso | ✅ modelado (Pool 4 · Fábrica de Vídeo e Ingestão & Pool 13 · Moderação de Vídeo) |
 | SubEquipe_03 | Extra | Moderação de Conteúdo UGC (denúncia, banimento, filtragem) | Liga Segurança à ênfase obrigatória de UGC do tema | ✅ modelado (Pool 5 · Chat e AutoMod & Pool 13 · Moderação de Vídeo) |
 
-## 6. Requisitos Não Funcionais Candidatos (insumo para os SIGs)
+## 5. Requisitos Não Funcionais Candidatos (insumo para os SIGs)
 
 > Cada subequipe elabora **um SIG** (NFR Framework) sobre um critério de qualidade (*softgoal*) diferente. Registrar a divisão aqui para evitar duplicidade.
 
 | Subequipe | Softgoal / critério de qualidade | Justificativa (por que é crítico neste domínio) | Status |
 | -- | -- | -- | -- |
-| SubEquipe_01 | Performance / Latência | Streaming ao vivo tolera pouco atraso; é a ênfase "Transmissões ao Vivo" do tema traduzida em NFR | 🟨 SIG v1 · O04 (LL-HLS) a corrigir após a engenharia reversa |
-| SubEquipe_02 | Confiabilidade / Disponibilidade | Picos de audiência e transações (doações) exigem robustez a falha e uptime | ⬜ |
-| SubEquipe_03 | Confiabilidade, Disponibilidade e Segurança | Autenticação, proteção de conteúdo e moderação de UGC — cobre acesso e a ênfase "Conteúdo UGC" expandida em 5 dimensões e trade-offs | ✅ concluído (SIG v1.0) |
+| SubEquipe_01 | Performance / Latência | Streaming ao vivo tolera pouco atraso; é a ênfase "Transmissões ao Vivo" do tema traduzida em NFR | ✅ concluído SIG v1 · O04 (LL-HLS) a corrigir após a engenharia reversa |
+| SubEquipe_02 | Confiabilidade / Disponibilidade | Picos de audiência e transações (doações) exigem robustez a falha e uptime | ✅ concluído |
+| SubEquipe_03 | Segurança | Autenticação, proteção de conteúdo e moderação de UGC — cobre acesso e a ênfase "Conteúdo UGC" expandida em 5 dimensões e trade-offs | ✅ concluído (SIG v1.0) |
 
-## 7. Fora de Escopo
+## 6. Fora de Escopo
 
 Recortes deliberados desta entrega, com a razão de cada um:
 
@@ -90,7 +74,7 @@ Recortes deliberados desta entrega, com a razão de cada um:
 | FE05 | Regras contratuais e fiscais de repasse a criadores | Domínio jurídico/financeiro, fora do alcance de observação e alheio às ênfases do tema. |
 | FE06 | Uso do nome real e da identidade visual da plataforma de referência | **Vedado pela diretriz da disciplina.** A referência é sempre descrita por características. |
 
-## 8. Referências
+## 7. Referências
 
 Consolidadas em [Referências do Projeto](Referencias.md). Sustentam este escopo, em especial:
 
@@ -108,3 +92,5 @@ Consolidadas em [Referências do Projeto](Referencias.md). Sustentam este escopo
 | 1.1 | 22/08/2026 | Definição da aplicação de referência, ênfases, público-alvo, levantamento preliminar de funcionalidades e não-escopo (Reunião Geral 01) | [Equipe G6](Equipe.md) | Lucas Andrade Zanetti |
 | 1.2 | 23/08/2026 | Correção da divisão de softgoals e fluxos entre SubEquipe_02 e SubEquipe_03 (§5 e §6) e atualização do rótulo do projeto para G6_ProjetoStreamingVideo | Lucas Andrade Zanetti | Heitor Macedo Ricardo |
 | 1.3 | 28/08/2026 | Atualização do status dos fluxos BPMN (13 pools integradas) e softgoals da SubEquipe_03 para concluído (✅) | Eduardo Lôbo Moreira, Hugo Freitas Silva, Philipe Amâncio Reis Caetano | Equipe G6 |
+| 1.4 | 28/08/2026 | Atualização dos fluxos BPMN e softgoals das SubEquipes 01 e 02 para concluído (✅) e consolidação da numeração de seções | Davi Severiano Freitas | Equipe G6 |
+
