@@ -11,7 +11,6 @@
 
 Os integrantes, matrículas, papéis e divisão nas 3 subequipes estão detalhados em [Equipe & Subequipes](Projeto/Equipe.md). A apresentação visual de todos os membros do grupo também pode ser consultada no [README principal do repositório](https://github.com/UnBArqDsw2026-2-Turma01/2026.2-T01-_G6_ProjetoStreamingVideo_Entrega_01/blob/main/README.md#equipe).
 
-
 ## Sobre
 
 O **G6_ProjetoStreamingVideo** aborda o domínio das **plataformas de streaming de vídeo**, sob as duas ênfases determinadas pela disciplina: **Transmissões ao Vivo** e **Conteúdo UGC** (*User-Generated Content*).
@@ -38,19 +37,17 @@ Acompanhamento de pendências: [Checklist da Entrega 1](Projeto/ChecklistEntrega
 
 ## Screenshots da Primeira Entrega
 
-![Rich Picture da plataforma de transmissão ao vivo — SubEquipe_01](assets/artefatos/subequipe_01_artefato-generalista.png)
+![Rich Picture do Ecossistema de Transmissão ao Vivo — SubEquipe_03](assets/artefatos/artefato-generalista-junto.png)
 
-*Figura 1 — Rich Picture v1 (FOCO_01): atores, pipeline de mídia, camada de interação e camada de monetização. Autores: SubEquipe_01, 25/08/2026. Página completa em [1. Artefato Generalista](Base/Relatorios/1.1.1.SubEquipe_01/1.ArtefatoGeneralista.md).*
+*Figura 1 — Rich Picture v1.0 (FOCO_01): ecossistema de transmissão, moderação, monetização e interação de streaming de vídeo ao vivo. Autores: Eduardo Lôbo Moreira, Hugo Freitas Silva e Philipe Amâncio Reis Caetano, 26/08/2026. Página completa em [1. Artefato Generalista](Base/Relatorios/1.1.3.SubEquipe_03/1.ArtefatoGeneralista.md).*
 
-![Diagrama BPMN da cadeia de latência — SubEquipe_01](assets/bpmn/subequipe_01_bpmn-d0-cadeia-latencia.png)
+![Diagrama NFR Framework (SIG) — SubEquipe_01](assets/nfr/subequipe_01_sig.png)
 
-*Figura 2 — Diagrama D0 (FOCO_02): cadeia de latência da transmissão ao vivo, modelo integrador dos sete diagramas encadeados. Autores: SubEquipe_01, 27/08/2026. Página completa em [4. Modelagem BPMN](Base/Relatorios/1.1.1.SubEquipe_01/4.BPMN.md).*
+*Figura 2 — Softgoal Interdependency Graph — SIG v1 (FOCO_01): ramos Desempenho, Segurança, Confiabilidade e Usabilidade. Autores: Lucas Andrade Zanetti, Heitor Macedo Ricardo e Matheus Lemes Amaral (revisão: Pedro Druck Montalvão Reis), 26/08/2026. Página completa em [2. SIG · NFR Framework](Base/Relatorios/1.1.1.SubEquipe_01/2.NFRFramework.md).*
 
-![Diagrama BPMN de assistir transmissão ao vivo — SubEquipe_01](assets/bpmn/subequipe_01_bpmn-d2-assistir-transmissao.png)
+![Diagrama BPMN da Arquitetura e Processos de Transmissão — SubEquipe_03](assets/bpmn/subequipe_03_bpmn_geral.png)
 
-*Figura 3 — Diagrama D2 (FOCO_02): fluxo mínimo "Assistir Transmissão ao Vivo", obtido por engenharia reversa. Autores: SubEquipe_01, 27/08/2026. Processo de obtenção em [3. Engenharia Reversa](Base/Relatorios/1.1.1.SubEquipe_01/3.EngenhariaReversa.md).*
-
-> O SIG do NFR Framework (FOCO_01) é publicado como quadro navegável e pode ser consultado em [2. SIG · NFR Framework](Base/Relatorios/1.1.1.SubEquipe_01/2.NFRFramework.md).
+*Figura 3 — Modelo BPMN v1.0 (FOCO_02): arquitetura e processos de transmissão de vídeo ao vivo, moderação, chat, telemetria, autenticação e serviços auxiliares. Autores: Eduardo Lôbo Moreira, Hugo Freitas Silva e Philipe Amâncio Reis Caetano, 28/08/2026. Página completa em [4. Modelagem BPMN](Base/Relatorios/1.1.3.SubEquipe_03/4.BPMN.md).*
 
 ## Há algo a ser executado?
 
@@ -63,7 +60,6 @@ A Entrega 1 (Base) é **documental**: os entregáveis são artefatos de modelage
 ### Executando a Documentação Localmente
 
 Para instruções de instalação de dependências e execução do Docsify localmente via `npm run docs` ou `npx`, consulte a seção de **Tecnologia & Documentação** no [README principal do repositório](https://github.com/UnBArqDsw2026-2-Turma01/2026.2-T01-_G6_ProjetoStreamingVideo_Entrega_01/blob/main/README.md#tecnologia--documenta%C3%A7%C3%A3o).
-
 
 ## Informações Complementares
 
@@ -82,3 +78,4 @@ Para instruções de instalação de dependências e execução do Docsify local
 | 1.3 | 24/08/2026 | Centralização e referenciamento da equipe e instruções de execução local | Eduardo Lôbo Moreira | Equipe G6 |
 | 1.4 | 27/08/2026 | Preenchimento da seção de screenshots da Primeira Entrega com o Rich Picture e dois diagramas BPMN da SubEquipe_01, e correção dos links que apontavam para o repositório com o rótulo G6 | Heitor Macedo Ricardo | [SubEquipe_01](Projeto/Atas/Atas_Sg1/ata-S1-04-2026-08-27.md) |
 | 1.5 | 28/08/2026 | Consolidação dos relatórios, rich pictures e participações das subequipes para a Entrega 1 | Davi Severiano Freitas | Equipe G6 |
+| 1.6 | 28/08/2026 | Atualização das screenshots em destaque da Entrega 1 (Rich Picture SG3, SIG SG1 e BPMN SG3) | Eduardo Lôbo Moreira | Equipe G6 |
