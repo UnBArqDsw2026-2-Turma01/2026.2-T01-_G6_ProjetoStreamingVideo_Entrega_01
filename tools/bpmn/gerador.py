@@ -355,8 +355,8 @@ def gerar_xml(d: Diagram) -> str:
         ' xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"'
         ' xmlns:di="http://www.omg.org/spec/DD/20100524/DI"'
         ' xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"'
-        f' id="Definitions_{d.id}" targetNamespace="http://unb.fga/G7_ProjetoStreamingVideo"'
-        ' exporter="G7 SubEquipe_01 - tools/bpmn/gerador.py" exporterVersion="1.0">')
+        f' id="Definitions_{d.id}" targetNamespace="http://unb.fga/G6_ProjetoStreamingVideo"'
+        ' exporter="G6 SubEquipe_01 - tools/bpmn/gerador.py" exporterVersion="1.0">')
 
     for nome, sid in sinais.items():
         add(f'  <bpmn:signal id="{sid}" name={_a(nome)} />')

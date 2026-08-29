@@ -80,7 +80,7 @@ Daniel de Oliveira Lira · Davi Severiano Freitas · Eduardo Lôbo Moreira · He
 | -- | -- | -- | -- | -- |
 | 1.0 | 21/08/2026 | Criação do documento de equipe e subequipes | Lucas Andrade Zanetti | Heitor Macedo Ricardo |
 | 1.1 | 22/08/2026 | Divisão das três subequipes, definição das lideranças e do representante geral (Reunião Geral 01) | Equipe G6 | Lucas Andrade Zanetti |
-| 1.2 | 23/08/2026 | Preenchimento da distribuição de artefatos por subequipe (§2), sincronizado com o Escopo do Produto §5-6, e atualização do rótulo do projeto para G7_ProjetoStreamingVideo | Lucas Andrade Zanetti | Heitor Macedo Ricardo |
+| 1.2 | 23/08/2026 | Preenchimento da distribuição de artefatos por subequipe (§2), sincronizado com o Escopo do Produto §5-6, e atualização do rótulo do projeto para G6_ProjetoStreamingVideo | Lucas Andrade Zanetti | Heitor Macedo Ricardo |
 | 1.3 | 24/08/2026 | Sincronização da distribuição de softgoals e fluxos BPMN com o Escopo do Produto | Eduardo Lôbo Moreira | Equipe G6 |
 | 1.4 | 25/08/2026 | Atualização da matriz de participação (§3): FOCO_01 da SubEquipe_01 em andamento após a conclusão do Rich Picture v1 | Lucas Andrade Zanetti | [SubEquipe_01](Atas/Atas_Sg1/ata-S1-02-2026-08-25.md#participantes) |
 | 1.5 | 27/08/2026 | Matriz de participação da SubEquipe_01 atualizada para ✅ nos três focos após a conclusão do SIG, da engenharia reversa, do BPMN e dos pontos de vista individuais; nota da §3 corrigida (afirmava que o SIG não havia sido iniciado); Pedro Druck Montalvão Reis e Eduardo Lôbo Moreira incluídos na lista de autoria coletiva | Heitor Macedo Ricardo | [SubEquipe_01](Atas/Atas_Sg1/ata-S1-04-2026-08-27.md) |

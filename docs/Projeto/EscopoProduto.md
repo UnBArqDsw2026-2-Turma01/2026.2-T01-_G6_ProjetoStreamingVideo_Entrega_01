@@ -1,4 +1,4 @@
-# Escopo do Produto — G7_ProjetoStreamingVideo
+# Escopo do Produto — G6_ProjetoStreamingVideo
 
 > **Tema oficial**: Streaming de Vídeo, com ênfase em **Transmissões ao Vivo** e **Conteúdo UGC** (*User-Generated Content*), baseado em qualquer streaming de vídeo para inspiração, podendo ser em versão site, desktop ou aplicativo móvel.
 >
@@ -10,7 +10,7 @@ Esta página é a **fonte única de verdade do escopo**. Todos os artefatos das 
 
 | Campo | Valor |
 | -- | -- |
-| Nome do projeto | `G7_ProjetoStreamingVideo` |
+| Nome do projeto | `G6_ProjetoStreamingVideo` |
 | Plataforma-alvo (site / desktop / mobile) | **Site (aplicação web)** — versão de navegador da aplicação de referência |
 | Aplicação de referência (descrição, sem nome real) | Plataforma consolidada de **transmissões ao vivo organizadas em canais**, originada na comunidade de jogos eletrônicos e hoje ampliada para música, bate-papo, arte e eventos. Qualquer usuário pode se tornar criador: transmite em tempo real, a audiência interage por um **chat público síncrono**, e o conteúdo transmitido pode ser recortado em trechos curtos e revisto sob demanda após a transmissão. A receita combina inscrições recorrentes em canais, doações via moeda virtual e publicidade. |
 | Justificativa da escolha da referência | É uma das poucas plataformas em que as **duas ênfases exigidas pela disciplina coexistem no mesmo fluxo**: o conteúdo é ao vivo *e* é gerado pelo usuário, simultaneamente. Isso concentra, num único domínio, tensões arquiteturais ricas para modelagem — latência versus qualidade de vídeo, escala de audiência imprevisível, e moderação de conteúdo que precisa acontecer **enquanto** o conteúdo é produzido, sem o intervalo de revisão que plataformas sob demanda possuem. A versão web foi escolhida por ser acessível a todos os membros sem instalação, favorecendo a Engenharia Reversa distribuída entre 11 pessoas. |
@@ -106,5 +106,5 @@ Consolidadas em [Referências do Projeto](Referencias.md). Sustentam este escopo
 | -- | -- | -- | -- | -- |
 | 1.0 | 21/08/2026 | Criação do documento de escopo | Lucas Andrade Zanetti | Heitor Macedo Ricardo |
 | 1.1 | 22/08/2026 | Definição da aplicação de referência, ênfases, público-alvo, levantamento preliminar de funcionalidades e não-escopo (Reunião Geral 01) | [Equipe G6](Equipe.md) | Lucas Andrade Zanetti |
-| 1.2 | 23/08/2026 | Correção da divisão de softgoals e fluxos entre SubEquipe_02 e SubEquipe_03 (§5 e §6) e atualização do rótulo do projeto para G7_ProjetoStreamingVideo | Lucas Andrade Zanetti | Heitor Macedo Ricardo |
+| 1.2 | 23/08/2026 | Correção da divisão de softgoals e fluxos entre SubEquipe_02 e SubEquipe_03 (§5 e §6) e atualização do rótulo do projeto para G6_ProjetoStreamingVideo | Lucas Andrade Zanetti | Heitor Macedo Ricardo |
 | 1.3 | 28/08/2026 | Atualização do status dos fluxos BPMN (13 pools integradas) e softgoals da SubEquipe_03 para concluído (✅) | Eduardo Lôbo Moreira, Hugo Freitas Silva, Philipe Amâncio Reis Caetano | Equipe G6 |
