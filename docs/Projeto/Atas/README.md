@@ -45,7 +45,7 @@ Atas gerais ficam direto em `Atas/`; cada subequipe tem sua própria subpasta (`
 
 ## Histórico de Versões
 
-| Versão | Data | Descrição | Autor(es) | Revisor(es) |
-| :--: | :--: | -- | -- | -- |
-| 1.0 | 21/08/2026 | Criação da página de índice de atas | Lucas Andrade Zanetti | Heitor Macedo Ricardo |
-| 1.1 | 28/08/2026 | Inclusão da Ata S3_01 (Reunião Presencial da SubEquipe_03) | Eduardo Lôbo Moreira, Hugo Freitas Silva, Philipe Amâncio Reis Caetano | Equipe G6 |
+| Versão | Data | Descrição | Autor(es) | Revisor(es) | Descrição da revisão |
+| :--: | :--: | -- | -- | -- | -- |
+| 1.0 | 21/08/2026 | Criação da página de índice de atas | Lucas Andrade Zanetti | Heitor Macedo Ricardo | Revisão da estrutura da página de índice de atas. |
+| 1.1 | 28/08/2026 | Inclusão da Ata S3_01 (Reunião Presencial da SubEquipe_03) | Eduardo Lôbo Moreira, Hugo Freitas Silva, Philipe Amâncio Reis Caetano | Equipe G6 | Validação da indexação e links da Ata S3_01 da SubEquipe 03. |

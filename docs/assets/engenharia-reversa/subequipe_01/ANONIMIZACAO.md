@@ -44,6 +44,6 @@ As capturas originais **não** são versionadas (`.gitignore`: `docs/assets/enge
 
 ## Histórico de Versões
 
-| Versão | Data | Descrição | Autor(es) | Revisor(es) |
-| -- | -- | -- | -- | -- |
-| 1.0 | 27/08/2026 | Definição do procedimento de anonimização e da tabela de substituição | Lucas Andrade Zanetti | _(pendente)_ |
+| Versão | Data | Descrição | Autor(es) | Revisor(es) | Descrição da revisão |
+| -- | -- | -- | -- | -- | -- |
+| 1.0 | 27/08/2026 | Definição do procedimento de anonimização e da tabela de substituição | Lucas Andrade Zanetti | _(pendente)_ | Verificação do protocolo de anonimização de dados de tráfego de rede e tabela de substituição. |

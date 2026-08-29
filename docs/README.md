@@ -70,12 +70,12 @@ Para instruções de instalação de dependências e execução do Docsify local
 
 ## Histórico de Versões
 
-| Versão | Data | Descrição | Autor(es) | Revisor(es) |
-| -- | -- | -- | -- | -- |
-| 1.0 | 21/08/2026 | Estruturação inicial do GitPages para a Entrega 1 | Lucas Andrade Zanetti | Heitor Macedo Ricardo |
-| 1.1 | 22/08/2026 | Contextualização do projeto, divisão das subequipes e escopo de execução | [Equipe G6](Projeto/Equipe.md) | Lucas Andrade Zanetti |
-| 1.2 | 23/08/2026 | Resolução da pendência de nomenclatura: rótulo do projeto atualizado para G6_ProjetoStreamingVideo, conforme lista oficial de projetos | Lucas Andrade Zanetti | Heitor Macedo Ricardo |
-| 1.3 | 24/08/2026 | Centralização e referenciamento da equipe e instruções de execução local | Eduardo Lôbo Moreira | Equipe G6 |
-| 1.4 | 27/08/2026 | Preenchimento da seção de screenshots da Primeira Entrega com o Rich Picture e dois diagramas BPMN da SubEquipe_01, e correção dos links que apontavam para o repositório com o rótulo G6 | Heitor Macedo Ricardo | [SubEquipe_01](Projeto/Atas/Atas_Sg1/ata-S1-04-2026-08-27.md) |
-| 1.5 | 28/08/2026 | Consolidação dos relatórios, rich pictures e participações das subequipes para a Entrega 1 | Davi Severiano Freitas | Equipe G6 |
-| 1.6 | 28/08/2026 | Atualização das screenshots em destaque da Entrega 1 (Rich Picture SG3, SIG SG1 e BPMN SG3) | Eduardo Lôbo Moreira | Equipe G6 |
+| Versão | Data | Descrição | Autor(es) | Revisor(es) | Descrição da revisão |
+| -- | -- | -- | -- | -- | -- |
+| 1.0 | 21/08/2026 | Estruturação inicial do GitPages para a Entrega 1 | Lucas Andrade Zanetti | Heitor Macedo Ricardo | Revisão da estrutura inicial do GitPages e organização das seções da capa. |
+| 1.1 | 22/08/2026 | Contextualização do projeto, divisão das subequipes e escopo de execução | [Equipe G6](Projeto/Equipe.md) | Lucas Andrade Zanetti | Validação da contextualização do tema, divisão das subequipes e escopo de execução. |
+| 1.2 | 23/08/2026 | Resolução da pendência de nomenclatura: rótulo do projeto atualizado para G6_ProjetoStreamingVideo, conforme lista oficial de projetos | Lucas Andrade Zanetti | Heitor Macedo Ricardo | Conferência da padronização do rótulo oficial G6_ProjetoStreamingVideo. |
+| 1.3 | 24/08/2026 | Centralização e referenciamento da equipe e instruções de execução local | Eduardo Lôbo Moreira | Equipe G6 | Verificação dos links da equipe e das instruções de execução local. |
+| 1.4 | 27/08/2026 | Preenchimento da seção de screenshots da Primeira Entrega com o Rich Picture e dois diagramas BPMN da SubEquipe_01, e correção dos links que apontavam para o repositório com o rótulo G6 | Heitor Macedo Ricardo | [SubEquipe_01](Projeto/Atas/Atas_Sg1/ata-S1-04-2026-08-27.md) | Conferência das imagens de screenshot e correção de rotas para o repositório. |
+| 1.5 | 28/08/2026 | Consolidação dos relatórios, rich pictures e participações das subequipes para a Entrega 1 | Davi Severiano Freitas | Equipe G6 | Validação da consolidação dos relatórios, rich pictures e links de participação das subequipes. |
+| 1.6 | 28/08/2026 | Atualização das screenshots em destaque da Entrega 1 (Rich Picture SG3, SIG SG1 e BPMN SG3) | Eduardo Lôbo Moreira | Equipe G6 | Conferência das imagens em destaque (Rich Picture SG3, SIG SG1 e BPMN SG3) e links das páginas. |

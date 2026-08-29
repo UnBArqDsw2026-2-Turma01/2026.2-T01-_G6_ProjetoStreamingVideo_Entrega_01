@@ -51,10 +51,10 @@ Nenhuma das fontes acima, com exceção de **R01**, é oficial. Isso tem três c
 
 ## Histórico de Versões
 
-| Versão | Data | Descrição | Autor(es) | Revisor(es) |
-| :--: | :--: | -- | -- | -- |
-| 1.0 | 22/08/2026 | Consolidação das referências técnicas e metodológicas, com classificação de natureza da fonte e senso crítico | [Equipe G6](Equipe.md) | Lucas Andrade Zanetti |
-| 1.1 | 23/08/2026 | Atualização do rótulo do projeto para G6_ProjetoStreamingVideo | Lucas Andrade Zanetti | Heitor Macedo Ricardo |
-| 1.2 | 28/08/2026 | Atualização do status de consulta das fontes técnicas e metodológicas (R05 a R09) e mapeamento cruzado com os relatórios das subequipes | Davi Severiano Freitas | Pedro Henrique Freire Rodrigues |
+| Versão | Data | Descrição | Autor(es) | Revisor(es) | Descrição da revisão |
+| :--: | :--: | -- | -- | -- | -- |
+| 1.0 | 22/08/2026 | Consolidação das referências técnicas e metodológicas, com classificação de natureza da fonte e senso crítico | [Equipe G6](Equipe.md) | Lucas Andrade Zanetti | Revisão da consolidação geral das referências técnicas e metodológicas da equipe. |
+| 1.1 | 23/08/2026 | Atualização do rótulo do projeto para G6_ProjetoStreamingVideo | Lucas Andrade Zanetti | Heitor Macedo Ricardo | Conferência da atualização da nomenclatura oficial do projeto. |
+| 1.2 | 28/08/2026 | Atualização do status de consulta das fontes técnicas e metodológicas (R05 a R09) e mapeamento cruzado com os relatórios das subequipes | Davi Severiano Freitas | Pedro Henrique Freire Rodrigues | Validação da atualização do status de consulta das fontes e mapeamento cruzado com relatórios. |
 
 

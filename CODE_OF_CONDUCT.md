@@ -124,6 +124,6 @@ graph TD
 
 ## Histórico de Versões
 
-| Versão | Data | Descrição | Autor(es) | Revisor(es) |
-| :---: | :---: | :---: | :---: | :---: |
-| `1.0` | 21/08/2026 | Criação do Código de Conduta adaptado com base no Contributor Covenant 2.1, Mozilla CPG e diretrizes acadêmicas da FGA0208 | Eduardo Lôbo Moreira | Equipe Grupo 06 |
+| Versão | Data | Descrição | Autor(es) | Revisor(es) | Descrição da revisão |
+| -- | -- | -- | -- | -- | -- |
+| `1.0` | 21/08/2026 | Criação do Código de Conduta adaptado com base no Contributor Covenant 2.1, Mozilla CPG e diretrizes acadêmicas da FGA0208 | Eduardo Lôbo Moreira | Equipe Grupo 06 | Revisão da estrutura inicial do documento, conformidade com o template e organização das seções. |

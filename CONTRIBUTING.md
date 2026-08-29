@@ -277,8 +277,8 @@ Antes de solicitar a aprovação final do PR, certifique-se de que a contribuiç
 
 ## Histórico de Versões
 
-| Versão | Data | Descrição | Autor(es) | Revisor(es) |
-| :---: | :---: | :---: | :---: | :---: |
-| `1.0` | 21/08/2026 | Criação do Guia de Contribuição com GitHub Standards, ambiente local, fluxo de PRs, diretrizes de IA, rastreabilidade e referências | Eduardo Lôbo Moreira | Equipe Grupo 06 |
-| `1.1` | 24/08/2026 | Alinhamento da regra de revisão de PRs com a Metodologia e centralização de instruções de execução no README | Eduardo Lôbo Moreira | Equipe Grupo 06 |
+| Versão | Data | Descrição | Autor(es) | Revisor(es) | Descrição da revisão |
+| -- | -- | -- | -- | -- | -- |
+| `1.0` | 21/08/2026 | Criação do Guia de Contribuição com GitHub Standards, ambiente local, fluxo de PRs, diretrizes de IA, rastreabilidade e referências | Eduardo Lôbo Moreira | Equipe Grupo 06 | Revisão da estrutura inicial do documento, conformidade com o template e organização das seções. |
+| `1.1` | 24/08/2026 | Alinhamento da regra de revisão de PRs com a Metodologia e centralização de instruções de execução no README | Eduardo Lôbo Moreira | Equipe Grupo 06 | Revisão técnica de conteúdo, clareza textual e aderência às diretrizes do projeto. |
 
