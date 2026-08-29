@@ -39,7 +39,7 @@ A diretriz exige o grupo organizado em **3 subequipes**, e que **todos os membro
 | Subequipe | Artefato generalista (Rich Picture **ou** Mapa Mental) | Softgoal do SIG (NFR) | Fluxo modelado em BPMN |
 | -- | -- | -- | -- |
 | SubEquipe_01 | Rich Picture | Performance / Latência | Assistir Transmissão ao Vivo (mínimo) · Início/Configuração da Transmissão (extra) · Troca de Qualidade Adaptativa/ABR (extra) |
-| SubEquipe_02 | _a definir_ | Confiabilidade / Disponibilidade | Chat ao Vivo sob pico de audiência (mínimo) · Doações/Monetização (extra) · Recuperação de Falha de Transmissão (extra) |
+| SubEquipe_02 | Rich Picture | Confiabilidade / Disponibilidade | Chat ao Vivo sob pico de audiência (mínimo) · Doações/Monetização (extra) · Recuperação de Falha de Transmissão (extra) |
 | SubEquipe_03 | Rich Picture | Confiabilidade, Disponibilidade e Segurança | Arquitetura Integrada de Transmissão: Playback, Ingestão, Chat/AutoMod, Telemetria, Autenticação, VOD, Monetização e Guest Star (13 Pools) |
 
 > Sincronizar esta tabela com as seções 5 e 6 do [Escopo do Produto](EscopoProduto.md).

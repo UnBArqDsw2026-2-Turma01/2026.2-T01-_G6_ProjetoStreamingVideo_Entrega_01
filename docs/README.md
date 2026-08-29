@@ -81,3 +81,4 @@ Para instruções de instalação de dependências e execução do Docsify local
 | 1.2 | 23/08/2026 | Resolução da pendência de nomenclatura: rótulo do projeto atualizado para G7_ProjetoStreamingVideo, conforme lista oficial de projetos | Lucas Andrade Zanetti | Heitor Macedo Ricardo |
 | 1.3 | 24/08/2026 | Centralização e referenciamento da equipe e instruções de execução local | Eduardo Lôbo Moreira | Equipe G6 |
 | 1.4 | 27/08/2026 | Preenchimento da seção de screenshots da Primeira Entrega com o Rich Picture e dois diagramas BPMN da SubEquipe_01, e correção dos links que apontavam para o repositório com o rótulo G6 | Heitor Macedo Ricardo | [SubEquipe_01](Projeto/Atas/Atas_Sg1/ata-S1-04-2026-08-27.md) |
+| 1.5 | 28/08/2026 | Consolidação dos relatórios, rich pictures e participações das subequipes para a Entrega 1 | Davi Severiano Freitas | Equipe G6 |
