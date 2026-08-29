@@ -46,9 +46,9 @@ As diretrizes sugerem o *Design Sprint* (R09) como opção para esta primeira et
 
 | Finalidade | Ferramenta | Observações |
 | -- | -- | -- |
-| Artefato generalista (Rich Picture / Mapa Mental) | _a definir_ | |
-| SIG / NFR Framework | _a definir_ | |
-| Modelagem BPMN | Camunda | | |
+| Artefato generalista (Rich Picture / Mapa Mental) | Miro, Cloudairy e Figma | O Figma foi utilizado pela subequipe_02 como ferramenta de rascunho. |
+| SIG / NFR Framework | DSM3-FSR(UFPE), Miro | |
+| Modelagem BPMN | BPMN.io, Camunda, Miro | | |
 | Documentação (GitPages) | Docsify | Site em `docs/`    |
 | Versionamento | Git + GitHub | |
 | Reuniões / gravações | Teams | |
