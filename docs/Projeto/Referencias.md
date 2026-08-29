@@ -53,5 +53,5 @@ Nenhuma das fontes acima, com exceção de **R01**, é oficial. Isso tem três c
 
 | Versão | Data | Descrição | Autor(es) | Revisor(es) |
 | -- | -- | -- | -- | -- |
-| 1.0 | 22/08/2026 | Consolidação das referências técnicas e metodológicas, com classificação de natureza da fonte e senso crítico | [Equipe G7](Equipe.md) | Lucas Andrade Zanetti |
+| 1.0 | 22/08/2026 | Consolidação das referências técnicas e metodológicas, com classificação de natureza da fonte e senso crítico | [Equipe G6](Equipe.md) | Lucas Andrade Zanetti |
 | 1.1 | 23/08/2026 | Atualização do rótulo do projeto para G7_ProjetoStreamingVideo | Lucas Andrade Zanetti | Heitor Macedo Ricardo |

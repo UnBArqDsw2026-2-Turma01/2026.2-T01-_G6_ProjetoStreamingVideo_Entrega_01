@@ -95,6 +95,6 @@ Consolidadas em [Referências do Projeto §2](Referencias.md#_2-fontes-metodoló
 | Versão | Data | Descrição | Autor(es) | Revisor(es) |
 | -- | -- | -- | -- | -- |
 | 1.0 | 21/08/2026 | Criação do documento de metodologia | Lucas Andrade Zanetti | Heitor Macedo Ricardo |
-| 1.1 | 22/08/2026 | Definição da abordagem metodológica, justificativa fundamentada e registro das decisões de processo da Reunião Geral 01 | Equipe G7 | Lucas Andrade Zanetti |
+| 1.1 | 22/08/2026 | Definição da abordagem metodológica, justificativa fundamentada e registro das decisões de processo da Reunião Geral 01 | Equipe G6 | Lucas Andrade Zanetti |
 | 1.2 | 23/08/2026 | Atualização do rótulo do projeto para G7_ProjetoStreamingVideo | Lucas Andrade Zanetti | Heitor Macedo Ricardo |
-| 1.3 | 24/08/2026 | Correção ortográfica e remoção de comentários residuais | Eduardo Lôbo Moreira | Equipe G7 |
+| 1.3 | 24/08/2026 | Correção ortográfica e remoção de comentários residuais | Eduardo Lôbo Moreira | Equipe G6 |
